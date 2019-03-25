@@ -7,8 +7,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>SupliMais</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
@@ -76,7 +74,6 @@ function mandaId(num, numm){
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 <body class="hold-transition skin-green layout-top-nav">
 	<div class="wrapper">
-
 		<nav class="navbar navbar-static-top">
 			<div class="container">
 				<div class="navbar-header">
@@ -315,8 +312,28 @@ function mandaId(num, numm){
 												<div class="col-sm-3 form-group">
 													<label>Calorias</label> <input type="number"
 														class="form-control" id="txtCal" name="txtCal">
-												</div>
+												</div>	
 											</div>
+											<%
+													Resultado result = (Resultado) session.getAttribute("resultado");
+													if (result != null) {
+														if ("Produto cadastrado com sucesso!".equals(result.getMsg())) {
+															StringBuilder st = new StringBuilder();
+															st.append("<div class='alert alert-success' role='alert'>");
+															st.append("<strong>Parabéns</strong> Produto cadastrado com sucesso!.");
+															st.append("</div>");
+															out.print(st.toString());
+
+														} else {
+															StringBuilder st = new StringBuilder();
+															st.append("<div class='alert alert-danger' role='alert'>");
+															st.append(result.getMsg());
+															st.append("</div>");
+															out.print(st.toString());
+														}
+
+													}
+												%>
 											<div class="text-center">
 												<input type="submit" name="operacao" value="SALVARSUP"
 													id="operacao">

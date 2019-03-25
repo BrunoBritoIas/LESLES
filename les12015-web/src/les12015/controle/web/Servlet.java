@@ -15,6 +15,7 @@ import les12015.controle.web.command.impl.ConsultarCommand;
 import les12015.controle.web.command.impl.SalvarCommand;
 import les12015.controle.web.vh.IViewHelper;
 import les12015.controle.web.vh.impl.ClienteViewHelper;
+import les12015.controle.web.vh.impl.EnderecoViewHelper;
 import les12015.controle.web.vh.impl.ProdutoViewHelper;
 import les12015.core.aplicacao.Resultado;
 import les12015.dominio.EntidadeDominio;
@@ -42,11 +43,16 @@ public class Servlet extends HttpServlet {
     	//CLIENTE
     	commands.put("SALVAR", new SalvarCommand());
     	commands.put("CONSULTAR", new ConsultarCommand());
+    	commands.put("LOGAR", new ConsultarCommand());
     	commands.put("ALTERAR", new AlterarCommand());
+    	commands.put("SALVAREND", new SalvarCommand());
+    	commands.put("CONSULTAREND", new ConsultarCommand());
+    	commands.put("DELEND", new AlterarCommand());
     	
     	//PRODUTO
     	commands.put("SALVARSUP", new SalvarCommand());
     	commands.put("CONSULTARSUP", new ConsultarCommand());
+    	commands.put("CONSULTARHOME", new ConsultarCommand());
     	commands.put("ALTERARSUP", new AlterarCommand());
     	
     	/* Utilizando o ViewHelper para tratar especificações de qualquer tela e indexando 
@@ -58,7 +64,13 @@ public class Servlet extends HttpServlet {
     	 * está configurado no web.xml e sendo utilizada no action do html
     	 */
     	vhs.put("/les12015-web/SalvarCliente", new ClienteViewHelper());
+    	vhs.put("/les12015-web/SalvarEndereco", new EnderecoViewHelper());
+    	vhs.put("/les12015-web/ConsultarEndereco", new EnderecoViewHelper());
+    	vhs.put("/les12015-web/DeleteEndereco", new EnderecoViewHelper());
+    	vhs.put("/les12015-web/ClienteLogin", new ClienteViewHelper());
+    	vhs.put("/les12015-web/AlterarCliente", new ClienteViewHelper());
     	vhs.put("/les12015-web/SalvarProduto", new ProdutoViewHelper());
+    	vhs.put("/les12015-web/ConsultarProduto", new ProdutoViewHelper());
    	
     }
     

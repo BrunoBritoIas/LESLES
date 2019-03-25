@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page
+	import="les12015.core.aplicacao.Resultado, les12015.dominio.*, java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,6 +45,11 @@
 </style>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 <body class="hold-transition skin-green layout-top-nav">
+
+	<c:if test="${listaSuplementos ==null}">
+		<c:redirect url="SalvarProduto?operacao=CONSULTARHOME" />
+	</c:if>
+
 	<div class="wrapper">
 
 		<header class="main-header">
@@ -81,119 +87,84 @@
 									</div>
 								</form>
 							</li>
+
+						</ul>
 					</div>
-					</li>
-					</ul>
+
 				</div>
 
 				<!-- /.navbar-collapse -->
 	</div>
 	<!-- /.container-fluid -->
-	</nav>
-	</header>
+
 	<!-- Full Width Column -->
+	<div class="content-wrapper">
+		<div class="container">
 
-	<c:if test="${resultado.getMsg() == null}">
-		<div class="content-wrapper">
-			<div class="container">
-				<br> <br> <br> <br>
-				<!-- INÃ­CIO do CONTEÃšDO -->
-				<div class="container">
-					<form class="form-horizontal" role="form" method="post"
-						action="SalvarCliente">
-						<h2 style="text-align: center">Cadastro</h2>
-						<div class="form-group">
-							<label for="Primeiro Nome" class="col-sm-3 control-label">Nome</label>
-							<div class="col-sm-9">
-								<input type="text" id="txtNome" name="txtNome"
-									placeholder="First Name" class="form-control" autofocus>
-							</div>
-						</div>
+			<!-- INíCIO do CONTEÚDO -->
+			<section class="content-header">
+				<h1></h1>
+			</section>
 
-						<div class="form-group">
-							<label for="email" class="col-sm-3 control-label">Email*
-							</label>
-							<div class="col-sm-9">
-								<input type="email" id="txtEmail" name="txtEmail"
-									placeholder="Email" class="form-control" name="email">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="txtCpf" class="col-sm-3 control-label">CPF </label>
-							<div class="col-sm-9">
-								<input type="text" id="txtCpf" name="txtCpf" placeholder="CPF"
-									class="form-control" name="CPF">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="senha" class="col-sm-3 control-label">senha*</label>
-							<div class="col-sm-9">
-								<input type="password" id="txtSenha" name="txtSenha"
-									placeholder="Senha" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="password" class="col-sm-3 control-label">Confirme
-								a Senha</label>
-							<div class="col-sm-9">
-								<input type="password" id="password" placeholder="Password"
-									class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="birthDate" class="col-sm-3 control-label">Data
-								de Nascimento</label>
-							<div class="col-sm-9">
-								<input type="date" id="bday" name="bday" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="phoneNumber" class="col-sm-3 control-label">Numero
-								de telefone</label>
-							<div class="col-sm-9">
-								<input type="text" id="phoneNumber" name="phoneNumber"
-									placeholder="Ex (11)95555-0809" class="form-control">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-3">Genero</label>
-							<div class="col-sm-6">
-								<div class="row">
-									<div class="col-sm-4">
-										<label class="radio-inline"> <input type="radio"
-											id="txtGender" name="txtGender" value="Mulher">Mulher
-										</label>
-									</div>
-									<div class="col-sm-4">
-										<label class="radio-inline"> <input type="radio"
-											id="txtGender" name="txtGender" value="Homem">Homem
-										</label>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- /.form-group -->
-						<button type="submit" style="margin-left: 600px"
-							class="btn btn-primary" name="operacao" value="SALVAR"
-							id="operacao">CADASTRAR</button>
-					</form>
-					<!-- /form -->
+			<br> <br> <br>
+
+
+			<form method="post" action="SalvarProduto">
+
+				<div class="row">
+					<div class="col-sm-6 form-group">
+						<label>Nome</label> <input type="text" id="txtNome" name="txtNome"
+							class="form-control">
+					</div>
+					<div class="col-sm-6 form-group">
+						<label>Marca</label> <input type="text" id="txtMarca"
+							name="txtMarca" class="form-control">
+					</div>
+
 				</div>
-				<!-- ./container -->
+				<div>
+					<label>Categoria</label> <label class="checkbox-inline"><input
+						type="radio" id="txtCategoria" name="txtCategoria"
+						value="Massa Magra">Massa Magra</label> <label
+						class="checkbox-inline"><input type="radio"
+						id="txtCategoria" name="txtCategoria" value="Emagrecimento">Emagrecimento</label>
+					<label class="checkbox-inline"><input type="radio"
+						id="txtCategoria" name="txtCategoria" value="Vegano">Vegano</label>
+				</div>
+				<input type="submit" name="operacao" value="CONSULTARHOME"
+					id="operacao"> <br> <br> <br>
 
-				<!-- FIM  do CONTEÃšDO -->
+				<div class="row">
+					<c:forEach items="${listaSuplementos}" var="suplemento">
+						<div class="col-sm-6 col-xs-12">
+							<a href="detail-restaurant.html">
+								<div class="place-info-box">
+									<span class="place-info-box-icon"><img
+										src="assets/img/restaurants/bcaa.png" class="arruma-img" /></span>
 
-				<!-- /.content -->
-			</div>
-			<!-- /.container -->
+									<div class="place-info-box-content">
+										<span class="place-info-box-text">${suplemento.nome}</span> <span
+											class="place-info-box-star"><i class="fa fa-star"></i>
+											4.8</span> <span class="place-info-box-detail">${suplemento.marca}</span>
+										<span class="place-info-box-detail">${suplemento.peso}gr</span>
+										<span class="menu-item-info-box-price">R$
+											${suplemento.preco}</span>
+									</div>
+									<!-- /.info-box-content -->
+								</div>
+							</a>
+							<!-- /.info-box -->
+						</div>
+					</c:forEach>
+
+				</div>
+
+				<!-- FIM  do CONTEÚDO -->
+
+			</form>
 		</div>
-	</c:if>
-	
-	<c:if test="${resultado.getMsg() != null}">
-		
-		<h2 class="text-align:center">${resultado.getMsg()} clique <a href="Login.jsp">Aqui</a> para acessar sua conta</h2>
-		
-	</c:if>
+
+	</div>
 	<!-- /.content-wrapper -->
 	<footer class="main-footer">
 		<div class="container">

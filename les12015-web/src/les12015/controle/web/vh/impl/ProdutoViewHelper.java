@@ -19,24 +19,29 @@ public class ProdutoViewHelper implements IViewHelper {
 	public EntidadeDominio getEntidade(HttpServletRequest request) {
 		String operacao = request.getParameter("operacao");
 		Suplementos sup = new Suplementos();
-		if(operacao.equals("SALVARSUP")){
+		if (operacao.equals("SALVARSUP")) {
 			String nome = request.getParameter("txtNome");
 			String marca = request.getParameter("txtMarca");
-			String validade = request.getParameter("txtValidade");
+			String validade = request.getParameter("txtValidade").equals("") ? "vazio"
+					: request.getParameter("txtValidade");
 			String descricao = request.getParameter("txtDesc");
-			Double peso = Double.parseDouble(request.getParameter("txtPeso"));
-			String categoria = request.getParameter("txtCategoria"); 
-			Double proteina = Double.parseDouble(request.getParameter("txtProt")) ; 
-			Double carboidrato = Double.parseDouble(request.getParameter("txtCarb"));
-			Double gordura =  Double.parseDouble(request.getParameter("txtFat")); 
-			Double caloria =  Double.parseDouble(request.getParameter("txtCal")); 
-			Double preco =  Double.parseDouble(request.getParameter("txtPreco"));
-			
-			
-			/*if(id != null && !id.trim().equals("")){
-			c.setId(Integer.parseInt(id));
-			}*/
-			
+			Double peso = request.getParameter("txtPeso").equals("") ? 0.0
+					: Double.parseDouble(request.getParameter("txtPeso"));
+			String categoria = request.getParameter("txtCategoria");
+			Double proteina = "".equals(request.getParameter("txtProt")) ? 0.0
+					: Double.parseDouble(request.getParameter("txtProt"));
+			Double carboidrato = request.getParameter("txtCarb").equals("") ? 0.0
+					: Double.parseDouble(request.getParameter("txtCarb"));
+			Double gordura = request.getParameter("txtFat").equals("") ? 0.0
+					: Double.parseDouble(request.getParameter("txtFat"));
+			Double caloria = request.getParameter("txtCal").equals("") ? 0.0
+					: Double.parseDouble(request.getParameter("txtCal"));
+			Double preco = request.getParameter("txtPreco").equals("") ? 0.0
+					: Double.parseDouble(request.getParameter("txtPreco"));
+			/*
+			 * if(id != null && !id.trim().equals("")){ c.setId(Integer.parseInt(id)); }
+			 */
+
 			sup.setNome(nome);
 			sup.setMarca(marca);
 			sup.setDescricao(descricao);
@@ -51,43 +56,54 @@ public class ProdutoViewHelper implements IViewHelper {
 			sup.setStatus("ATIVO");
 			sup.setValidade(validade);
 		}
-		
-		if(operacao.equals("CONSULTARSUP")){
+
+		if (operacao.equals("CONSULTARSUP") ||operacao.equals("CONSULTARHOME"))  {
 			String nome = request.getParameter("txtNome");
 			String marca = request.getParameter("txtMarca");
-			String categoria = request.getParameter("txtCategoria"); 
-			Double preco =  5.5;
-			
+			String categoria = request.getParameter("txtCategoria");
+			Double preco = 5.5;
 			sup.setNome(nome);
 			sup.setMarca(marca);
-			sup.setCategoria(categoria);		
+			sup.setCategoria(categoria);
 			sup.setRating(5.0);
 			sup.setPreco(preco);
-				
-	}	
-		if(operacao.equals("ALTERARSUP")){
+
+		}
+		if (operacao.equals("ALTERARSUP")) {
 			HttpSession sessao = request.getSession();
-			
-			Integer id =  Integer.parseInt(request.getParameter("txtIdnovo"));
-			ArrayList<EntidadeDominio> suplementos = (ArrayList<EntidadeDominio>)sessao.getAttribute("listaSuplementos");
-			for(EntidadeDominio s : suplementos) {
-				if(s.getId() == id) {
+
+			Integer id = Integer.parseInt(request.getParameter("txtIdnovo"));
+			ArrayList<EntidadeDominio> suplementos = (ArrayList<EntidadeDominio>) sessao
+					.getAttribute("listaSuplementos");
+			for (EntidadeDominio s : suplementos) {
+				if (s.getId() == id) {
 					sup = (Suplementos) s;
-				}				
+				}
 			}
 			String nome = request.getParameter("txtNome").equals("") ? sup.getNome() : request.getParameter("txtNome");
-			String status = request.getParameter("txtStatus").equals("") ? sup.getNome() : request.getParameter("txtStatus");
-			String marca = request.getParameter("txtMarca").equals("") ? sup.getMarca() : request.getParameter("txtMarca");
-			String validade = request.getParameter("txtValidade").equals("") ? sup.getValidade() : request.getParameter("txtValidade");
-			String descricao = request.getParameter("txtDesc").equals("") ? sup.getDescricao() : request.getParameter("txtDesc");
-			Double peso = request.getParameter("txtPeso").equals("") ? sup.getPeso() : Double.parseDouble(request.getParameter("txtPeso"));
-			String categoria = request.getParameter("txtCategoria").equals("") ? sup.getCategoria() : request.getParameter("txtCategoria");
-			Double proteina = "".equals(request.getParameter("txtProt")) ? sup.getProteina() : Double.parseDouble(request.getParameter("txtProt"));
-			Double carboidrato = request.getParameter("txtCarb").equals("") ? sup.getCarboidratos() : Double.parseDouble(request.getParameter("txtCarb"));
-			Double gordura =  request.getParameter("txtFat").equals("") ? sup.getGordura() : Double.parseDouble(request.getParameter("txtFat"));
-			Double caloria =  request.getParameter("txtCal").equals("") ? sup.getCalorias() : Double.parseDouble(request.getParameter("txtCal"));
-			Double preco = request.getParameter("txtPreco").equals("") ? sup.getPreco() : Double.parseDouble(request.getParameter("txtCal"));
-			
+			String status = request.getParameter("txtStatus").equals("") ? sup.getNome()
+					: request.getParameter("txtStatus");
+			String marca = request.getParameter("txtMarca").equals("") ? sup.getMarca()
+					: request.getParameter("txtMarca");
+			String validade = request.getParameter("txtValidade").equals("") ? sup.getValidade()
+					: request.getParameter("txtValidade");
+			String descricao = request.getParameter("txtDesc").equals("") ? sup.getDescricao()
+					: request.getParameter("txtDesc");
+			Double peso = request.getParameter("txtPeso").equals("") ? sup.getPeso()
+					: Double.parseDouble(request.getParameter("txtPeso"));
+			String categoria = request.getParameter("txtCategoria").equals("") ? sup.getCategoria()
+					: request.getParameter("txtCategoria");
+			Double proteina = "".equals(request.getParameter("txtProt")) ? sup.getProteina()
+					: Double.parseDouble(request.getParameter("txtProt"));
+			Double carboidrato = request.getParameter("txtCarb").equals("") ? sup.getCarboidratos()
+					: Double.parseDouble(request.getParameter("txtCarb"));
+			Double gordura = request.getParameter("txtFat").equals("") ? sup.getGordura()
+					: Double.parseDouble(request.getParameter("txtFat"));
+			Double caloria = request.getParameter("txtCal").equals("") ? sup.getCalorias()
+					: Double.parseDouble(request.getParameter("txtCal"));
+			Double preco = request.getParameter("txtPreco").equals("") ? sup.getPreco()
+					: Double.parseDouble(request.getParameter("txtCal"));
+
 			sup.setNome(nome);
 			sup.setMarca(marca);
 			sup.setValidade(validade);
@@ -101,39 +117,45 @@ public class ProdutoViewHelper implements IViewHelper {
 			sup.setPreco(preco);
 			sup.setStatus(status);
 			sup.setId(id);
-			
+
 		}
-		
+
 		return sup;
-	
-}
+
+	}
 
 	public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		RequestDispatcher d=null;
+		RequestDispatcher d = null;
 		String operacao = request.getParameter("operacao");
 		HttpSession sessao = request.getSession();
-		
-		if(resultado.getMsg() == null){
-			if(operacao.equals("SALVARSUP")){
+
+		if (resultado.getMsg() == null) {
+			if (operacao.equals("SALVARSUP")) {
 				resultado.setMsg("Produto cadastrado com sucesso!");
 			}
-			
-			if(operacao.equals("CONSULTARSUP")){
-				sessao.setAttribute("listaSuplementos", resultado.getEntidades());
-			}
-			
-			if( operacao.equals("ALTERARSUP")){
-				resultado.setMsg("Produto Alterado com sucesso!");
-				d= request.getRequestDispatcher("Admin.jsp"); ;  	
-			}
 			sessao.setAttribute("resultado", resultado);
-			d= request.getRequestDispatcher("Admin.jsp"); 
-			
-		}
-		d.forward(request,response); 
-	
-		
-	}
+			d = request.getRequestDispatcher("Admin.jsp");
 
+		}
+		else {
+			sessao.setAttribute("resultado", resultado);
+			d = request.getRequestDispatcher("Admin.jsp");
+		}
+		
+		if (resultado.getMsg() == null && operacao.equals("CONSULTARSUP")) {
+			sessao.setAttribute("listaSuplementos", resultado.getEntidades());
+			d = request.getRequestDispatcher("Admin.jsp");
+		}
+		else if((resultado.getMsg() == null && operacao.equals("CONSULTARHOME"))) {
+			sessao.setAttribute("listaSuplementos", resultado.getEntidades());
+			d = request.getRequestDispatcher("index.jsp");
+		}
+
+		if ( resultado.getMsg() == null && operacao.equals("ALTERARSUP")) {
+			d = request.getRequestDispatcher("Admin.jsp");
+		}
+
+		d.forward(request, response);
+	}
 }
