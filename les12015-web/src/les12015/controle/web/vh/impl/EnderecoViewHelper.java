@@ -97,8 +97,11 @@ public class EnderecoViewHelper implements IViewHelper {
 		}
 
 		if (resultado.getMsg() == null && operacao.equals("DELEND")) {
+			HttpSession lol = request.getSession();
+			lol.setAttribute("uiui", "oi");
 
 			d = request.getRequestDispatcher("CliAdmin.jsp");
+			response.setHeader("Refresh", "0; URL=" +request.getContextPath() +"/ConsultarEndereco?operacao=CONSULTAREND");
 		}
 
 		if (resultado.getMsg() != null) {

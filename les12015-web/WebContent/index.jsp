@@ -37,6 +37,12 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
+<script>
+function Redirecionar(id) {
+	var idd = id
+	window.location.href = "SalvarProduto?operacao=VERPRODUTO&id=" + idd;
+}
+</script>
 <style>
 .arruma-img {
 	height: 120px;
@@ -137,13 +143,13 @@
 				<div class="row">
 					<c:forEach items="${listaSuplementos}" var="suplemento">
 						<div class="col-sm-6 col-xs-12">
-							<a href="detail-restaurant.html">
+							<a href="" onclick="Redirecionar(${suplemento.id})">
 								<div class="place-info-box">
 									<span class="place-info-box-icon"><img
 										src="assets/img/restaurants/bcaa.png" class="arruma-img" /></span>
 
 									<div class="place-info-box-content">
-										<span class="place-info-box-text">${suplemento.nome}</span> <span
+										<span class="place-info-box-text">${suplemento.id}</span> <span
 											class="place-info-box-star"><i class="fa fa-star"></i>
 											4.8</span> <span class="place-info-box-detail">${suplemento.marca}</span>
 										<span class="place-info-box-detail">${suplemento.peso}gr</span>

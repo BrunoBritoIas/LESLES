@@ -35,12 +35,9 @@
 	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 	crossorigin="anonymous"></script>
 <script>
-	// $('.nav-pills a').click(function(){
-	// var content = $(this).attr('data-id');
-	//$('.content .panel').removeClass('is-active');
-	//$('.content .panel[id="'+content+'"]').addClass('is-active');
-	//});
-	$(document).ready(function() {
+	
+	 $(document).ready(function() {
+
 		var navItems = $('.admin-menu li > a');
 		var navListItems = $('.admin-menu li');
 		var allWells = $('.admin-content');
@@ -84,8 +81,6 @@ textarea {
 	<c:if test="${listaEnderecos == null}">
 		<c:redirect url="ConsultarEndereco?operacao=CONSULTAREND" />
 	</c:if>
-
-
 
 	<div class="wrapper">
 		<nav class="navbar navbar-static-top">
@@ -136,12 +131,12 @@ textarea {
 					<div class="row">
 						<div class="col-md-3">
 							<ul class="nav nav-pills nav-stacked admin-menu">
-								<li class="active"><a href="#" data-target-id="home"><i
+								<li><a href="#" data-target-id="home"><i
 										class="fa fa-home fa-fw"></i>Perfil</a></li>
 								<li><a href="http://www.jquery2dotnet.com"
 									data-target-id="widgets"><i class="fa fa-list-alt fa-fw"></i>
 										Cadastro Endereço</a></li>
-								<li><a href="http://www.jquery2dotnet.com"
+								<li class="active"><a href="" id="consultaEnd"
 									data-target-id="pages"><i class="fa fa-file-o fa-fw"></i>Consulta
 										Endereços</a></li>
 								<li><a href="http://www.jquery2dotnet.com"
@@ -372,6 +367,8 @@ textarea {
 		<script src="assets/js/app.min.js"></script>
 		<!-- AdminLTE for demo purposes -->
 		<script src="assets/js/demo.js"></script>
+		<c:if test="${uiui != null}">
+	</c:if>
 </body>
 
 <div class="modal fade" id="edit" tabindex="-1" role="dialog"
