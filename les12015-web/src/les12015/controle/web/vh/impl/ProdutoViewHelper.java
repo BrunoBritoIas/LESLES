@@ -73,8 +73,8 @@ public class ProdutoViewHelper implements IViewHelper {
 			HttpSession sessao = request.getSession();
 
 			Integer id = Integer.parseInt(request.getParameter("txtIdnovo"));
-			ArrayList<EntidadeDominio> suplementos = (ArrayList<EntidadeDominio>) sessao
-					.getAttribute("listaSuplementos");
+			ArrayList<EntidadeDominio> suplementos = (ArrayList<EntidadeDominio>) sessao.getAttribute("listaSuplementos");
+			
 			for (EntidadeDominio s : suplementos) {
 				if (s.getId() == id) {
 					sup = (Suplementos) s;
@@ -149,7 +149,7 @@ public class ProdutoViewHelper implements IViewHelper {
 		}
 		else if((resultado.getMsg() == null && operacao.equals("CONSULTARHOME"))) {
 			sessao.setAttribute("listaSuplementos", resultado.getEntidades());
-			d = request.getRequestDispatcher("index.jsp");
+			d = request.getRequestDispatcher("Home.jsp");
 		}
 
 		if ( resultado.getMsg() == null && operacao.equals("ALTERARSUP")) {

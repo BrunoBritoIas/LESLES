@@ -14,6 +14,7 @@ import les12015.controle.web.command.impl.AlterarCommand;
 import les12015.controle.web.command.impl.ConsultarCommand;
 import les12015.controle.web.command.impl.SalvarCommand;
 import les12015.controle.web.vh.IViewHelper;
+import les12015.controle.web.vh.impl.CartaoViewHelper;
 import les12015.controle.web.vh.impl.ClienteViewHelper;
 import les12015.controle.web.vh.impl.EnderecoViewHelper;
 import les12015.controle.web.vh.impl.ProdutoViewHelper;
@@ -48,7 +49,9 @@ public class Servlet extends HttpServlet {
     	commands.put("SALVAREND", new SalvarCommand());
     	commands.put("CONSULTAREND", new ConsultarCommand());
     	commands.put("DELEND", new AlterarCommand());
-    	
+    	commands.put("SAVECARD", new SalvarCommand());
+    	commands.put("CONSULTACARD", new ConsultarCommand());
+    	commands.put("CARDEL", new AlterarCommand());
     	//PRODUTO
     	commands.put("SALVARSUP", new SalvarCommand());
     	commands.put("CONSULTARSUP", new ConsultarCommand());
@@ -71,7 +74,8 @@ public class Servlet extends HttpServlet {
     	vhs.put("/les12015-web/AlterarCliente", new ClienteViewHelper());
     	vhs.put("/les12015-web/SalvarProduto", new ProdutoViewHelper());
     	vhs.put("/les12015-web/ConsultarProduto", new ProdutoViewHelper());
-   	
+    	vhs.put("/les12015-web/SaveCards", new CartaoViewHelper());
+       	
     }
     
     

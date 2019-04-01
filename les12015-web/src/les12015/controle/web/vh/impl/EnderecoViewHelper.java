@@ -1,6 +1,7 @@
 package les12015.controle.web.vh.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import les12015.core.aplicacao.Resultado;
 import les12015.dominio.Cliente;
 import les12015.dominio.Endereco;
 import les12015.dominio.EntidadeDominio;
+import les12015.dominio.Suplementos;
 
 public class EnderecoViewHelper implements IViewHelper {
 
@@ -57,14 +59,47 @@ public class EnderecoViewHelper implements IViewHelper {
 			int id = cu.getIdCliente();
 			endereco.setCli_id(id);
 			endereco.setId(id);
-			;
 
 		}
 
 		if (operacao.equals("DELEND")) {
-			int EndId =  Integer.parseInt(request.getParameter("txtIdnovo"));
+			HttpSession sessao = request.getSession();
+
+			int EndId = Integer.parseInt(request.getParameter("txtIdnovo"));
+			ArrayList<EntidadeDominio> enderecos = (ArrayList<EntidadeDominio>) sessao.getAttribute("listaEnderecos");
+			for (EntidadeDominio e : enderecos) {
+				if (e.getId() == EndId) {
+					endereco = (Endereco) e;
+				}
+			}
+
+			String cep = request.getParameter("txtCep").equals("") ? endereco.getCep() : request.getParameter("txtCep");
+			String estado = request.getParameter("txtEstado").equals("") ? endereco.getEstado()
+					: request.getParameter("txtEstado");
+			String cidade = request.getParameter("txtCidade").equals("") ? endereco.getCidade()
+					: request.getParameter("txtCidade");
+			String obs = request.getParameter("txtObservacao").equals("") ? endereco.getObs()
+					: request.getParameter("txtObservacao");			
+			String tipo_log = request.getParameter("txtLogradouro").equals("") ? endereco.getTipo_log()
+					: request.getParameter("txtLogradouro");
+			String logradouro = request.getParameter("txtLogradouro").equals("") ? endereco.getLogradouro()
+					: request.getParameter("txtLogradouro");
+			String numero = request.getParameter("txtNumero").equals("") ? endereco.getNumero()
+					: request.getParameter("txtNumero");
+			String bairro = request.getParameter("txtBairro").equals("") ? endereco.getBairro()
+					: request.getParameter("txtBairro");
+
 			endereco.setId(EndId);
-			endereco.setStatus("I");
+			endereco.setStatus("A");
+			endereco.setTipo_log(tipo_log);
+			endereco.setLogradouro(logradouro);
+			endereco.setNumero(numero);
+			endereco.setBairro(bairro);
+			endereco.setCep(cep);
+			endereco.setEstado(estado);
+			endereco.setCidade(cidade);
+			endereco.setObs(obs);
+
 		}
 		return endereco;
 	}
@@ -76,14 +111,10 @@ public class EnderecoViewHelper implements IViewHelper {
 
 		String operacao = request.getParameter("operacao");
 
-		if (resultado.getMsg() == null) {
-			if (operacao.equals("SALVAREND")) {
-				resultado.setMsg("Endereço cadastrado com sucesso!");
-				request.getSession().setAttribute("resultado", resultado);
+		if (operacao.equals("SALVAREND")) {
+			request.getSession().setAttribute("cadastroEnd", resultado);
 
-				d = request.getRequestDispatcher("CliAdmin.jsp");
-			}
-
+			d = request.getRequestDispatcher("CliAdmin.jsp");
 		}
 
 		if (resultado.getMsg() == null && operacao.equals("ALTERAR")) {
@@ -96,12 +127,10 @@ public class EnderecoViewHelper implements IViewHelper {
 			d = request.getRequestDispatcher("CliAdmin.jsp");
 		}
 
-		if (resultado.getMsg() == null && operacao.equals("DELEND")) {
-			HttpSession lol = request.getSession();
-			lol.setAttribute("uiui", "oi");
+		if (operacao.equals("DELEND")) {
 
 			d = request.getRequestDispatcher("CliAdmin.jsp");
-			response.setHeader("Refresh", "0; URL=" +request.getContextPath() +"/ConsultarEndereco?operacao=CONSULTAREND");
+
 		}
 
 		if (resultado.getMsg() != null) {

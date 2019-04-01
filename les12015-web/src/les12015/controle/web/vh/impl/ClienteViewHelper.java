@@ -117,52 +117,55 @@ public class ClienteViewHelper implements IViewHelper {
 		String operacao = request.getParameter("operacao");
 		HttpSession sessao = request.getSession();
 		HttpSession sess = request.getSession();
-		if (resultado.getMsg() == null) {
-			if (operacao.equals("SALVAR")) {
-				d = request.getRequestDispatcher("CadastroCliente.jsp");
-				resultado.setMsg("Você foi cadastrado com sucesso!");
-			}
-			if (operacao.equals("LOGAR")) {
-				List<EntidadeDominio> entidades = resultado.getEntidades();
-				for (int i = 0; i < entidades.size(); i++) {
-					Cliente cli = (Cliente) entidades.get(i);
-					if (request.getParameter("txtEmail").trim().equals(cli.getEmail())
-							&& (request.getParameter("txtSenha").trim().equals(cli.getSenha())))
 
-					{
-
-	
-						sess.setAttribute("usuario", cli);
-						d = request.getRequestDispatcher("CliAdmin.jsp");
-						break;
-
-					} else {
-						request.getSession().setAttribute("resultadoLogin", resultado);
-						resultado.setMsg("Email ou senha Incorretos");
-						d = request.getRequestDispatcher("Login.jsp");
-						resultado.equals(null);
-					}
-
-				}
-			}
-
-			if (operacao.equals("CONSULTAR")) {
-				sessao.setAttribute("listaCliente", resultado.getEntidades());
-				d = request.getRequestDispatcher("CliAdmin.jsp");
-			}
-			
-			if ( resultado.getMsg() == null && operacao.equals("ALTERAR")) {
-				resultado.setMsg("Produto Alterado com sucesso!");
-				Cliente clie = (Cliente) request.getSession().getAttribute("user");
-				sess.setAttribute("usuario", clie);
-				d = request.getRequestDispatcher("CliAdmin.jsp");
-				resultado.equals(null);
-				
-			}
+		if (operacao.equals("SALVAR") && resultado.getMsg() != null) {
 			sessao.setAttribute("resultado", resultado);
-
+			d = request.getRequestDispatcher("CadastroCliente.jsp");
+		} 
+		
+		else if (operacao.equals("SALVAR") && resultado.getMsg() == null) {
+			sessao.setAttribute("resultado", resultado);
+			d = request.getRequestDispatcher("CadastroCliente.jsp");
 
 		}
+
+		if (operacao.equals("LOGAR")) {
+			List<EntidadeDominio> entidades = resultado.getEntidades();
+			for (int i = 0; i < entidades.size(); i++) {
+				Cliente cli = (Cliente) entidades.get(i);
+				if (request.getParameter("txtEmail").trim().equals(cli.getEmail())
+						&& (request.getParameter("txtSenha").trim().equals(cli.getSenha())))
+
+				{
+
+					sess.setAttribute("usuario", cli);
+					d = request.getRequestDispatcher("Home.jsp");
+					break;
+
+				} else {
+					request.getSession().setAttribute("resultadoLogin", resultado);
+					resultado.setMsg("Email ou senha Incorretos");
+					d = request.getRequestDispatcher("Login.jsp");
+					resultado.equals(null);
+				}
+
+			}
+		}
+
+		if (operacao.equals("CONSULTAR")) {
+			sessao.setAttribute("listaCliente", resultado.getEntidades());
+			d = request.getRequestDispatcher("CliAdmin.jsp");
+		}
+
+		if (resultado.getMsg() == null && operacao.equals("ALTERAR")) {
+			resultado.setMsg("Produto Alterado com sucesso!");
+			Cliente clie = (Cliente) request.getSession().getAttribute("user");
+			sess.setAttribute("usuario", clie);
+			d = request.getRequestDispatcher("CliAdmin.jsp");
+			resultado.equals(null);
+
+		}
+
 		d.forward(request, response);
 	}
 
