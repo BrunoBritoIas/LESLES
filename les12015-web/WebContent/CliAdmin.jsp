@@ -453,10 +453,10 @@ textarea {
 					</div>
 					
 					<c:choose>
-						<c:when test="${cadastroEnd == null}">
+						<c:when test="${resultadoAlterar == null}">
 							<div></div>
 						</c:when>
-						<c:when test="${ cadastroEnd.msg == null}">
+						<c:when test="${ resultadoAlterar.msg == null}">
 							<div class="alert alert-success"
 								style="class: center; text-align: center; width: 97%;"
 								role='alert'>
@@ -464,10 +464,10 @@ textarea {
 							</div>
 						</c:when>
 
-						<c:when test="${cadastroEnd.msg != null}">
+						<c:when test="${resultadoAlterar.msg != null}">
 							<div class="alert alert-danger"
 								style="class: center; text-align: center; width: 97%;"
-								role="alert">${cadastroEnd.msg}</div>
+								role="alert">${resultadoAlterar.msg}</div>
 						</c:when>
 
 					</c:choose>

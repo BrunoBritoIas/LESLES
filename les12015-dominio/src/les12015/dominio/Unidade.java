@@ -13,11 +13,11 @@ public class Unidade extends EntidadeDominio {
 		this.quantidade = quantidade;
 	}
 
-	public Suplementos getLivro() {
+	public Suplementos getSup() {
 		return sup;
 	}
 
-	public void setLivro(Suplementos sup) {
+	public void setSup(Suplementos sup) {
 		this.sup = sup;
 	}
 

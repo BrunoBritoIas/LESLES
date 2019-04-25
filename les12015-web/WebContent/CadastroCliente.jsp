@@ -174,11 +174,11 @@
 					</div>
 
 					<c:choose>
-						<c:when test="${resultado == null}">
+						<c:when test="${resultadoSalvar == null}">
 							<div></div>
 						</c:when>
 						<c:when
-							test="${ resultado != null && resultado.msg == null}">
+							test="${ resultadoSalvar != null && resultado.msg == null}">
 							<div class="alert alert-success"
 								style="margin-left: 294px; class: center; text-align: center; width: 74%;"
 								role='alert'>
@@ -187,10 +187,10 @@
 						</c:when>
 
 						<c:when
-							test="${resultado.msg !=null}">
+							test="${resultadoSalvar.msg !=null}">
 							<div class="alert alert-danger"
 								style="margin-left: 294px; class: center; text-align: center; width: 74%;"
-								role="alert">${resultado.msg}</div>
+								role="alert">${resultadoSalvar.msg}</div>
 						</c:when>
 
 					</c:choose>

@@ -119,12 +119,12 @@ public class ClienteViewHelper implements IViewHelper {
 		HttpSession sess = request.getSession();
 
 		if (operacao.equals("SALVAR") && resultado.getMsg() != null) {
-			sessao.setAttribute("resultado", resultado);
+			sessao.setAttribute("resultadoSalvar", resultado);
 			d = request.getRequestDispatcher("CadastroCliente.jsp");
-		} 
-		
+		}
+
 		else if (operacao.equals("SALVAR") && resultado.getMsg() == null) {
-			sessao.setAttribute("resultado", resultado);
+			sessao.setAttribute("resultadoSalvar", resultado);
 			d = request.getRequestDispatcher("CadastroCliente.jsp");
 
 		}
@@ -159,13 +159,12 @@ public class ClienteViewHelper implements IViewHelper {
 
 		if (resultado.getMsg() == null && operacao.equals("ALTERAR")) {
 			resultado.setMsg("Produto Alterado com sucesso!");
+			sessao.setAttribute("resultadoAlterar", resultado);
 			Cliente clie = (Cliente) request.getSession().getAttribute("user");
 			sess.setAttribute("usuario", clie);
 			d = request.getRequestDispatcher("CliAdmin.jsp");
-			resultado.equals(null);
 
 		}
-
 		d.forward(request, response);
 	}
 

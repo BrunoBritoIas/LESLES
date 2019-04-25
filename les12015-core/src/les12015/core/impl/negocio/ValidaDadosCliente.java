@@ -29,10 +29,10 @@ public class ValidaDadosCliente implements IStrategy {
 
 			}
 			
-			if( nome.trim().length()>255 ) {
+			if( nome.trim().length()>100 ) {
 				return "Nome com numeros de caracteres maior que o permitido";
 			}
-			if( email.trim().length()>255 ) {
+			if( email.trim().length()>100 ) {
 				return "Email com numeros de caracteres maior que o permitido";
 			}
 			if( senha.trim().length()>30 ) {
@@ -41,8 +41,8 @@ public class ValidaDadosCliente implements IStrategy {
 			if( senha.trim().length()<6 ) {
 				return "Senha Fraca";
 			}
-			if( telefone.trim().length()>255 ) {
-				return "Telefone com numeros de caracteres maior que o permitido";
+			if( telefone.trim().length()>11 ) {
+				return "Telefone Invalido";
 			}
 			if( telefone.trim().length() < 10 ) {
 				return "Número de telefone invalido";

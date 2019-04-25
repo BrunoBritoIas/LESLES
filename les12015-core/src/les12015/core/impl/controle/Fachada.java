@@ -25,6 +25,7 @@ import les12015.dominio.Cliente;
 import les12015.dominio.Endereco;
 import les12015.dominio.EntidadeDominio;
 import les12015.dominio.Suplementos;
+import les12015.dominio.Unidade;
 
 public class Fachada implements IFachada {
 
@@ -59,7 +60,7 @@ public class Fachada implements IFachada {
 		daos.put(Suplementos.class.getName(), supDao);
 		daos.put(Endereco.class.getName(), endDAO);
 		daos.put(Cartao.class.getName(), carDao);
-
+		daos.put(Unidade.class.getName(), supDao);
 		/* Criando instâncias de regras de negócio a serem utilizados */
 
 		ValidadorCpf vCpf = new ValidadorCpf();
@@ -187,6 +188,37 @@ public class Fachada implements IFachada {
 
 		return resultado;
 
+	}
+
+	public Resultado comprar(EntidadeDominio entidade) {
+
+		Resultado resultado = new Resultado();
+		Unidade itemCarrinho = (Unidade) entidade;
+		Suplementos sup = itemCarrinho.getSup();
+
+		if (sup != null) {
+			
+
+			SuplementoDAO dao = new SuplementoDAO();
+			List<EntidadeDominio> entidadeSuplemento = dao.consultar(sup);
+
+			Suplementos s = (Suplementos) entidadeSuplemento.get(0);
+
+			itemCarrinho.setSup(s);
+
+			List<EntidadeDominio> itens = new ArrayList<EntidadeDominio>();
+			itens.add(itemCarrinho);
+
+			resultado.setEntidades(itens);
+
+			String msg = executarRegras(itemCarrinho, "COMPRAR");
+
+			resultado.setMsg(msg);
+			if (resultado.getMsg() != null) {
+				//itemCarrinho.setQuantidade(s.get);
+			}
+		}
+		return resultado;
 	}
 
 	private String executarRegras(EntidadeDominio entidade, String operacao) {

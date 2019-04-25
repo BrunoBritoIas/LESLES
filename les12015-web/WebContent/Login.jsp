@@ -103,9 +103,9 @@
 										style="margin-right: 600px; margin-top: -56px; margin-right: 430px"
 										href="CadastroCliente.jsp" role="button">Cadastrar</a>
 								</div>
-								<c:if test="${resultado.getMsg() != null}">
+								<c:if test="${resultadoLogin.getMsg() != null}">
 
-									<div class='alert alert-danger' role='alert'>${resultado.getMsg()}</div>
+									<div class='alert alert-danger' role='alert'>${resultadoLogin.getMsg()}</div>
 								</c:if>
 							</div>
 						</form>

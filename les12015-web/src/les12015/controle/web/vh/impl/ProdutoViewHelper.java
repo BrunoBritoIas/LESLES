@@ -119,6 +119,11 @@ public class ProdutoViewHelper implements IViewHelper {
 			sup.setId(id);
 
 		}
+		
+		if(operacao.equals("VERPRODUTO")) {
+			Integer ProdID = Integer.parseInt( request.getParameter("id"));
+			sup.setId(ProdID);
+		}
 
 		return sup;
 
@@ -154,6 +159,12 @@ public class ProdutoViewHelper implements IViewHelper {
 
 		if ( resultado.getMsg() == null && operacao.equals("ALTERARSUP")) {
 			d = request.getRequestDispatcher("Admin.jsp");
+		}
+
+		if(operacao.equals("VERPRODUTO")) {
+			sessao.setAttribute("supDetail", resultado.getEntidades());
+			sessao.setAttribute("suplemento", resultado.getEntidades().get(0));
+			d = request.getRequestDispatcher("DetalheProduto.jsp");
 		}
 
 		d.forward(request, response);

@@ -12,6 +12,7 @@ import java.util.List;
 import les12015.dominio.Cliente;
 import les12015.dominio.EntidadeDominio;
 import les12015.dominio.Suplementos;
+import les12015.dominio.Unidade;
 
 public class SuplementoDAO extends AbstractJdbcDAO {
 	public SuplementoDAO() {
@@ -111,8 +112,13 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 	@Override
 	public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
 		PreparedStatement pst = null;
-		
-		Suplementos sup = (Suplementos)entidade;
+		Suplementos sup;
+		if(Unidade.class.getName().equals(entidade.getClass().getName())) {
+			sup = ((Unidade)entidade).getSup();
+		}
+		else {
+			sup = (Suplementos)entidade;
+		}
 		String sql=null;
 		
 		sql = "SELECT * FROM Suplemento WHERE 1=1";
@@ -158,6 +164,7 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 			s.setNome(rs.getString("nome"));
 			s.setMarca(rs.getString("marca"));
 			s.setCategoria(rs.getString("categoria"));
+			s.setDescricao(rs.getString("descricao"));
 			s.setRating(rs.getDouble("rating"));
 			s.setPeso(rs.getDouble("peso"));
 			s.setGordura(rs.getDouble("gordura"));

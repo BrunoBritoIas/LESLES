@@ -32,6 +32,7 @@
 		<url-pattern>/SalvarProduto</url-pattern>
 		<url-pattern>/ConsultarProduto</url-pattern>
 		<url-pattern>/SaveCards</url-pattern>
+		<url-pattern>/adicionarCarrinho</url-pattern>
 	</servlet-mapping>
 
 </web-app>

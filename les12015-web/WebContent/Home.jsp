@@ -39,8 +39,8 @@
 </head>
 <script>
 function Redirecionar(id) {
-	var idd = id
-	window.location.href = "SalvarProduto?operacao=VERPRODUTO&id=" + idd;
+	
+	window.location.href = "SalvarProduto?operacao=VERPRODUTO&id=" + id;
 }
 </script>
 <style>
@@ -104,7 +104,7 @@ function Redirecionar(id) {
 				<div class="row">
 					<c:forEach items="${listaSuplementos}" var="suplemento">
 						<div class="col-sm-6 col-xs-12">
-							<a href="" onclick="Redirecionar(${suplemento.id})">
+							<div onclick="Redirecionar(${suplemento.id})">
 								<div class="place-info-box">
 									<span class="place-info-box-icon"><img
 										src="assets/img/restaurants/bcaa.png" class="arruma-img" /></span>
@@ -119,7 +119,7 @@ function Redirecionar(id) {
 									</div>
 									<!-- /.info-box-content -->
 								</div>
-							</a>
+							</div>
 							<!-- /.info-box -->
 						</div>
 					</c:forEach>
