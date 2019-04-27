@@ -4,6 +4,7 @@ package les12015.controle.web.vh.impl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import les12015.controle.web.vh.IViewHelper;
 import les12015.core.aplicacao.Resultado;
 import les12015.dominio.Cliente;
 import les12015.dominio.EntidadeDominio;
+import les12015.dominio.Pedido;
 import les12015.dominio.Suplementos;
 
 public class ClienteViewHelper implements IViewHelper {
@@ -137,7 +139,8 @@ public class ClienteViewHelper implements IViewHelper {
 						&& (request.getParameter("txtSenha").trim().equals(cli.getSenha())))
 
 				{
-
+					request.getSession().setAttribute("carrinho", null);
+					request.getSession().setAttribute("itens", null);
 					sess.setAttribute("usuario", cli);
 					d = request.getRequestDispatcher("Home.jsp");
 					break;

@@ -108,22 +108,27 @@
 											<th class="text-right"></th>
 										</tr>
 									</thead>
-									<tbody>
-										<c:forEach items="${itenscarrinho}" var="car">
-											<tr>
-												<td class="text-center"><a class="btn btn-sm"><i
-														class="fa fa-minus"></i></a> 1 <a class="btn btn-sm"><i
-														class="fa fa-plus"></i></a></td>
-												<td>${car.sup.nome}</td>
+									<c:if test="${carrinho !=null }">
+									
+										<tbody>
+											<c:forEach items="${itens}" var="car">
+												<tr>
+													<td class="text-center"><a class="btn btn-sm">
+													<a href="adicionarCarrinho?operacao=QUANTIDADE&txtqtd=${car.getQuantidade() -1 }&id=${car.getSup().getId()}"><button type="button" class="fa fa-minus"></button></a>
+													
+													</a> ${car.getQuantidade()} <a href="adicionarCarrinho?operacao=QUANTIDADE&txtqtd=${car.getQuantidade() + 1}&id=${car.getSup().getId()}"><button type="button" class="fa fa-plus"></button></a></td>
+													<td>${car.getSup().getNome()}</td>
 
-												<td>${car.sup.marca}</td>
-												<td class="text-right">R$ 25,00</td>
-												<td class="text-right"><a class="btn btn-sm danger"><i
-														class="fa fa-remove"></i></a></td>
-											</tr>
-										</c:forEach>
-									</tbody>
+													<td>${car.getSup().getMarca()}</td>
+													<td class="text-right">${car.getSup().getPreco().toString()}</td>
+													<td class="text-right"><a  href="adicionarCarrinho?operacao=REMOVER&id=${car.getSup().getId()}" class="btn btn-sm danger"><i
+															class="fa fa-remove"></i></a></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</c:if>
 								</table>
+
 							</div>
 							<!-- /.col -->
 						</div>

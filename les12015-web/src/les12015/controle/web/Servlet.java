@@ -61,6 +61,8 @@ public class Servlet extends HttpServlet {
 		commands.put("ALTERARSUP", new AlterarCommand());
 		//CARRINHO
 		commands.put("addCarrinho", new ConsultarCommand());
+		commands.put("REMOVER", new ConsultarCommand());
+		commands.put("QUANTIDADE", new ConsultarCommand());
 
 		/*
 		 * Utilizando o ViewHelper para tratar especificações de qualquer tela e
@@ -136,7 +138,7 @@ public class Servlet extends HttpServlet {
 		 * Executa o command que chamará a fachada para executar a operação requisitada
 		 * o retorno é uma instância da classe resultado que pode conter mensagens derro
 		 * ou entidades de retorno
-		 */
+		 */ 
 		Resultado resultado = command.execute(entidade);
 
 		/*
