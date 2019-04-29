@@ -1,18 +1,20 @@
 package les12015.dominio;
 
-import java.util.Date;
+
 
 public class Cupom extends EntidadeDominio {
 	private String serial;
-	private Date dtVal;
+	private String dtVal;
 	private double desconto;
-	private boolean tpCupom;
+	private String tpCupom;
 
-	public boolean getTpCupom() {
+	
+
+	public String getTpCupom() {
 		return tpCupom;
 	}
 
-	public void setTpCupom(boolean tpCupom) {
+	public void setTpCupom(String tpCupom) {
 		this.tpCupom = tpCupom;
 	}
 
@@ -20,11 +22,11 @@ public class Cupom extends EntidadeDominio {
 		return serial;
 	}
 
-	public Date getDtVal() {
+	public String getDtVal() {
 		return dtVal;
 	}
 
-	public void setDtVal(Date dtVal) {
+	public void setDtVal(String dtVal) {
 		this.dtVal = dtVal;
 	}
 

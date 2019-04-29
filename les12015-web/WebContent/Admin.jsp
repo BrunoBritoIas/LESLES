@@ -305,7 +305,8 @@ function mandaId(num, numm){
 						</div>
 					</div>
 					<div class="col-md-9 well admin-content" id="charts">
-						Graficos</div>
+						<%@include file="Cupom.jsp"%>
+					</div>
 					<div class="col-md-9 well admin-content" id="table">Table</div>
 					<div class="col-md-9 well admin-content" id="forms">Forms</div>
 					<div class="col-md-9 well admin-content" id="calender">

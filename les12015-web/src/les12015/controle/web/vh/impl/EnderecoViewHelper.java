@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import les12015.controle.web.vh.IViewHelper;
 import les12015.core.aplicacao.Resultado;
+import les12015.dominio.Cartao;
 import les12015.dominio.Cliente;
 import les12015.dominio.Endereco;
 import les12015.dominio.EntidadeDominio;
@@ -55,7 +56,7 @@ public class EnderecoViewHelper implements IViewHelper {
 			endereco.setTipo_res("bacana");
 		}
 
-		if (operacao.equals("CONSULTAREND")) {
+		if (operacao.equals("CONSULTAREND") || operacao.equals("ENDHOME")) {
 			int id = cu.getIdCliente();
 			endereco.setCli_id(id);
 			endereco.setId(id);
@@ -79,7 +80,7 @@ public class EnderecoViewHelper implements IViewHelper {
 			String cidade = request.getParameter("txtCidade").equals("") ? endereco.getCidade()
 					: request.getParameter("txtCidade");
 			String obs = request.getParameter("txtObservacao").equals("") ? endereco.getObs()
-					: request.getParameter("txtObservacao");			
+					: request.getParameter("txtObservacao");
 			String tipo_log = request.getParameter("txtLogradouro").equals("") ? endereco.getTipo_log()
 					: request.getParameter("txtLogradouro");
 			String logradouro = request.getParameter("txtLogradouro").equals("") ? endereco.getLogradouro()
@@ -108,7 +109,8 @@ public class EnderecoViewHelper implements IViewHelper {
 			throws IOException, ServletException {
 		RequestDispatcher d = null;
 		HttpSession sessao = request.getSession();
-
+		Cliente cu = (Cliente) request.getSession().getAttribute("usuario");
+		Cliente cli = cu;
 		String operacao = request.getParameter("operacao");
 
 		if (operacao.equals("SALVAREND")) {
@@ -125,6 +127,14 @@ public class EnderecoViewHelper implements IViewHelper {
 		if (resultado.getMsg() == null && operacao.equals("CONSULTAREND")) {
 			sessao.setAttribute("listaEnderecos", resultado.getEntidades());
 			d = request.getRequestDispatcher("CliAdmin.jsp");
+		}
+
+		if (resultado.getMsg() == null && operacao.equals("ENDHOME")) {
+			sessao.setAttribute("listaEnderecos", resultado.getEntidades());
+			ArrayList<Endereco> end = (ArrayList<Endereco>) sessao.getAttribute("listaEnderecos");
+			cli.setEndereco(end);
+			request.getSession().setAttribute("usuario", cli);
+			d = request.getRequestDispatcher("Home.jsp");
 		}
 
 		if (operacao.equals("DELEND")) {

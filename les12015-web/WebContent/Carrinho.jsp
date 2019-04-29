@@ -45,6 +45,8 @@
 </head>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 <body class="hold-transition skin-green layout-top-nav">
+
+
 	<%@include file="NavBar.jsp"%>
 	<div class="content-wrapper">
 		<div class="container">
@@ -55,146 +57,191 @@
 			<section class="content">
 				<section class="invoice">
 
-					<form>
-						<div class="row">
-							<div class="col-xs-12">
-								<h2 class="page-header">
-									<i class="fa fa-shopping-cart"></i> Finalize o seu pedido
-								</h2>
-							</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<h2 class="page-header">
+								<i class="fa fa-shopping-cart"></i> Finalize o seu pedido
+							</h2>
 						</div>
+					</div>
 
-						<div class="row invoice-info">
-							<div class="col-xs-12">
-								<p class="lead">Endereço de Entrega:</p>
-							</div>
-							<div style="padding-left: 540px">Cupom de desconto:</div>
-							<div class="col-sm-6 col-xs-12">
-								<div>
-									<select class="form-control" id="exampleFormControlSelect1">
-										<option>Rua Bacana que legal mano</option>
-										<option>Av. melancia loca</option>
-										<option>Rua Maneirinha</option>
-									</select>
+					<div class="row invoice-info">
+						<div class="col-xs-12">
+							<p class="lead">Endereço de Entrega:</p>
+						</div>
+						<div style="padding-left: 540px">Cupom de desconto:</div>
+						<form method="post" action="SalvarCupom">
+							<input type="submit" id="operacao" name="operacao" value="CUPOM"
+								class="btn btn-success" />
+
+
+							<c:if test="${usuario.getEndereco().size()> 0}">
+
+								<div class="col-sm-6 col-xs-12">
+									<div>
+										<select class="form-control" id="exampleFormControlSelect1">
+											<c:forEach var="endereco" items="${usuario.endereco}">
+												<option>${endereco.cidade},${endereco.logradouro},
+													N.${endereco.numero}</option>
+											</c:forEach>
+										</select>
+									</div>
 								</div>
-							</div>
+
+
+
+							</c:if>
 							<div class="col-sm-2 col-xs-6">
 								<div class="form-group">
 									<label class="control-label sr-only" for="inputSuccess"><i
 										class="fa fa-check"></i> Número</label> <input type="text"
-										class="form-control" placeholder=" EX. Arnold10">
-									<!-- <input type="text" class="form-control" id="inputSuccess" placeholder="Número"> -->
-									<!-- <span class="help-block"><i class="fa fa-check"></i> Ok</span> -->
+										id="txtCupom" name="txtCupom" class="form-control"
+										placeholder=" EX. Arnold10">
+
 								</div>
 							</div>
-						</div>
-						<!-- /.row -->
+						</form>
+					</div>
 
-						<!-- Table row -->
-						<div class="row">
-							<div class="col-xs-12">
-								<p class="lead">Itens do Pedido:</p>
+
+					<!-- Table row -->
+					<div class="row">
+						<div class="col-xs-12">
+							<p class="lead">Itens do Pedido:</p>
+						</div>
+
+						<div class="col-xs-12 table-responsive">
+
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th class="text-center">Quantidade</th>
+										<th>Item</th>
+										<th>Marca</th>
+										<th class="text-right">Subtotal</th>
+										<th class="text-right"></th>
+									</tr>
+								</thead>
+								<c:if test="${carrinho !=null }">
+
+									<tbody>
+										<c:forEach items="${itens}" var="car">
+											<tr>
+												<td class="text-center"><a class="btn btn-sm"> <a
+														href="adicionarCarrinho?operacao=QUANTIDADE&txtqtd=${car.getQuantidade() -1 }&id=${car.getSup().getId()}"><button
+																type="button" class="fa fa-minus"></button></a>
+
+												</a> ${car.getQuantidade()} <a
+													href="adicionarCarrinho?operacao=QUANTIDADE&txtqtd=${car.getQuantidade() + 1}&id=${car.getSup().getId()}"><button
+															type="button" class="fa fa-plus"></button></a></td>
+												<td>${car.getSup().getNome()}</td>
+
+												<td>${car.getSup().getMarca()}</td>
+												<td class="text-right">${car.getSup().getPreco().toString() * car.getQuantidade() }</td>
+												<td class="text-right"><a
+													href="adicionarCarrinho?operacao=REMOVER&id=${car.getSup().getId()}"
+													class="btn btn-sm danger"><i class="fa fa-remove"></i></a></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</c:if>
+							</table>
+
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+
+					<div class="row">
+						<!-- accepted payments column -->
+						<div class="col-sm-6 col-xs-12">
+							<p class="lead">
+								<b>Cartões de Credito:</b>
+							</p>
+
+							<div class="form-group">
+								<div></div>
+								<div>
+									<label>
+										<div>
+											<c:if test="${usuario.getCartao().size()> 0}">
+												<select class="form-control" id="exampleFormControlSelect1">
+													<c:forEach var="cartao" items="${usuario.cartao}">
+														<option>${cartao.bandeira},${cartao.numero}</option>
+													</c:forEach>
+												</select>
+											</c:if>
+											<c:if test="${usuario.getCartao().size() <= 0}">
+
+												<h5>
+													Você ainda cadatrou seu cartão, clique <a
+														href="CliAdmin.jsp">AQUI</a> para cadastrar
+												</h5>
+
+											</c:if>
+										</div>
+									</label>
+								</div>
+
 							</div>
 
-							<div class="col-xs-12 table-responsive">
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-6 col-xs-12">
+							<p class="lead">Frete e Total:</p>
 
-								<table class="table table-striped">
-									<thead>
+							<div class="table-responsive">
+
+								<table class="table">
+									<tbody>
 										<tr>
-											<th class="text-center">Quantidade</th>
-											<th>Item</th>
-											<th>Marca</th>
-											<th class="text-right">Subtotal</th>
-											<th class="text-right"></th>
+											<th style="width: 50%">Itens:</th>
+											<td class="text-right"><c:out
+													value=" R$ ${pedido.precoTotal}" /></td>
 										</tr>
-									</thead>
-									<c:if test="${carrinho !=null }">
-									
-										<tbody>
-											<c:forEach items="${itens}" var="car">
-												<tr>
-													<td class="text-center"><a class="btn btn-sm">
-													<a href="adicionarCarrinho?operacao=QUANTIDADE&txtqtd=${car.getQuantidade() -1 }&id=${car.getSup().getId()}"><button type="button" class="fa fa-minus"></button></a>
-													
-													</a> ${car.getQuantidade()} <a href="adicionarCarrinho?operacao=QUANTIDADE&txtqtd=${car.getQuantidade() + 1}&id=${car.getSup().getId()}"><button type="button" class="fa fa-plus"></button></a></td>
-													<td>${car.getSup().getNome()}</td>
-
-													<td>${car.getSup().getMarca()}</td>
-													<td class="text-right">${car.getSup().getPreco().toString()}</td>
-													<td class="text-right"><a  href="adicionarCarrinho?operacao=REMOVER&id=${car.getSup().getId()}" class="btn btn-sm danger"><i
-															class="fa fa-remove"></i></a></td>
-												</tr>
-											</c:forEach>
-										</tbody>
-									</c:if>
+										<tr>
+											<th>Frete:</th>
+											<td class="text-right">R$ ${pedido.precoFrete}</td>
+										</tr>
+										<tr>
+											<th>Descontos:</th>
+											<c:if test="${cupom !=null}">
+												<td class="text-right">R$ -${cupom.desconto}</td>
+											</c:if>
+											<c:if test="${cupom ==null}">
+												<td class="text-right">R$ 0.0</td>
+											</c:if>
+										</tr>
+										<tr>
+											<th>Total:</th>
+											<c:if test="${cupom !=null}">
+												<td class="text-right">R$ ${pedido.precoTotal + pedido.precoFrete - cupom.desconto}</td>
+											</c:if>
+											<c:if test="${cupom ==null}">
+												<td class="text-right">R$ ${pedido.precoTotal + pedido.precoFrete}</td>
+											</c:if>
+										</tr>
+									</tbody>
 								</table>
 
 							</div>
-							<!-- /.col -->
 						</div>
-						<!-- /.row -->
+						<!-- /.col -->
+					</div>
 
-						<div class="row">
-							<!-- accepted payments column -->
-							<div class="col-sm-6 col-xs-12">
-								<p class="lead">
-									<b>Cartões de Credito:</b>
-								</p>
 
-								<div class="form-group">
-									<div></div>
-									<div>
-										<label>
-											<div>
-												<select class="form-control" id="exampleFormControlSelect1">
-													<option>Master Card</option>
-													<option>Visa</option>
-													<option>BitchCoin</option>
-												</select>
-											</div>
-										</label>
-									</div>
-
-								</div>
-
-							</div>
-							<!-- /.col -->
-							<div class="col-sm-6 col-xs-12">
-								<p class="lead">Frete e Total:</p>
-
-								<div class="table-responsive">
-									<table class="table">
-										<tbody>
-											<tr>
-												<th style="width: 50%">Itens:</th>
-												<td class="text-right">R$ 55,00</td>
-											</tr>
-											<tr>
-												<th>Frete:</th>
-												<td class="text-right">R$ 8,00</td>
-											</tr>
-											<tr>
-												<th>Descontos:</th>
-												<td class="text-right">R$ -14,00</td>
-											</tr>
-											<tr>
-												<th>Total:</th>
-												<td class="text-right">R$ 49,00</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<!-- /.col -->
-						</div>
-
-					</form>
 
 					<div class="row">
 						<div class="col-xs-12">
-							<a href="order-summary.html" class="btn btn-success pull-right"><i
-								class="fa fa-credit-card"></i> Concluir Pedido </a>
+							<form method="post" action="finalizaCompra">
+								<button type="submit" name="operacao" value="FINALIZAR"
+									class="btn btn-success pull-right">
+									<i class="fa fa-credit-card"></i> Concluir Pedido
+								</button>
+							</form>
 						</div>
+
+
 					</div>
 
 				</section>

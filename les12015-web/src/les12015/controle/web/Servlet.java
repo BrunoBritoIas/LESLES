@@ -17,7 +17,9 @@ import les12015.controle.web.vh.IViewHelper;
 import les12015.controle.web.vh.impl.CarrinhoViewHelper;
 import les12015.controle.web.vh.impl.CartaoViewHelper;
 import les12015.controle.web.vh.impl.ClienteViewHelper;
+import les12015.controle.web.vh.impl.CupomViewHelper;
 import les12015.controle.web.vh.impl.EnderecoViewHelper;
+import les12015.controle.web.vh.impl.PedidoViewHelper;
 import les12015.controle.web.vh.impl.ProdutoViewHelper;
 import les12015.core.aplicacao.Resultado;
 import les12015.dominio.EntidadeDominio;
@@ -63,7 +65,15 @@ public class Servlet extends HttpServlet {
 		commands.put("addCarrinho", new ConsultarCommand());
 		commands.put("REMOVER", new ConsultarCommand());
 		commands.put("QUANTIDADE", new ConsultarCommand());
-
+		commands.put("ENDHOME", new ConsultarCommand());
+		commands.put("CARDHOME", new ConsultarCommand());
+		
+		//CUPOM
+		commands.put("SAVECUPOM", new SalvarCommand());
+		commands.put("CUPOM", new ConsultarCommand());
+		
+		//PEDIDO
+		commands.put("FINALIZAR", new SalvarCommand());
 		/*
 		 * Utilizando o ViewHelper para tratar especificações de qualquer tela e
 		 * indexando cada viewhelper pela url em que esta servlet é chamada no form
@@ -85,6 +95,8 @@ public class Servlet extends HttpServlet {
 		vhs.put("/les12015-web/ConsultarProduto", new ProdutoViewHelper());
 		vhs.put("/les12015-web/SaveCards", new CartaoViewHelper());
 		vhs.put("/les12015-web/adicionarCarrinho", new CarrinhoViewHelper());
+		vhs.put("/les12015-web/SalvarCupom", new CupomViewHelper());
+		vhs.put("/les12015-web/finalizaCompra", new PedidoViewHelper());
 
 	}
 

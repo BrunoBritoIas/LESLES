@@ -115,7 +115,6 @@ public class ClienteViewHelper implements IViewHelper {
 	public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		RequestDispatcher d = null;
-
 		String operacao = request.getParameter("operacao");
 		HttpSession sessao = request.getSession();
 		HttpSession sess = request.getSession();
@@ -142,6 +141,7 @@ public class ClienteViewHelper implements IViewHelper {
 					request.getSession().setAttribute("carrinho", null);
 					request.getSession().setAttribute("itens", null);
 					sess.setAttribute("usuario", cli);
+					
 					d = request.getRequestDispatcher("Home.jsp");
 					break;
 

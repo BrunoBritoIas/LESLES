@@ -12,7 +12,9 @@ import les12015.core.IStrategy;
 import les12015.core.aplicacao.Resultado;
 import les12015.core.impl.dao.CartaoDao;
 import les12015.core.impl.dao.ClienteDAO;
+import les12015.core.impl.dao.CupomDAO;
 import les12015.core.impl.dao.EnderecoDAO;
+import les12015.core.impl.dao.PedidoDao;
 import les12015.core.impl.dao.SuplementoDAO;
 import les12015.core.impl.negocio.NumCaracterCampos;
 import les12015.core.impl.negocio.ValidaDadosCliente;
@@ -22,8 +24,10 @@ import les12015.core.impl.negocio.ValidaValidade;
 import les12015.core.impl.negocio.ValidadorCpf;
 import les12015.dominio.Cartao;
 import les12015.dominio.Cliente;
+import les12015.dominio.Cupom;
 import les12015.dominio.Endereco;
 import les12015.dominio.EntidadeDominio;
+import les12015.dominio.Pedido;
 import les12015.dominio.Suplementos;
 import les12015.dominio.Unidade;
 
@@ -54,6 +58,8 @@ public class Fachada implements IFachada {
 		SuplementoDAO supDao = new SuplementoDAO();
 		EnderecoDAO endDAO = new EnderecoDAO();
 		CartaoDao carDao = new CartaoDao();
+		CupomDAO cupDao = new CupomDAO();
+		PedidoDao pedDao = new PedidoDao(); 
 
 		/* Adicionando cada dao no MAP indexando pelo nome da classe */
 		daos.put(Cliente.class.getName(), cliDAO);
@@ -61,6 +67,8 @@ public class Fachada implements IFachada {
 		daos.put(Endereco.class.getName(), endDAO);
 		daos.put(Cartao.class.getName(), carDao);
 		daos.put(Unidade.class.getName(), supDao);
+		daos.put(Cupom.class.getName(), cupDao);
+		daos.put(Pedido.class.getName(), pedDao);
 		/* Criando instâncias de regras de negócio a serem utilizados */
 
 		ValidadorCpf vCpf = new ValidadorCpf();

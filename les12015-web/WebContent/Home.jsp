@@ -48,8 +48,10 @@ function Redirecionar(id) {
 	height: 120px;
 	height: 120px;
 }
-.skin-green .wrapper, .skin-green .main-sidebar, .skin-green .left-side {
-    background-color: #00a65a;
+
+.skin-green .wrapper, .skin-green .main-sidebar, .skin-green .left-side
+	{
+	background-color: #00a65a;
 }
 
 .navbar {
@@ -62,7 +64,13 @@ function Redirecionar(id) {
 	<c:if test="${listaSuplementos ==null}">
 		<c:redirect url="SalvarProduto?operacao=CONSULTARHOME" />
 	</c:if>
-
+	<c:if test="${listaEnderecos == null}">
+		<c:redirect url="ConsultarEndereco?operacao=ENDHOME" />
+	</c:if>
+	
+	<c:if test="${listaCartoes == null}">
+		<c:redirect url="SaveCards?operacao=CARDHOME" />
+	</c:if>
 	<%@include file="NavBar.jsp"%>
 
 	<div class="content-wrapper">

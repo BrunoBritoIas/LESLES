@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import les12015.controle.web.vh.IViewHelper;
 import les12015.core.aplicacao.Resultado;
 import les12015.dominio.Cliente;
+import les12015.dominio.Cupom;
 import les12015.dominio.EntidadeDominio;
 import les12015.dominio.Pedido;
 import les12015.dominio.Suplementos;
@@ -47,7 +48,7 @@ public class CarrinhoViewHelper implements IViewHelper {
 			return u;
 		}
 
-		if (carrinho != null) {
+		{
 			Unidade u = new Unidade();
 			u.setQuantidade(1);
 			u.setSup(sup);
@@ -72,8 +73,6 @@ public class CarrinhoViewHelper implements IViewHelper {
 		 * if (carrinho != null) { Unidade u = new Unidade(); u.setQuantidade(1);
 		 * u.setSup(l); return u; }
 		 */
-
-		return new Unidade();
 	}
 
 	public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response)
@@ -135,7 +134,7 @@ public class CarrinhoViewHelper implements IViewHelper {
 					else
 						p.getUnidade().get(indice).setQuantidade(p.getUnidade().get(indice).getQuantidade() + 1);
 
-					carrinho.replace(id, p);				
+					carrinho.replace(id, p);
 				}
 			} // if contains key
 
@@ -143,7 +142,7 @@ public class CarrinhoViewHelper implements IViewHelper {
 				List<EntidadeDominio> e = resultado.getEntidades();
 
 				Unidade unidade = (Unidade) e.get(0);
-				 p = carrinho.get(id);
+				p = carrinho.get(id);
 				if (p == null) {
 					p = new Pedido();
 				}
@@ -155,12 +154,12 @@ public class CarrinhoViewHelper implements IViewHelper {
 					carrinho.put(id, p);
 				} else {
 					carrinho.replace(id, p);
-				}				
+				}
 			} // if !containsKey
 			request.getSession().setAttribute("carrinho", carrinho);
 			request.setAttribute("itens", p.getUnidade());
 			request.getSession().setAttribute("resultadoSuplementos", resultado);
-
+			request.setAttribute("pedido", p);
 			d = request.getRequestDispatcher("Carrinho.jsp");
 		}
 
@@ -186,30 +185,50 @@ public class CarrinhoViewHelper implements IViewHelper {
 			d = request.getRequestDispatcher("Carrinho.jsp");
 
 		}
-		
+
 		if (operacao.equals("QUANTIDADE")) {
 
 			Integer IdCarrinho = Integer.parseInt(request.getParameter("id"));
-			Integer quantidade = Integer.parseInt(request.getParameter("txtqtd"));	
+			Integer quantidade = Integer.parseInt(request.getParameter("txtqtd"));
 			Cliente cliente = (Cliente) request.getSession().getAttribute("usuario");
+			Cupom cupom = (Cupom) request.getSession().getAttribute("cupom");
 			Integer txtId = cliente.getIdCliente();
 			Pedido p = carrinho.get(txtId);
-
+			Double vFinal = 0.0;
+			Double qtdFinal = 0.0;
+			Double pesoFinal = 0.0;
 			for (int i = 0; i < p.getUnidade().size(); i++) {
 				Suplementos s = p.getUnidade().get(i).getSup();
 				if (s.getId() == IdCarrinho) {
 					p.getUnidade().get(i).setQuantidade(quantidade);
-					break;
+
+					p.getUnidade().get(i).setPreco(quantidade * p.getUnidade().get(i).getSup().getPreco());
+
 				}
+				vFinal = p.getUnidade().get(i).getPreco() + vFinal;
+				qtdFinal = p.getUnidade().get(i).getQuantidade() + qtdFinal;
+				pesoFinal = p.getUnidade().get(i).getSup().getPeso() + pesoFinal;
+
 			}
-			request.getSession().setAttribute("carrinho", carrinho);
+			p.setPrecoFrete((pesoFinal + qtdFinal) / 10);
+			p.setPrecoTotal(vFinal);
+			p.setQtdItens(qtdFinal);
+			if(cupom != null) {
+				p.setPrecoFinal(p.getPrecoTotal() + p.getPrecoFrete() - cupom.getDesconto());
+
+			}
+			else {
+				p.setPrecoFinal(p.getPrecoTotal() + p.getPrecoFrete());
+			}
+			
+			
 			request.setAttribute("itens", p.getUnidade());
+			request.getSession().setAttribute("pedido", p);
 			carrinho.replace(txtId, p);
 
 			d = request.getRequestDispatcher("Carrinho.jsp");
 
 		}
-
 
 		d.forward(request, response);
 

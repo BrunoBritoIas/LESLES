@@ -1,6 +1,7 @@
 package les12015.controle.web.vh.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import les12015.dominio.Cartao;
 import les12015.dominio.Cliente;
 import les12015.dominio.Endereco;
 import les12015.dominio.EntidadeDominio;
+import les12015.dominio.Suplementos;
 
 public class CartaoViewHelper implements IViewHelper {
 
@@ -42,7 +44,7 @@ public class CartaoViewHelper implements IViewHelper {
 
 		}
 
-		if (operacao.equals("CONSULTACARD")) {
+		if (operacao.equals("CONSULTACARD")||operacao.equals("CARDHOME")) {
 			int id = cu.getIdCliente();
 			cartao.setId(id);
 
@@ -63,7 +65,8 @@ public class CartaoViewHelper implements IViewHelper {
 		RequestDispatcher d = null;
 		HttpSession sessao = request.getSession();
 		String operacao = request.getParameter("operacao");
-
+		Cliente cu = (Cliente) request.getSession().getAttribute("usuario");
+		Cliente cli = cu;
 		if (resultado.getMsg() == null) {
 			if (operacao.equals("SAVECARD")) {
 				resultado.setMsg("Endereço cadastrado com sucesso!");
@@ -83,10 +86,16 @@ public class CartaoViewHelper implements IViewHelper {
 			sessao.setAttribute("listaCartoes", resultado.getEntidades());
 			d = request.getRequestDispatcher("CliAdmin.jsp");
 		}
+		if (resultado.getMsg() == null && operacao.equals("CARDHOME")) {
+			sessao.setAttribute("listaCartoes", resultado.getEntidades());
+			ArrayList<Cartao> card = (ArrayList<Cartao>) sessao.getAttribute("listaCartoes");
+			cli.setCartao(card);
+			request.getSession().setAttribute("usuario",cli);
+			d = request.getRequestDispatcher("Home.jsp");
+		}
 
 		if (resultado.getMsg() == null && operacao.equals("CARDEL")) {
-			HttpSession lol = request.getSession();
-			lol.setAttribute("uiui", "oi");
+			
 
 			d = request.getRequestDispatcher("CliAdmin.jsp");
 			response.setHeader("Refresh","0; URL=" + request.getContextPath() + "/SaveCards?operacao=CONSULTACARD");
