@@ -34,16 +34,61 @@
 }
 </style>
 
+<script src="plugins/jQuery/jquery-2.2.3.min.js" type="text/javascript"></script>
 
+<script>
+	function clicao() {
+		var InputVal = 0.0;
+		var valor = document.getElementById('idTotal').innerText.replace("R$ ","");
+		var Val = parseFloat(valor);
 
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+		$("input[type='checkbox']:checked").each(
+				function() {
+					if (parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value) < 0 || document.getElementById(this.id.replace('radio', 'valor')).value === "") {
+						document.getElementById(this.id.replace('radio', 'valor')).value = 0;
+					} else {
+						InputVal += parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value);
+					}
+					if(InputVal > valor){
+						document.getElementById(this.id.replace('radio', 'valor')).value = 0;
+					}
+					document.getElementById(this.id.replace('radio', 'valorParcela')).innerText = 
+						(parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value /$("#" + this.id.replace('radio', 'nParcelas')).val())).toFixed(2)
+				});
+
+		if (InputVal === Val) {
+			$("#Concluir").prop("disabled", false);
+		} else {
+			$("#Concluir").prop("disabled", true);
+		}
+		
+		if((Val - InputVal).toFixed(2) < 0){
+			document.getElementById('valorRestante').innerText = 0.0;
+		}
+		else{
+			document.getElementById('valorRestante').innerText = (Val - InputVal).toFixed(2);
+		}
+		
+
+	}
+
+	function clicLoco(checkId) {
+
+		var idCheck = checkId;
+		var	idChange = idCheck.replace('radio', 'valor');
+		var idChange2 = idCheck.replace('radio', 'nParcelas');
+		if ($('input[id=' + idCheck + ']').prop('checked')) {
+			$("#" + idChange).prop("disabled", false);
+			$("#" + idChange2).prop("disabled", false);
+		} else {
+			$("#" + idChange).prop("disabled", true);
+			$("#" + idChange2).prop("disabled", true);
+		}
+
+	}
+</script>
 </head>
-<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+
 <body class="hold-transition skin-green layout-top-nav">
 
 
@@ -122,29 +167,27 @@
 										<th class="text-right"></th>
 									</tr>
 								</thead>
-								<c:if test="${carrinho !=null }">
 
-									<tbody>
-										<c:forEach items="${itens}" var="car">
-											<tr>
-												<td class="text-center"><a class="btn btn-sm"> <a
-														href="adicionarCarrinho?operacao=QUANTIDADE&txtqtd=${car.getQuantidade() -1 }&id=${car.getSup().getId()}"><button
-																type="button" class="fa fa-minus"></button></a>
 
-												</a> ${car.getQuantidade()} <a
-													href="adicionarCarrinho?operacao=QUANTIDADE&txtqtd=${car.getQuantidade() + 1}&id=${car.getSup().getId()}"><button
-															type="button" class="fa fa-plus"></button></a></td>
-												<td>${car.getSup().getNome()}</td>
+								<tbody>
+									<c:forEach items="${itens}" var="car">
+										<tr>
+											<td class="text-center"><a class="btn btn-sm"> <a
+													href="adicionarCarrinho?operacao=QUANTIDADE&txtqtd=${car.getQuantidade() -1 }&id=${car.getSup().getId()}"><button
+															type="button" class="fa fa-minus"></button></a>
 
-												<td>${car.getSup().getMarca()}</td>
-												<td class="text-right">${car.getSup().getPreco().toString() * car.getQuantidade() }</td>
-												<td class="text-right"><a
-													href="adicionarCarrinho?operacao=REMOVER&id=${car.getSup().getId()}"
-													class="btn btn-sm danger"><i class="fa fa-remove"></i></a></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</c:if>
+											</a> ${car.getQuantidade()} <a
+												href="adicionarCarrinho?operacao=QUANTIDADE&txtqtd=${car.getQuantidade() + 1}&id=${car.getSup().getId()}"><button
+														type="button" class="fa fa-plus"></button></a></td>
+											<td>${car.getSup().getNome()}</td>
+
+											<td>${car.getSup().getMarca()}</td>
+											<td class="text-right">${car.getSup().getPreco().toString() * car.getQuantidade() }</td>
+											<td class="text-right"><a
+												href="adicionarCarrinho?operacao=REMOVER&id=${car.getSup().getId()}"
+												class="btn btn-sm danger"><i class="fa fa-remove"></i></a></td>
+										</tr>
+									</c:forEach>
 							</table>
 
 						</div>
@@ -160,26 +203,62 @@
 							</p>
 
 							<div class="form-group">
-								<div></div>
+
 								<div>
-									<label>
-										<div>
-											<c:if test="${usuario.getCartao().size()> 0}">
-												<select class="form-control" id="exampleFormControlSelect1">
-													<c:forEach var="cartao" items="${usuario.cartao}">
-														<option>${cartao.bandeira},${cartao.numero}</option>
+									<label> <c:if test="${usuario.getCartao().size()> 0}">
+
+											<table id="datatable"
+												class="table table-striped table-bordered" cellspacing="0"
+												width="100%">
+												<thead>
+													<tr>
+														<th>Usar</th>
+														<th>Numero</th>
+														<th>Bandeira</th>
+														<th>Validade</th>
+														<th>Valor</th>
+														<th>N.Parcelas</th>
+														<th id="valorRestante" style="color:red"></th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach items="${usuario.cartao}" var="cartao">
+														<tr>
+															<td><input type="checkbox" id="radio${cartao.id}" onclick="clicLoco(this.id)" onchange="clicao()"></input></td>
+															<td>${cartao.numero}</td>
+															<td>${cartao.bandeira}</td>
+															<td>${cartao.validade}</td>
+															<td><p data-placement="top" data-toggle="tooltip"
+																	title="Edit">
+																<form action="SaveCards">
+
+																	<input type="number" id="valor${cartao.id}"
+																		name="valor${cartao.id}" onmouseenter="clicao()"
+																		onmouseover="clicao()"  onchange="clicao()" style="width:70px" disabled/>
+
+																</form></td>
+															<td><input type="number" id="nParcelas${cartao.id}"  min ="1" max="12" style="width:50px; padding: 10px;" value="1" disabled /></td>
+															<td style="color:blue" id="valorParcela${cartao.id}"></td>
+
+														</tr>
 													</c:forEach>
-												</select>
-											</c:if>
-											<c:if test="${usuario.getCartao().size() <= 0}">
 
-												<h5>
-													Você ainda cadatrou seu cartão, clique <a
-														href="CliAdmin.jsp">AQUI</a> para cadastrar
-												</h5>
+												</tbody>
+											</table>
+											<div>
+												<input type="button" id="operacao" name="operacao"
+													value="ADDcar" class="btn btn-success" />
+											</div>
 
-											</c:if>
-										</div>
+										</c:if> <c:if test="${usuario.getCartao().size() <= 0}">
+
+											<h5>
+												Você ainda cadatrou seu cartão, clique <a
+													href="CliAdmin.jsp">AQUI</a> para cadastrar
+											</h5>
+
+										</c:if>
+
 									</label>
 								</div>
 
@@ -218,7 +297,8 @@
 												<td class="text-right">R$ ${pedido.precoTotal + pedido.precoFrete - cupom.desconto}</td>
 											</c:if>
 											<c:if test="${cupom ==null}">
-												<td class="text-right">R$ ${pedido.precoTotal + pedido.precoFrete}</td>
+												<td class="text-right" id="idTotal">R$
+													${pedido.precoTotal + pedido.precoFrete}</td>
 											</c:if>
 										</tr>
 									</tbody>
@@ -234,8 +314,8 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<form method="post" action="finalizaCompra">
-								<button type="submit" name="operacao" value="FINALIZAR"
-									class="btn btn-success pull-right">
+								<button type="submit" name="operacao" id="Concluir"
+									value="FINALIZAR" class="btn btn-success pull-right" disabled>
 									<i class="fa fa-credit-card"></i> Concluir Pedido
 								</button>
 							</form>

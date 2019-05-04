@@ -106,6 +106,9 @@ textarea {
 							<li><a href="http://www.jquery2dotnet.com"
 								data-target-id="conCards"><i class="fa fa-bar-chart-o fa-fw"></i>Consulta
 									Cartões </a></li>
+							<li><a href="http://www.jquery2dotnet.com"
+								data-target-id="conPedidos"><i class="fa fa-bar-chart-o fa-fw"></i>Consulta
+									Pedidos </a></li>
 						</ul>
 					</div>
 					<!-- HOME -->
@@ -320,6 +323,9 @@ textarea {
 					<div class="col-md-9 content admin-content" id="conCards">
 						<%@include file="ConsultaCartao.jsp"%>
 					</div>
+					<div class="col-md-9 content admin-content" id="conPedidos">
+						<%@include file="CliPedido.jsp"%>
+					</div>
 
 				</div>
 
@@ -366,10 +372,11 @@ textarea {
 					aria-hidden="true">×</button>
 
 			</div>
-			
-			<form class="form-horizontal" role="form" method="post"action="DeleteEndereco">
+
+			<form class="form-horizontal" role="form" method="post"
+				action="DeleteEndereco">
 				<div class="modal-body">
-					
+
 					<div class="row">
 						<div class="col-sm-6 form-group">
 							<label>Logradouro</label> <input type="text" class="form-control"
@@ -438,7 +445,8 @@ textarea {
 								id="txtNumero" name="txtNumero">
 						</div>
 						<div class="col-md-2 mb-2">
-							<input type="hidden" class="form-control" id="Idnovo" name="txtIdnovo">
+							<input type="hidden" class="form-control" id="Idnovo"
+								name="txtIdnovo">
 						</div>
 
 					</div>
@@ -451,7 +459,7 @@ textarea {
 								name="txtObservacao"></textarea>
 						</div>
 					</div>
-					
+
 					<c:choose>
 						<c:when test="${resultadoAlterar == null}">
 							<div></div>

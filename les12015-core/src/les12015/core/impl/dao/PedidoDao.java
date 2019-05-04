@@ -24,8 +24,8 @@ public class PedidoDao extends AbstractJdbcDAO {
 
 			StringBuilder sql = new StringBuilder();
 			sql.append(
-					"INSERT INTO Pedido(tipo_Residencia, tipo_Logradouro, logradouro, numero, bairro, CEP,cidade,estado, pais, obs, pref, stats, fk_cliente) ");
-			sql.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+					"INSERT INTO Pedido(dt_pedido, stats, endereco, idUsuario, precoFinal, frete , precoTotal, ciqtdItens) ");
+			sql.append("VALUES (?,?,?,?,?,?,?,?)");
 
 			pst = connection.prepareStatement(sql.toString());
 			pst.setString(1, ped.getDtPedido());

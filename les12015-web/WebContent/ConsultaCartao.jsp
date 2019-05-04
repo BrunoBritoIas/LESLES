@@ -4,11 +4,6 @@
 	import="les12015.core.aplicacao.Resultado, les12015.dominio.*, java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-
-
-<c:if test="${listaCartoes == null}">
-	<c:redirect url="SaveCards?operacao=CONSULTACARD" />
-</c:if>
 <table id="datatable" class="table table-striped table-bordered"
 	cellspacing="0" width="100%">
 	<thead>

@@ -87,10 +87,7 @@ public class CartaoViewHelper implements IViewHelper {
 			d = request.getRequestDispatcher("CliAdmin.jsp");
 		}
 		if (resultado.getMsg() == null && operacao.equals("CARDHOME")) {
-			sessao.setAttribute("listaCartoes", resultado.getEntidades());
-			ArrayList<Cartao> card = (ArrayList<Cartao>) sessao.getAttribute("listaCartoes");
-			cli.setCartao(card);
-			request.getSession().setAttribute("usuario",cli);
+			sessao.setAttribute("listaCartoes", resultado.getEntidades());			
 			d = request.getRequestDispatcher("Home.jsp");
 		}
 
@@ -107,6 +104,9 @@ public class CartaoViewHelper implements IViewHelper {
 				d = request.getRequestDispatcher("ConsultarEndereco.jsp");
 			}
 		}
+		ArrayList<Cartao> card = (ArrayList<Cartao>) sessao.getAttribute("listaCartoes");
+		cli.setCartao(card);
+		request.getSession().setAttribute("usuario",cli);
 		d.forward(request, response);
 
 	}
