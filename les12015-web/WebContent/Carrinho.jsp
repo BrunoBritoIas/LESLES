@@ -41,7 +41,8 @@
 		var InputVal = 0.0;
 		var valor = document.getElementById('idTotal').innerText.replace("R$ ","");
 		var Val = parseFloat(valor);
-
+		var qtdCards = $("input[type='checkbox']:checked").size();
+		
 		$("input[type='checkbox']:checked").each(
 				function() {
 					if (parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value) < 0 || document.getElementById(this.id.replace('radio', 'valor')).value === "") {
@@ -54,8 +55,14 @@
 					}
 					document.getElementById(this.id.replace('radio', 'valorParcela')).innerText = 
 						(parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value /$("#" + this.id.replace('radio', 'nParcelas')).val())).toFixed(2)
+						
+					$("#" + this.id.replace('radio', '')).val(this.id.replace('radio', ''));
+					$("#" + this.id.replace('radio', 'cardValue')).val(parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value));
+					$("#" + this.id.replace('radio', 'cardParcela')).val((parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value /$("#" + this.id.replace('radio', 'nParcelas')).val())).toFixed(2));
+					$("#" + this.id.replace('radio', 'numParcela')).val($("#" + this.id.replace('radio', 'nParcelas')).val());
 				});
-
+		
+		$("#numCards").val(qtdCards);
 		if (InputVal === Val) {
 			$("#Concluir").prop("disabled", false);
 		} else {
@@ -69,7 +76,6 @@
 			document.getElementById('valorRestante').innerText = (Val - InputVal).toFixed(2);
 		}
 		
-
 	}
 
 	function clicLoco(checkId) {
@@ -221,7 +227,7 @@
 														<th id="valorRestante" style="color:red"></th>
 													</tr>
 												</thead>
-												<tbody>
+												<tbody>											
 													<c:forEach items="${usuario.cartao}" var="cartao">
 														<tr>
 															<td><input type="checkbox" id="radio${cartao.id}" onclick="clicLoco(this.id)" onchange="clicao()"></input></td>
@@ -237,12 +243,13 @@
 																		onmouseover="clicao()"  onchange="clicao()" style="width:70px" disabled/>
 
 																</form></td>
-															<td><input type="number" id="nParcelas${cartao.id}"  min ="1" max="12" style="width:50px; padding: 10px;" value="1" disabled /></td>
-															<td style="color:blue" id="valorParcela${cartao.id}"></td>
-
-														</tr>
+															<td><input type="number" id="nParcelas${cartao.id}"  min ="1" max="12" style="width:50px; padding: 10px;" value="1" onmouseenter="clicao()"
+																		onmouseover="clicao()"  onchange="clicao()" disabled /></td>
+															<td style="color:blue" id="valorParcela${cartao.id}"></td>	
+		
+														
 													</c:forEach>
-
+											
 												</tbody>
 											</table>
 											<div>
@@ -313,7 +320,17 @@
 
 					<div class="row">
 						<div class="col-xs-12">
-							<form method="post" action="finalizaCompra">
+							<form method="get" action="finalizaCompra">
+								<c:forEach items="${usuario.cartao}" var="cartao">										
+									<input type="hidden" name="${cartao.id}" id="${cartao.id}"/>
+									<input type="hidden" name="cardValue${cartao.id}" id="cardValue${cartao.id}"/>
+									<input type="hidden" name="cardParcela${cartao.id}" id="cardParcela${cartao.id}"/>
+									<input type="hidden" name="numParcela${cartao.id}" id="numParcela${cartao.id}"/>
+									<input type="hidden" value="${cartao.numero}" name="numero${cartao.id}" id="numero${cartao.id}"/>
+									<input type="hidden" value="${cartao.bandeira}" name="bandeira${cartao.id}" id="bandeira${cartao.id}"/>
+									<input type="hidden" value="${cartao.validade}" name="validade${cartao.id}" id="validade${cartao.id}"/>											
+								</c:forEach>
+									<input type="text" name="numCards" id="numCards"/>
 								<button type="submit" name="operacao" id="Concluir"
 									value="FINALIZAR" class="btn btn-success pull-right" disabled>
 									<i class="fa fa-credit-card"></i> Concluir Pedido

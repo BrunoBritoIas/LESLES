@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Pedido extends EntidadeDominio {
 	private List<Unidade> unidade;
+	private List<CartaoPedido> cardPed;
 	private Endereco endereco;
 	private Cupom cupomPromocional;
 	private String dtPedido;
@@ -93,5 +94,14 @@ public class Pedido extends EntidadeDominio {
 	public void setIDusuario(Integer iDusuario) {
 		IDusuario = iDusuario;
 	}
+
+	public List<CartaoPedido> getCardPed() {
+		return cardPed;
+	}
+
+	public void setCardPed(List<CartaoPedido> cardPed) {
+		this.cardPed = cardPed;
+	}
+	
 
 }
