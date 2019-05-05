@@ -149,6 +149,8 @@ public class EnderecoViewHelper implements IViewHelper {
 				d = request.getRequestDispatcher("ConsultarEndereco.jsp");
 			}
 		}
+		ArrayList<Endereco> end = (ArrayList<Endereco>) sessao.getAttribute("listaEnderecos");
+		cli.setEndereco(end);
 		d.forward(request, response);
 
 	}

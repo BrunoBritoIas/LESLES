@@ -3,6 +3,7 @@ package les12015.dominio;
 public class Unidade extends EntidadeDominio {
 	private Suplementos sup;
 	private int quantidade;
+	private int idSup;
 	private double preco;
 	
 	public int getQuantidade() {
@@ -28,5 +29,14 @@ public class Unidade extends EntidadeDominio {
 	public void setPreco(double preco) {
 		this.preco = preco;
 	}
+
+	public int getIdSup() {
+		return idSup;
+	}
+
+	public void setIdSup(int idSup) {
+		this.idSup = idSup;
+	}
+	
 	
 }

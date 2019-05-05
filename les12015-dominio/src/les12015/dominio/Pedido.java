@@ -14,6 +14,7 @@ public class Pedido extends EntidadeDominio {
 	private double precoFrete;
 	private double precoFinal;
 	private Double qtdItens;
+	private boolean prodDetail;
 
 	public Cupom getCupomPromocional() {
 		return cupomPromocional;
@@ -101,6 +102,14 @@ public class Pedido extends EntidadeDominio {
 
 	public void setCardPed(List<CartaoPedido> cardPed) {
 		this.cardPed = cardPed;
+	}
+
+	public boolean isProdDetail() {
+		return prodDetail;
+	}
+
+	public void setProdDetail(boolean prodDetail) {
+		this.prodDetail = prodDetail;
 	}
 	
 

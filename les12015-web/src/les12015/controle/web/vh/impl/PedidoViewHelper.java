@@ -98,6 +98,12 @@ public class PedidoViewHelper implements IViewHelper {
 			pedido.setId(cliente.getIdCliente());
 
 		}
+		if (operacao.equals("VERPEDIDO")) {
+			Integer idPedido = Integer.parseInt(request.getParameter("idPedido"));
+			pedido.setProdDetail(true);
+			pedido.setId(idPedido);
+
+		}
 
 		return pedido;
 
@@ -118,6 +124,23 @@ public class PedidoViewHelper implements IViewHelper {
 			request.getSession().setAttribute("usuario", cli);
 			d = request.getRequestDispatcher("FinalPedido.jsp");
 		}
+
+		if (operacao.equals("CONSULTAPEDIDO")) {
+			sessao.setAttribute("listaPedidos", resultado.getEntidades());
+			ArrayList<Pedido> pedido = (ArrayList<Pedido>) sessao.getAttribute("listaPedidos");
+			// pedido.get(1).getCardPed().get(1).getNumCartao();
+			cli.setPedido(pedido);
+			request.getSession().setAttribute("usuario", cli);
+			d = request.getRequestDispatcher("CliAdmin.jsp");
+		}
+
+		if (operacao.equals("VERPEDIDO")) {
+			sessao.setAttribute("pedDetail", resultado.getEntidades());
+			sessao.setAttribute("detalhePed", resultado.getEntidades().get(0));
+			d = request.getRequestDispatcher("DetalhePedido.jsp");
+
+		}
+
 		d.forward(request, response);
 	}
 

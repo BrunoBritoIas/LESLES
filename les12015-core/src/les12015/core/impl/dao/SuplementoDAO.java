@@ -120,9 +120,15 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 			sup = (Suplementos) entidade;
 		}
 		String sql = null;
-
-		sql = "SELECT * FROM Suplemento WHERE 1=1";
-
+		
+		if(sup.isSupPedido()) {
+			sql = "SELECT * FROM Suplemento WHERE Id_suplemento="+ sup.getId();
+		}
+		else
+		{
+			sql = "SELECT * FROM Suplemento WHERE 1=1";
+		}
+		
 		if (sup.getId() != null && sup.getId() > 0) {
 			sql += " and Id_suplemento = " + sup.getId();
 

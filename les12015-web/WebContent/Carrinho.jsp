@@ -330,7 +330,7 @@
 									<input type="hidden" value="${cartao.bandeira}" name="bandeira${cartao.id}" id="bandeira${cartao.id}"/>
 									<input type="hidden" value="${cartao.validade}" name="validade${cartao.id}" id="validade${cartao.id}"/>											
 								</c:forEach>
-									<input type="text" name="numCards" id="numCards"/>
+									<input type="hidden" name="numCards" id="numCards"/>
 								<button type="submit" name="operacao" id="Concluir"
 									value="FINALIZAR" class="btn btn-success pull-right" disabled>
 									<i class="fa fa-credit-card"></i> Concluir Pedido

@@ -16,6 +16,7 @@ public class Suplementos extends EntidadeDominio {
 	private Double rating;
 	private String status;
 	private String validade;
+	private boolean supPedido;
 	public String getNome() {
 		return nome;
 	}
@@ -109,6 +110,14 @@ public class Suplementos extends EntidadeDominio {
 
 	public void setValidade(String validade) {
 		this.validade = validade;
+	}
+
+	public boolean isSupPedido() {
+		return supPedido;
+	}
+
+	public void setSupPedido(boolean supPedido) {
+		this.supPedido = supPedido;
 	}
 	
 }

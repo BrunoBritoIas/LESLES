@@ -6,19 +6,19 @@
 
 
 <c:if test="${listaPedidos == null}">
-	
+
 </c:if>
 <table id="datatable" class="table table-striped table-bordered"
 	cellspacing="0" width="100%">
 	<thead>
 		<tr>
-			<th>Pedidos</th>
+			<th>N.Pedido</th>
 			<th>Quantidade</th>
-			<th>Endereco</th>
-			<th>Data</th>
 			<th>Frete</th>
-			<th>precoFinal</th>
+			<th>PrecoFinal</th>
+			<th>Data</th>
 			<th>Status</th>
+			<th>Detalhes</th>
 
 		</tr>
 	</thead>
@@ -26,20 +26,18 @@
 		<c:forEach items="${listaPedidos}" var="pedido">
 			<tr>
 
-				<td><select class="form-control" id="exampleFormControlSelect1">
-
-						<c:forEach var="i" begin="0" end="${listaPedidos.size() - 1}">
-							<option>${listaPedidos.get(i).getUnidade().get(i).getSup().getNome()}</option>
+				<%-- <td><select class="form-control" id="exampleFormControlSelect1">
+						<c:forEach var="i" begin="0" end="${listaPedidos.get(i).getCardPed().size()}">
+							<option>${listaPedidos.get(i).getCardPed().get(i).getNumCartao()}</option>
 						</c:forEach>
-
-
-				</select></td>
+				</select></td> --%>
+				<td>${pedido.id}</td>
 				<td>${pedido.qtdItens}</td>
-				<td>${pedido.getEndereco().getLogradouro()}</td>
-				<td>${pedido.dtPedido}</td>
 				<td>${pedido.precoFrete}</td>
 				<td>${pedido.precoFinal}</td>
+				<td>${pedido.dtPedido}</td>
 				<td>${pedido.status}</td>
+				<td><a href="finalizaCompra?operacao=VERPEDIDO&idPedido=${pedido.id}">Saiba Mais</a></td>
 			</tr>
 		</c:forEach>
 
