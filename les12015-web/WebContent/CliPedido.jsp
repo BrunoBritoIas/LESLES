@@ -45,9 +45,9 @@
 
 	</tbody>
 </table>
-<form action="SaveCards" method="post">
+<form action="finalizaCompra" method="post">
 	<button type="submit" class="btn btn-primary btn-lg" name="operacao"
-		value=CONSULTACARD id="operacao" style="width: 95%;">
+		value=CONSULTAPEDIDO id="operacao" style="width: 95%;">
 		<span class="glyphicon glyphicon-ok-sign"></span> consultar
 	</button>
 </form>

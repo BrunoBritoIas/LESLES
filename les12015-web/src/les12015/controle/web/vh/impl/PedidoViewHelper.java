@@ -29,7 +29,6 @@ public class PedidoViewHelper implements IViewHelper {
 		String numCartao = "";
 		String bandeira = "";
 		String validade = "";
-		Integer numCards = Integer.parseInt(request.getParameter("numCards"));
 		Cliente cliente = (Cliente) request.getSession().getAttribute("usuario");
 		Pedido ped = (Pedido) request.getSession().getAttribute("pedido");
 		Pedido pedido = new Pedido();
@@ -38,6 +37,7 @@ public class PedidoViewHelper implements IViewHelper {
 		String data = formatter.format(ldt);
 		ArrayList<CartaoPedido> p = new ArrayList<CartaoPedido>();
 		if (operacao.equals("FINALIZAR")) {
+			Integer numCards = Integer.parseInt(request.getParameter("numCards"));
 			pedido.setDtPedido(data);
 			pedido.setEndereco(cliente.getEndereco().get(0));
 			pedido.setIDusuario(cliente.getIdCliente());
@@ -47,6 +47,7 @@ public class PedidoViewHelper implements IViewHelper {
 			pedido.setPrecoFrete(ped.getPrecoFrete());
 			pedido.setPrecoTotal(ped.getPrecoTotal());
 			pedido.setQtdItens(ped.getQtdItens());
+			pedido.setId(1);
 			int y = 1;
 			String numParcela = "numParcela" + y;
 			String cardValue = "cardValue" + y;
@@ -54,7 +55,7 @@ public class PedidoViewHelper implements IViewHelper {
 			String numero = "numero" + y;
 			String nbandeira = "bandeira" + y;
 			String nvalidade = "validade" + y;
-			
+
 			for (int i = 0; i < numCards; i++) {
 				CartaoPedido cardPed = new CartaoPedido();
 				numParcela = "numParcela" + y;
@@ -62,8 +63,9 @@ public class PedidoViewHelper implements IViewHelper {
 				cardParcela = "cardParcela" + y;
 				numero = "numero" + y;
 				nvalidade = "validade" + y;
-				while(request.getParameter(numParcela) == "" ||request.getParameter(cardValue) == "" ||request.getParameter(cardParcela)==
-					""||request.getParameter(numero) == ""||request.getParameter(nvalidade) == "") {
+				while (request.getParameter(numParcela) == "" || request.getParameter(cardValue) == ""
+						|| request.getParameter(cardParcela) == "" || request.getParameter(numero) == ""
+						|| request.getParameter(nvalidade) == "") {
 					y++;
 					numParcela = "numParcela" + y;
 					cardValue = "cardValue" + y;
@@ -71,7 +73,7 @@ public class PedidoViewHelper implements IViewHelper {
 					numero = "numero" + y;
 					nvalidade = "validade" + y;
 				}
-				
+
 				nParcela = Double.parseDouble(request.getParameter(numParcela));
 				vParcela = Double.parseDouble(request.getParameter(cardValue));
 				totalParcela = Double.parseDouble(request.getParameter(cardParcela));
@@ -84,15 +86,21 @@ public class PedidoViewHelper implements IViewHelper {
 				cardPed.setNumCartao(numCartao);
 				cardPed.setBandeira(bandeira);
 				cardPed.setValidade(validade);
+				cardPed.setId(pedido.getId());
 				p.add(cardPed);
 				pedido.setCardPed(p);
 				y++;
 			}
 
-			return pedido;
+		}
+		if (operacao.equals("CONSULTAPEDIDO")) {
+			pedido.setId(cliente.getId());
+			pedido.setId(cliente.getIdCliente());
+
 		}
 
-		return null;
+		return pedido;
+
 	}
 
 	public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response)
