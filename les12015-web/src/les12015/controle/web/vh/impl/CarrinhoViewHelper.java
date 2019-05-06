@@ -55,24 +55,7 @@ public class CarrinhoViewHelper implements IViewHelper {
 			return u;
 		}
 
-		/*
-		 * if (operacao.equals("MUDAR")) { System.out.println("Entrei no Mudar"); String
-		 * txtIdUsuario = (String) request.getSession().getAttribute("userid"); int
-		 * idUsuario = Integer.parseInt(txtIdUsuario); String txtIdSuplementos =
-		 * request.getParameter("id"); int idSuplementos =
-		 * Integer.parseInt(txtIdSuplementos); Pedido p = carrinho.get(idUsuario);
-		 * Suplementos book; Unidade u = new Unidade(); for (int i = 0; i <
-		 * p.getUnidade().size(); i++) { if (p.getUnidade().get(i).getSup().getId() ==
-		 * idSuplementos) { book = p.getUnidade().get(i).getSup(); u =
-		 * p.getUnidade().get(i);
-		 * 
-		 * } }
-		 * 
-		 * return u; }
-		 * 
-		 * if (carrinho != null) { Unidade u = new Unidade(); u.setQuantidade(1);
-		 * u.setSup(l); return u; }
-		 */
+		
 	}
 
 	public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response)

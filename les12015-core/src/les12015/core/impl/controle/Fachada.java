@@ -20,6 +20,7 @@ import les12015.core.impl.negocio.NumCaracterCampos;
 import les12015.core.impl.negocio.ValidaDadosCliente;
 import les12015.core.impl.negocio.ValidaDadosEndereco;
 import les12015.core.impl.negocio.ValidaDadosProduto;
+import les12015.core.impl.negocio.ValidaPedido;
 import les12015.core.impl.negocio.ValidaValidade;
 import les12015.core.impl.negocio.ValidadorCpf;
 import les12015.dominio.Cartao;
@@ -77,6 +78,7 @@ public class Fachada implements IFachada {
 		ValidaValidade vval = new ValidaValidade();
 		NumCaracterCampos numCal = new NumCaracterCampos();
 		ValidaDadosEndereco vEnd = new ValidaDadosEndereco();
+		ValidaPedido vPed = new ValidaPedido();
 		/*
 		 * Criando uma lista para conter as regras de negócio de cliente quando a
 		 * operação for salvar
@@ -85,6 +87,7 @@ public class Fachada implements IFachada {
 		List<IStrategy> rnsSalvarCliente = new ArrayList<IStrategy>();
 		List<IStrategy> rnsSalvarProdutos = new ArrayList<IStrategy>();
 		List<IStrategy> rnsSalvarEnderecos = new ArrayList<IStrategy>();
+		List<IStrategy> rnsSalvarPedidos = new ArrayList<IStrategy>();
 		/* Adicionando as regras a serem utilizadas na operação salvar do cliente */
 		rnsSalvarCliente.add(vCpf);
 		rnsSalvarCliente.add(cliVal);
@@ -92,6 +95,7 @@ public class Fachada implements IFachada {
 		rnsSalvarProdutos.add(vval);
 		rnsSalvarProdutos.add(numCal);
 		rnsSalvarEnderecos.add(vEnd);
+		rnsSalvarPedidos.add(vPed);
 		/*
 		 * Cria o mapa que poderá conter todas as listas de regras de negócio específica
 		 * por operação do cliente
@@ -99,6 +103,7 @@ public class Fachada implements IFachada {
 		Map<String, List<IStrategy>> rnsCliente = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsProduto = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsEndereco = new HashMap<String, List<IStrategy>>();
+		Map<String, List<IStrategy>> rnsPedido = new HashMap<String, List<IStrategy>>();
 		/*
 		 * Adiciona a listra de regras na operação salvar no mapa do cliente (lista
 		 * criada na linha 93)
@@ -107,6 +112,7 @@ public class Fachada implements IFachada {
 		// rnsCliente.put("CONSULTAR", rnsLoginCliente);
 		rnsProduto.put("SALVAR", rnsSalvarProdutos);
 		rnsEndereco.put("SALVAR", rnsSalvarEnderecos);
+		rnsPedido.put("SALVAR", rnsSalvarPedidos);
 		/*
 		 * Adiciona o mapa(criado na linha 101) com as regras indexadas pelas operações
 		 * no mapa geral indexado pelo nome da entidade. Observe que este mapa (rns) é o
@@ -115,6 +121,7 @@ public class Fachada implements IFachada {
 		rns.put(Cliente.class.getName(), rnsCliente);
 		rns.put(Suplementos.class.getName(), rnsProduto);
 		rns.put(Endereco.class.getName(), rnsEndereco);
+		rns.put(Pedido.class.getName(), rnsPedido);
 
 	}
 

@@ -157,11 +157,6 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 
 		}
 		
-		if ( sup.getQuantidade() > 0) {
-			sql += " and rating = " + sup.getQuantidade();
-
-		}
-
 		try {
 			openConnection();
 			pst = connection.prepareStatement(sql);
