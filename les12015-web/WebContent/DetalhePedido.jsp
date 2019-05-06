@@ -23,68 +23,70 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="assets/css/AdminLTE.min.css">
+
 <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="assets/css/skins/_all-skins.min.css">
 
 <link rel="stylesheet" href="assets/css/meat.css">
 
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+
 </head>
-<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+<style>
+a {
+	color: #014BB0;
+	text-decoration: none;
+}
+.navbar {
+	background-color: #00a65a;
+}
+
+</style>
 <body class="hold-transition skin-green layout-top-nav">
 	<div class="wrapper">
+	<nav class="navbar navbar-static-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a href="Home.jsp" class="navbar-brand"><b>SupliMais</b></a>
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar-collapse">
+					<i class="fa fa-bars"></i>
+				</button>
+			</div>
 
-		<header class="main-header">
-			<nav class="navbar navbar-static-top">
-				<div class="container">
-					<div class="navbar-header">
-						<a href="home.html" class="navbar-brand"><b>SupliMais</b></a>
-						<button type="button" class="navbar-toggle collapsed"
-							data-toggle="collapse" data-target="#navbar-collapse">
-							<i class="fa fa-bars"></i>
-						</button>
-					</div>
+			<div class="collapse navbar-collapse pull-right" id="navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="main-restaurants.html"></a></li>
+					<c:choose>
+						<c:when test="${usuario !=null}">
+							<li><a href="CliAdmin.jsp">Perfil </a></li>
+							<li><a href="#">Logout</a></li>
+						</c:when>
+						<c:when test="${usuario ==null}">
+					    <li><a href="Login.jsp">Login</a></li>
+					  </c:when>
 
-					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse pull-right"
-						id="navbar-collapse">
-						<ul class="nav navbar-nav">
-							<li><a href="main-restaurants.html"> <span
-									class="sr-only">(current)</span></a></li>
-							<li><a href="main-restaurants.html">Categorias <span
-									class="sr-only">(current)</span></a></li>
-							<li><a href="main-restaurants.html">Marcas <span
-									class="sr-only">(current)</span></a></li>
-							<li><a href="login.html">Login</a></li>
-							<li>
-								<form class="navbar-form" role="search">
-									<div class="input-group">
-										<input type="text" class="form-control" placeholder="Search"
-											name="q">
-										<div class="input-group-btn">
-											<button class="btn btn-default" type="submit">
-												<i class="glyphicon glyphicon-search"></i>
-											</button>
-										</div>
-									</div>
-								</form>
-							</li>
-					</div>
+					</c:choose>
+					<li>
+						<form class="navbar-form" role="search">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Search"
+									name="q">
+								<div class="input-group-btn">
+									<button class="btn btn-default" type="submit">
+										<i class="glyphicon glyphicon-search"></i>
+									</button>
+								</div>
+							</div>
+						</form>
 					</li>
-					</ul>
-				</div>
+				</ul>
+			</div>
 
-				<!-- /.navbar-collapse -->
-	</div>
-	<!-- /.container-fluid -->
+			<!-- /.navbar-collapse -->
+		</div>
 	</nav>
+</div>
 	<!-- Full Width Column -->
 	<div class="content-wrapper">
 		<div class="container">
@@ -95,16 +97,16 @@
 				<h1></h1>
 			</section>
 
-			<c:forEach items="${pedDetail}" var="pedido">
-				<section class="content">
-
+			<%-- <c:forEach items="${detalhePed}" var="pedido"> --%>
+			<section class="content">
+				<c:forEach items="${detalhePed.unidade}" var="pedido">
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="box box-solid">
 								<div class="box-header with-border">
 									<i class="fa fa-home"></i>
 
-									<h3 class="box-title">${pedido.nome}</h3>
+									<h3 class="box-title"></h3>
 									<span class="pull-right"><i class="fa fa-star"></i> 4.5</span>
 								</div>
 								<!-- /.box-header -->
@@ -115,15 +117,16 @@
 									</div>
 
 									<dl class="col-sm-9 col-xs-12">
-										<dt>Categoria</dt>
-										<dd>${pedido.categoria}</dd>
+										<dt>Quantidade</dt>
+										<dd>${pedido.quantidade}</dd>
 										<dt>Peso</dt>
-										<dd>${pedido.peso}gr</dd>
+										<dd>${pedido.sup.peso}gr</dd>
 										<dt>Marca</dt>
-										<dd>${pedido.marca}</dd>
+										<dd>${pedido.sup.marca}</dd>
 										<dt>Preço</dt>
 										<dd>
-											<span class="menu-item-info-box-price">R$${pedido.preco}</span>
+											<span class="menu-item-info-box-price">R$
+												${pedido.sup.preco}</span>
 										</dd>
 									</dl>
 								</div>
@@ -134,27 +137,11 @@
 
 					</div>
 
-					<h3 style="text-align: center;">MODO DE USO:</h3>
-					<div class="row">
-						<!--INÍCIO DO MENU -->
-						<div class="col-xs-12">
-
-							<div class="menu-item-info-box">
-								<div class="menu-item-info-box-content">
-									<span class="menu-item-info-box-text">Descrição</span> <span
-										class="menu-item-info-box-detail">${pedido.descricao}</span>
-								</div>
-								<!-- /.info-box-content -->
-							</div>
-							<!-- /.info-box -->
+				</c:forEach>
 
 
-
-						</div>
-
-						<!-- FIM DO MENU -->
-					</div>
-					<h3 style="text-align: center;">TABELA NUTRICIONAL:</h3>
+				<h3 style="text-align: center;">PAGAMENTO:</h3>
+				<c:forEach items="${detalhePed.cardPed}" var="card">
 					<div class="row">
 						<!--INÍCIO DO MENU -->
 						<div class="col-xs-12">
@@ -163,16 +150,19 @@
 								<div class="menu-item-info-box-content">
 									<table style="width: 100%">
 										<tr>
-											<th>Proteina</th>
-											<th>Carboidrato</th>
-											<th>Gordura</th>
-											<th>Calorias</th>
+											<th>Numero do Cartão</th>
+											<th>Bandeira</th>
+											<th>Numero de Parcelas</th>
+											<th>Valor da parcela</th>
+											<th>Total a Pagar</th>
+
 										</tr>
 										<tr>
-											<td>${pedido.proteina}</td>
-											<td>${pedido.carboidratos}</td>
-											<td>${pedido.gordura}</td>
-											<td>${pedido.calorias}</td>
+											<td>${card.numCartao}</td>
+											<td>${card.bandeira}</td>
+											<td>${card.numParcela}</td>
+											<td>${card.vlrParcela}</td>
+											<td>${card.totalParcela}</td>
 									</table>
 								</div>
 								<!-- /.info-box-content -->
@@ -185,12 +175,84 @@
 
 						<!-- FIM DO MENU -->
 					</div>
-			</c:forEach>
-			<div class="text-center">
-				<form method="post" action="adicionarCarrinho">
-					<button class="btn btn btn-success" type="submit" id="operacao" value="addCarrinho" name="operacao">Adicionar</button>
-				</form>
-			</div>
+				</c:forEach>
+				<h3 style="text-align: center;">VALORES:</h3>
+				<div class="row">
+					<!--INÍCIO DO MENU -->
+					<div class="col-xs-12">
+
+						<div class="menu-item-info-box">
+							<div class="menu-item-info-box-content">
+								<table style="width: 100%">
+									<tr>
+										<th>Preço Produtos</th>
+										<th>Preço Frete</th>
+										<th>Preço Final</th>
+										<th>Quantidade Total</th>
+										<th>Status</th>
+									</tr>
+									<tr>
+										<td>${detalhePed.precoFinal}</td>
+										<td>${detalhePed.precoFrete}</td>
+										<td>${detalhePed.precoFinal + detalhePed.precoFrete}</td>
+										<td>${detalhePed.qtdItens}</td>
+										<td>${detalhePed.status}</td>
+								</table>
+							</div>
+							<!-- /.info-box-content -->
+						</div>
+
+
+
+
+					</div>
+
+					<!-- FIM DO MENU -->
+				</div>
+				<h4 style="text-align: center;">Endereço de Entrega:</h4>
+				<div class="row">
+					<!--INÍCIO DO MENU -->
+					<div class="col-xs-12">
+
+						<div class="menu-item-info-box">
+							<div class="menu-item-info-box-content">
+								<table style="width: 100%">
+									<tr>
+										<th>Estado</th>
+										<th>Cidade</th>
+										<th>Bairro</th>
+										<th>Rua</th>
+										<th>Numero</th>
+									</tr>
+									<tr>
+										<td>${detalhePed.endereco.estado}</td>
+										<td>${detalhePed.endereco.cidade}</td>
+										<td>${detalhePed.endereco.bairro}</td>
+										<td>${detalhePed.endereco.logradouro}</td>
+										<td>${detalhePed.endereco.numero}</td>
+								</table>
+							</div>
+							<!-- /.info-box-content -->
+						</div>
+
+
+
+
+					</div>
+
+					<!-- FIM DO MENU -->
+				</div>
+
+
+
+				</div>
+				<%-- </c:forEach> --%>
+				<div class="text-center">
+					<form method="post" action="adicionarCarrinho">
+						<button class="btn btn btn-success" type="submit" id="operacao"
+							value="addCarrinho" name="operacao">Adicionar</button>
+					</form>
+				</div>
 			</section>
 			<!-- FIM DO CONTEÚDO -->
 		</div>

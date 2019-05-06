@@ -9,6 +9,7 @@ import java.util.List;
 import com.mysql.jdbc.Statement;
 
 import les12015.dominio.CartaoPedido;
+import les12015.dominio.Endereco;
 import les12015.dominio.EntidadeDominio;
 import les12015.dominio.Pedido;
 import les12015.dominio.Suplementos;
@@ -31,19 +32,20 @@ public class PedidoDao extends AbstractJdbcDAO {
 
 			StringBuilder sql = new StringBuilder();
 			sql.append(
-					"INSERT INTO Pedido(dt_pedido, stats, endereco, idUsuario, precoFinal, frete , precoTotal, ciqtdItens) ");
-			sql.append("VALUES (?,?,?,?,?,?,?,?)");
+					"INSERT INTO Pedido(dt_pedido, stats, idEndereco, idUsuario, precoFinal, frete , precoTotal, ciqtdItens, username, userCpf) ");
+			sql.append("VALUES (?,?,?,?,?,?,?,?,?,?)");
 
 			pst = connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 			pst.setString(1, ped.getDtPedido());
 			pst.setString(2, ped.getStatus());
-			pst.setString(3, ped.getEndereco().getCidade() + ", " + ped.getEndereco().getLogradouro() + ", "
-					+ ped.getEndereco().getNumero());
+			pst.setInt(3, ped.getIdEnd());
 			pst.setInt(4, ped.getIDusuario());
 			pst.setDouble(5, ped.getPrecoFinal());
 			pst.setDouble(6, ped.getPrecoFrete());
 			pst.setDouble(7, ped.getPrecoTotal());
 			pst.setDouble(8, ped.getQtdItens());
+			pst.setString(9, ped.getNomeUser());
+			pst.setString(10, ped.getCpfUser());
 			pst.executeUpdate();
 			ResultSet rs = pst.getGeneratedKeys();
 			int id = 0;
@@ -145,7 +147,9 @@ public class PedidoDao extends AbstractJdbcDAO {
 				pi.setPrecoTotal(rs.getDouble("precoTotal"));
 				pi.setQtdItens(rs.getDouble("ciqtdItens"));
 				pi.setStatus(rs.getString("stats"));
-				
+				pi.setIdEnd(rs.getInt("idEndereco"));
+				pi.setNomeUser(rs.getString("username"));
+				pi.setCpfUser(rs.getString("usercpf"));
 				sq = "SELECT * FROM CartaoPedido WHERE id_pedido =" + pi.getId();
 				pst = null;
 				pst = connection.prepareStatement(sq);
@@ -161,8 +165,7 @@ public class PedidoDao extends AbstractJdbcDAO {
 					cartaoPedido.add(pe);
 				}
 				pi.setCardPed(cartaoPedido);
-				
-				
+
 				sequela = "SELECT * FROM UnidadePedido WHERE id_pedido =" + pi.getId();
 				pst = null;
 				pst = connection.prepareStatement(sequela);
@@ -177,14 +180,19 @@ public class PedidoDao extends AbstractJdbcDAO {
 					uni.setIdSup(rsss.getInt("id_sup"));
 					s.setId(rsss.getInt("id_sup"));
 					s.setSupPedido(true);
-					s = (Suplementos)supimpa.consultar(s).get(0);
+					s = (Suplementos) supimpa.consultar(s).get(0);
 					uni.setSup(s);
 					unidadePedido.add(uni);
 				}
+				EnderecoDAO end = new EnderecoDAO();
+				Endereco e = new Endereco();
+				e.setId(pi.getIdEnd());
+				e.setEndPedido(true);
+				e = (Endereco) end.consultar(e).get(0);
+				pi.setEndereco(e);
 				pi.setUnidade(unidadePedido);
 				pedido.add(pi);
-				
-				
+
 			}
 			return pedido;
 

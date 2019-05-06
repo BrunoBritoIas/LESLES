@@ -37,9 +37,12 @@ public class PedidoViewHelper implements IViewHelper {
 		String data = formatter.format(ldt);
 		ArrayList<CartaoPedido> p = new ArrayList<CartaoPedido>();
 		if (operacao.equals("FINALIZAR")) {
+			Integer idEndereco = Integer.parseInt(request.getParameter("idEnd"));
 			Integer numCards = Integer.parseInt(request.getParameter("numCards"));
 			pedido.setDtPedido(data);
 			pedido.setEndereco(cliente.getEndereco().get(0));
+			pedido.setNomeUser(cliente.getNome());
+			pedido.setCpfUser(cliente.getCpf());
 			pedido.setIDusuario(cliente.getIdCliente());
 			pedido.setUnidade(ped.getUnidade());
 			pedido.setStatus("Aguardando Aprovação");
@@ -47,6 +50,7 @@ public class PedidoViewHelper implements IViewHelper {
 			pedido.setPrecoFrete(ped.getPrecoFrete());
 			pedido.setPrecoTotal(ped.getPrecoTotal());
 			pedido.setQtdItens(ped.getQtdItens());
+			pedido.setIdEnd(idEndereco);
 			pedido.setId(1);
 			int y = 1;
 			String numParcela = "numParcela" + y;
@@ -102,7 +106,6 @@ public class PedidoViewHelper implements IViewHelper {
 			Integer idPedido = Integer.parseInt(request.getParameter("idPedido"));
 			pedido.setProdDetail(true);
 			pedido.setId(idPedido);
-
 		}
 
 		return pedido;

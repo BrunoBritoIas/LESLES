@@ -91,11 +91,11 @@ function mandaId(num, numm){
 							<li><a href="http://www.jquery2dotnet.com"
 								data-target-id="pages"><i class="fa fa-file-o fa-fw"></i>Produtos</a></li>
 							<li><a href="http://www.jquery2dotnet.com"
-								data-target-id="charts"><i class="fa fa-bar-chart-o fa-fw"></i>Graficos</a></li>
+								data-target-id="charts"><i class="fa fa-tasks fa-fw"></i>Cupom</a></li>
 							<li><a href="http://www.jquery2dotnet.com"
-								data-target-id="table"><i class="fa fa-table fa-fw"></i>Tabelas</a></li>
+								data-target-id="table"><i class="fa fa-table fa-fw"></i>Pedidos</a></li>
 							<li><a href="http://www.jquery2dotnet.com"
-								data-target-id="forms"><i class="fa fa-tasks fa-fw"></i>Formularios</a></li>
+								data-target-id="forms"><i class="fa fa-tasks fa-fw"></i>Pedidos</a></li>
 							<li><a href="http://www.jquery2dotnet.com"
 								data-target-id="calender"><i class="fa fa-calendar fa-fw"></i>Calenderario</a></li>
 						</ul>
@@ -179,6 +179,7 @@ function mandaId(num, numm){
 										<th>Categoria</th>
 										<th>Rating</th>
 										<th>Validade</th>
+										<th>Quantidade</th>
 										<th>Status</th>
 										<th>Alterar</th>
 									</tr>
@@ -192,6 +193,7 @@ function mandaId(num, numm){
 											<td>${suplemento.categoria}</td>
 											<td>${suplemento.rating}</td>
 											<td>${suplemento.validade}</td>
+											<td>${suplemento.quantidade}</td>
 											<td>${suplemento.status}</td>
 											<td><p data-placement="top" data-toggle="tooltip"
 													title="Edit">
@@ -218,13 +220,18 @@ function mandaId(num, numm){
 								<form method="post" action="SalvarProduto">
 									<div class="col-sm-9">
 										<div class="row">
-											<div class="col-sm-6 form-group">
+											<div class="col-sm-4 form-group">
 												<label>Nome</label> <input type="text" id="txtNome"
 													name="txtNome" class="form-control">
 											</div>
-											<div class="col-sm-6 form-group">
+											<div class="col-sm-4 form-group">
 												<label>Marca</label> <input type="text" id="txtMarca"
 													name="txtMarca" class="form-control">
+											</div>
+											
+											<div class="col-sm-2 form-group">
+												<label>Quantidade</label> <input type="number" id="txtQuantidade"
+													name="txtQuantidade" class="form-control">
 											</div>
 										</div>
 										<div class="form-group">
@@ -307,7 +314,9 @@ function mandaId(num, numm){
 					<div class="col-md-9 well admin-content" id="charts">
 						<%@include file="Cupom.jsp"%>
 					</div>
-					<div class="col-md-9 well admin-content" id="table">Table</div>
+					<div class="col-md-9 well admin-content" id="table">
+							<%@include file="PedidosAdmin.jsp"%>
+					</div>
 					<div class="col-md-9 well admin-content" id="forms">Forms</div>
 					<div class="col-md-9 well admin-content" id="calender">
 						Calender</div>

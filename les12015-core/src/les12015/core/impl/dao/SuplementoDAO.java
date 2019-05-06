@@ -35,8 +35,8 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 
 			StringBuilder sql = new StringBuilder();
 			sql.append(
-					"INSERT INTO Suplemento(nome, marca, categoria, descricao, peso, preco, proteina, carboidratos, gordura, calorias, rating, stats, validade)");
-			sql.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+					"INSERT INTO Suplemento(nome, marca, categoria, descricao, peso, preco, proteina, carboidratos, gordura, calorias, rating, stats, validade,quantidade)");
+			sql.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
 			pst = connection.prepareStatement(sql.toString());
 			pst.setString(1, suplemento.getNome());
@@ -52,6 +52,7 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 			pst.setDouble(11, suplemento.getRating());
 			pst.setString(12, suplemento.getStatus());
 			pst.setString(13, suplemento.getValidade());
+			pst.setInt(14, suplemento.getQuantidade());
 			pst.executeUpdate();
 			connection.commit();
 		} catch (SQLException e) {
@@ -155,6 +156,11 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 			sql += " and rating = " + sup.getRating();
 
 		}
+		
+		if ( sup.getQuantidade() > 0) {
+			sql += " and rating = " + sup.getQuantidade();
+
+		}
 
 		try {
 			openConnection();
@@ -202,6 +208,7 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 					s.setCalorias(rs.getDouble("calorias"));
 					s.setStatus(rs.getString("stats"));
 					s.setValidade(rs.getString("validade"));
+					s.setQuantidade(rs.getInt("quantidade"));
 					suplementos.add(s);
 				}
 			}

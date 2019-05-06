@@ -103,7 +103,13 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 		Endereco end = (Endereco) entidade;
 		String sql = null;
 
-		sql = "SELECT * FROM Endereco WHERE fk_cliente =" + end.getId() + " and stats = 'ATIVO'";
+		if(end.isEndPedido()) {
+			sql = "SELECT * FROM Endereco WHERE ID_Endereco =" + end.getId();
+		}
+		else {
+			sql = "SELECT * FROM Endereco WHERE fk_cliente =" + end.getId() + " and stats = 'ATIVO'";
+		}
+		
 
 		try {
 			openConnection();

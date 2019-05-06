@@ -15,6 +15,7 @@ public class Endereco extends EntidadeDominio {
 	private String responsavel;
 	private String pref;
 	private String status;
+	private boolean endPedido;
 
 	public String getNumero() {
 		return numero;
@@ -127,6 +128,12 @@ public class Endereco extends EntidadeDominio {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
 
+	public boolean isEndPedido() {
+		return endPedido;
+	}
+
+	public void setEndPedido(boolean endPedido) {
+		this.endPedido = endPedido;
+	}
 }

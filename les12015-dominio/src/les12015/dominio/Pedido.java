@@ -10,6 +10,9 @@ public class Pedido extends EntidadeDominio {
 	private String dtPedido;
 	private String status;
 	private Integer IDusuario;
+	private String  nomeUser;
+	private String  cpfUser;
+	private Integer idEnd;
 	private double precoTotal;
 	private double precoFrete;
 	private double precoFinal;
@@ -111,6 +114,29 @@ public class Pedido extends EntidadeDominio {
 	public void setProdDetail(boolean prodDetail) {
 		this.prodDetail = prodDetail;
 	}
-	
 
+	public Integer getIdEnd() {
+		return idEnd;
+	}
+
+	public void setIdEnd(Integer idEnd) {
+		this.idEnd = idEnd;
+	}
+
+	public String getNomeUser() {
+		return nomeUser;
+	}
+
+	public void setNomeUser(String nomeUser) {
+		this.nomeUser = nomeUser;
+	}
+
+	public String getCpfUser() {
+		return cpfUser;
+	}
+
+	public void setCpfUser(String cpfUser) {
+		this.cpfUser = cpfUser;
+	}
+	
 }

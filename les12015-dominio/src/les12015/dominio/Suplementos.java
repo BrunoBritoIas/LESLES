@@ -17,6 +17,7 @@ public class Suplementos extends EntidadeDominio {
 	private String status;
 	private String validade;
 	private boolean supPedido;
+	private int quantidade;
 	public String getNome() {
 		return nome;
 	}
@@ -119,5 +120,14 @@ public class Suplementos extends EntidadeDominio {
 	public void setSupPedido(boolean supPedido) {
 		this.supPedido = supPedido;
 	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+	
 	
 }

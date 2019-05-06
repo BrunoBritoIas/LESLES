@@ -38,6 +38,8 @@ public class ProdutoViewHelper implements IViewHelper {
 					: Double.parseDouble(request.getParameter("txtCal"));
 			Double preco = request.getParameter("txtPreco").equals("") ? 0.0
 					: Double.parseDouble(request.getParameter("txtPreco"));
+			
+			Integer quantidade = request.getParameter("txtQuantidade").equals("") ? 0 : Integer.parseInt(request.getParameter("txtQuantidade"));
 			/*
 			 * if(id != null && !id.trim().equals("")){ c.setId(Integer.parseInt(id)); }
 			 */
@@ -55,6 +57,7 @@ public class ProdutoViewHelper implements IViewHelper {
 			sup.setPreco(preco);
 			sup.setStatus("ATIVO");
 			sup.setValidade(validade);
+			sup.setQuantidade(quantidade);
 		}
 
 		if (operacao.equals("CONSULTARSUP") ||operacao.equals("CONSULTARHOME"))  {

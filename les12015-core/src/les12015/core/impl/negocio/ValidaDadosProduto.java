@@ -23,9 +23,10 @@ public class ValidaDadosProduto implements IStrategy {
 			Double gordura = sup.getGordura();
 			Double caloria = sup.getCalorias();
 			Double preco = sup.getPreco();
+			Integer quantidade = sup.getQuantidade();
 
-			if (nome == null || marca == null || validade == null || descricao == null || peso == 0 || categoria == null
-					|| proteina == 0 || carboidrato == 0 || gordura == 0 || caloria == 0 || preco == 0) {
+			if (nome == null || marca == null || validade == null || descricao == null || peso == 0 || categoria == null ||quantidade == null
+					|| proteina == 0 || carboidrato == 0 || gordura == 0 || caloria == 0 || preco == 0 ||quantidade == 0) {
 				return "Dados Cadastrais de Supplementos são obrigatorios";
 
 			}
@@ -35,7 +36,7 @@ public class ValidaDadosProduto implements IStrategy {
 				return "Dados Cadastrais de Supplementos são obrigatorios";
 			}
 
-			if (proteina <= 0 || caloria <= 0 || proteina <= 0 || carboidrato <= 0 || gordura <= 0 || peso <= 0
+			if (proteina <= 0 || caloria <= 0 || proteina <= 0 || carboidrato <= 0 || gordura <= 0 || peso <= 0 ||quantidade <= 0
 					|| preco <= 0) {
 				return "Este valor tem que ser maior que zero";
 			}
