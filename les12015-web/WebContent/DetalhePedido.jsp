@@ -29,7 +29,15 @@
 <link rel="stylesheet" href="assets/css/skins/_all-skins.min.css">
 
 <link rel="stylesheet" href="assets/css/meat.css">
-
+<script>
+function alerta(){
+	$("input[type='checkbox']:checked").each(
+			function() {
+				
+				
+			});
+}
+</script>
 
 </head>
 <style>
@@ -37,56 +45,57 @@ a {
 	color: #014BB0;
 	text-decoration: none;
 }
+
 .navbar {
 	background-color: #00a65a;
 }
-
 </style>
 <body class="hold-transition skin-green layout-top-nav">
 	<div class="wrapper">
-	<nav class="navbar navbar-static-top">
-		<div class="container">
-			<div class="navbar-header">
-				<a href="Home.jsp" class="navbar-brand"><b>SupliMais</b></a>
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar-collapse">
-					<i class="fa fa-bars"></i>
-				</button>
-			</div>
+		<nav class="navbar navbar-static-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a href="Home.jsp" class="navbar-brand"><b>SupliMais</b></a>
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#navbar-collapse">
+						<i class="fa fa-bars"></i>
+					</button>
+				</div>
 
-			<div class="collapse navbar-collapse pull-right" id="navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li><a href="main-restaurants.html"></a></li>
-					<c:choose>
-						<c:when test="${usuario !=null}">
-							<li><a href="CliAdmin.jsp">Perfil </a></li>
-							<li><a href="#">Logout</a></li>
-						</c:when>
-						<c:when test="${usuario ==null}">
-					    <li><a href="Login.jsp">Login</a></li>
-					  </c:when>
+				<div class="collapse navbar-collapse pull-right"
+					id="navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="main-restaurants.html"></a></li>
+						<c:choose>
+							<c:when test="${usuario !=null}">
+								<li><a href="CliAdmin.jsp">Perfil </a></li>
+								<li><a href="#">Logout</a></li>
+							</c:when>
+							<c:when test="${usuario ==null}">
+								<li><a href="Login.jsp">Login</a></li>
+							</c:when>
 
-					</c:choose>
-					<li>
-						<form class="navbar-form" role="search">
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Search"
-									name="q">
-								<div class="input-group-btn">
-									<button class="btn btn-default" type="submit">
-										<i class="glyphicon glyphicon-search"></i>
-									</button>
+						</c:choose>
+						<li>
+							<form class="navbar-form" role="search">
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="Search"
+										name="q">
+									<div class="input-group-btn">
+										<button class="btn btn-default" type="submit">
+											<i class="glyphicon glyphicon-search"></i>
+										</button>
+									</div>
 								</div>
-							</div>
-						</form>
-					</li>
-				</ul>
-			</div>
+							</form>
+						</li>
+					</ul>
+				</div>
 
-			<!-- /.navbar-collapse -->
-		</div>
-	</nav>
-</div>
+				<!-- /.navbar-collapse -->
+			</div>
+		</nav>
+	</div>
 	<!-- Full Width Column -->
 	<div class="content-wrapper">
 		<div class="container">
@@ -106,8 +115,11 @@ a {
 								<div class="box-header with-border">
 									<i class="fa fa-home"></i>
 
-									<h3 class="box-title"></h3>
-									<span class="pull-right"><i class="fa fa-star"></i> 4.5</span>
+									<h3 class="box-title">
+										<input type="checkbox" style="margin-left: 77%;" id="check${pedido.idSup}" /> <label class="pull-right" for="check${pedido.idSup}" onclick="alerta()"><i class="fa fa-refresh"></i>
+											Solicitar Devolução</label> <input type="number"
+											style="margin-left: 87%; width: 52px;" min="1" max="${pedido.quantidade}">
+									</h3>
 								</div>
 								<!-- /.box-header -->
 								<div class="box-body">
@@ -242,21 +254,19 @@ a {
 
 					<!-- FIM DO MENU -->
 				</div>
-
-
-
-				</div>
-				<%-- </c:forEach> --%>
-				<div class="text-center">
-					<form method="post" action="adicionarCarrinho">
-						<button class="btn btn btn-success" type="submit" id="operacao"
-							value="addCarrinho" name="operacao">Adicionar</button>
-					</form>
-				</div>
-			</section>
-			<!-- FIM DO CONTEÚDO -->
 		</div>
-		<!-- /.container -->
+		<%-- </c:forEach> --%>
+		<div class="text-center">
+			<form method="post" action="adicionarCarrinho">
+			
+				<button class="btn btn btn-success" type="submit" id="operacao"
+					value="addCarrinho" name="operacao">Adicionar</button>
+			</form>
+		</div>
+		</section>
+		<!-- FIM DO CONTEÚDO -->
+	</div>
+	<!-- /.container -->
 	</div>
 	<!-- /.content-wrapper -->
 	<footer class="main-footer">

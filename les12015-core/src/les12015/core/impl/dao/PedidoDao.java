@@ -110,8 +110,36 @@ public class PedidoDao extends AbstractJdbcDAO {
 
 	@Override
 	public void alterar(EntidadeDominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
+		openConnection();
+		PreparedStatement pst = null;
+		Pedido p = new Pedido();
+		Pedido ped = (Pedido) entidade;
+		p.setProdDetail(true);
+		p.setId(ped.getId());
+		p = (Pedido) consultar(p).get(0);
+		try {
+			connection.setAutoCommit(false);
+			StringBuilder sql = new StringBuilder();
+			sql.append("UPDATE Pedido SET dt_pedido=?, stats=?, idEndereco=?, precoFinal=?, frete=? , precoTotal=?, ciqtdItens=?, username=?, userCpf=?"
+					+ "WHERE ID_Pedido=?");
+			pst = connection.prepareStatement(sql.toString());
+			pst.setString(1, p.getDtPedido());
+			pst.setString(2, ped.getStatus());
+			pst.setInt(3, p.getIdEnd());
+			pst.setDouble(4, p.getPrecoFinal());
+			pst.setDouble(5, p.getPrecoFrete());
+			pst.setDouble(6, p.getPrecoTotal());
+			pst.setDouble(7, p.getQtdItens());
+			pst.setString(8, p.getNomeUser());
+			pst.setString(9, p.getCpfUser());
+			pst.setInt(10, ped.getId());
+			pst.executeUpdate();
+			connection.commit();
 
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -122,7 +150,10 @@ public class PedidoDao extends AbstractJdbcDAO {
 		String sq = null;
 		String sequela = null;
 
-		if (ped.isProdDetail()) {
+		if(ped.isConsultaPedidos()){
+			sql = "SELECT * FROM Pedido WHERE  1=1";
+		}
+		else if (ped.isProdDetail()) {
 			sql = "SELECT * FROM Pedido WHERE ID_Pedido =" + ped.getId();
 		} else {
 			sql = "SELECT * FROM Pedido WHERE idUsuario =" + ped.getId();

@@ -18,6 +18,7 @@ public class Pedido extends EntidadeDominio {
 	private double precoFinal;
 	private Double qtdItens;
 	private boolean prodDetail;
+	private boolean consultaPedidos;
 
 	public Cupom getCupomPromocional() {
 		return cupomPromocional;
@@ -138,5 +139,14 @@ public class Pedido extends EntidadeDominio {
 	public void setCpfUser(String cpfUser) {
 		this.cpfUser = cpfUser;
 	}
+
+	public boolean isConsultaPedidos() {
+		return consultaPedidos;
+	}
+
+	public void setConsultaPedidos(boolean consultaPedidos) {
+		this.consultaPedidos = consultaPedidos;
+	}
+	
 	
 }

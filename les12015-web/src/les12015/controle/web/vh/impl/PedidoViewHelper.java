@@ -37,7 +37,8 @@ public class PedidoViewHelper implements IViewHelper {
 		String data = formatter.format(ldt);
 		ArrayList<CartaoPedido> p = new ArrayList<CartaoPedido>();
 		if (operacao.equals("FINALIZAR")) {
-			Integer idEndereco = Integer.parseInt(request.getParameter("idEnd"));
+			Integer idEndereco = request.getParameter("idEnd").equals("") ? 0
+					: Integer.parseInt(request.getParameter("idEnd"));
 			Integer numCards = Integer.parseInt(request.getParameter("numCards"));
 			pedido.setDtPedido(data);
 			pedido.setEndereco(cliente.getEndereco().get(0));
@@ -67,15 +68,16 @@ public class PedidoViewHelper implements IViewHelper {
 				cardParcela = "cardParcela" + y;
 				numero = "numero" + y;
 				nvalidade = "validade" + y;
-				while (request.getParameter(numParcela) == "" || request.getParameter(cardValue) == ""
-						|| request.getParameter(cardParcela) == "" || request.getParameter(numero) == ""
-						|| request.getParameter(nvalidade) == "") {
+				nbandeira = "bandeira" + y;
+				while (request.getParameter(numParcela) == null  || request.getParameter(cardValue) == null|| request.getParameter(cardParcela) == null || request.getParameter(numero) == null|| request.getParameter(nvalidade) == null
+						||  request.getParameter(numParcela) == ""  || request.getParameter(cardValue) == ""|| request.getParameter(cardParcela) == "" || request.getParameter(numero) == ""|| request.getParameter(nvalidade) == "") {
 					y++;
 					numParcela = "numParcela" + y;
 					cardValue = "cardValue" + y;
 					cardParcela = "cardParcela" + y;
 					numero = "numero" + y;
 					nvalidade = "validade" + y;
+					nbandeira = "bandeira" + y;
 				}
 
 				nParcela = Double.parseDouble(request.getParameter(numParcela));
@@ -102,11 +104,24 @@ public class PedidoViewHelper implements IViewHelper {
 			pedido.setId(cliente.getIdCliente());
 
 		}
+
+		if (operacao.equals("PEDIDOADMIN")) {
+			pedido.setConsultaPedidos(true);
+
+		}
 		if (operacao.equals("VERPEDIDO")) {
 			Integer idPedido = Integer.parseInt(request.getParameter("idPedido"));
 			pedido.setProdDetail(true);
 			pedido.setId(idPedido);
 		}
+		
+		if(operacao.equals("SPEDIDO")) {
+			String status = request.getParameter("status");
+			Integer idPedido = Integer.parseInt(request.getParameter("idPedido"));
+			pedido.setStatus(status);
+			pedido.setId(idPedido);
+		}
+
 
 		return pedido;
 
@@ -122,10 +137,17 @@ public class PedidoViewHelper implements IViewHelper {
 
 		if (operacao.equals("FINALIZAR")) {
 			sessao.setAttribute("listaPedidos", resultado.getEntidades());
+			sessao.setAttribute("resultadoCompra", resultado.getMsg());
 			ArrayList<Pedido> pedido = (ArrayList<Pedido>) sessao.getAttribute("listaPedidos");
 			cli.setPedido(pedido);
 			request.getSession().setAttribute("usuario", cli);
-			d = request.getRequestDispatcher("FinalPedido.jsp");
+			if (resultado.getMsg() == null) {
+				sessao.setAttribute("pedido", null);
+				sessao.setAttribute("carrinho", null);
+				d = request.getRequestDispatcher("FinalPedido.jsp");
+			} else {
+				d = request.getRequestDispatcher("Carrinho.jsp");
+			}
 		}
 
 		if (operacao.equals("CONSULTAPEDIDO")) {
@@ -142,6 +164,18 @@ public class PedidoViewHelper implements IViewHelper {
 			sessao.setAttribute("detalhePed", resultado.getEntidades().get(0));
 			d = request.getRequestDispatcher("DetalhePedido.jsp");
 
+		}
+
+		if (operacao.equals("PEDIDOADMIN")) {
+
+			sessao.setAttribute("todosPedidos", resultado.getEntidades());
+			d = request.getRequestDispatcher("Admin.jsp");
+
+		}
+		
+		if(operacao.equals("SPEDIDO")) {
+			sessao.setAttribute("todosPedidos", resultado.getEntidades());
+			d = request.getRequestDispatcher("Admin.jsp");
 		}
 
 		d.forward(request, response);

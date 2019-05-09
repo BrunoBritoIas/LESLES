@@ -157,6 +157,7 @@ public class ClienteDAO extends AbstractJdbcDAO {
 				c.setDtCadastro(dtCad);
 				c.setSenha(rs.getString("senha"));
 				c.setTelefone(rs.getString("telefone"));
+				c.setSaldo(rs.getDouble("saldo"));
 				clientes.add(c);
 			}
 			return clientes;

@@ -18,7 +18,9 @@
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 <!-- Font Awesome -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+	integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+	crossorigin="anonymous">
 <!-- Ionicons -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
@@ -44,63 +46,24 @@
 		var Val = parseFloat(valor);
 		var qtdCards = $("input[type='checkbox']:checked").size();
 
-		$("input[type='checkbox']:checked")
-				.each(
-						function() {
-							if (parseFloat(document.getElementById(this.id
-									.replace('radio', 'valor')).value) < 0
-									|| document.getElementById(this.id.replace(
-											'radio', 'valor')).value === "") {
-								document.getElementById(this.id.replace(
-										'radio', 'valor')).value = 0;
-							} else {
-								InputVal += parseFloat(document
-										.getElementById(this.id.replace(
-												'radio', 'valor')).value);
-							}
-							if (InputVal > valor) {
-								document.getElementById(this.id.replace(
-										'radio', 'valor')).value = 0;
-							}
-							document.getElementById(this.id.replace('radio',
-									'valorParcela')).innerText = (parseFloat(document
-									.getElementById(this.id.replace('radio',
-											'valor')).value
-									/ $(
-											"#"
-													+ this.id.replace('radio',
-															'nParcelas')).val()))
-									.toFixed(2)
-
-							$("#" + this.id.replace('radio', '')).val(
-									this.id.replace('radio', ''));
-							$("#" + this.id.replace('radio', 'cardValue')).val(
-									parseFloat(document.getElementById(this.id
-											.replace('radio', 'valor')).value));
-							$("#" + this.id.replace('radio', 'cardParcela'))
-									.val(
-											(parseFloat(document
-													.getElementById(this.id
-															.replace('radio',
-																	'valor')).value
-													/ $(
-															"#"
-																	+ this.id
-																			.replace(
-																					'radio',
-																					'nParcelas'))
-															.val())).toFixed(2));
-							$("#" + this.id.replace('radio', 'numParcela'))
-									.val(
-											$(
-													"#"
-															+ this.id
-																	.replace(
-																			'radio',
-																			'nParcelas'))
-													.val());
-						});
-
+		$("input[type='checkbox']:checked").each(
+				function() {
+					if (parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value) < 0 || document.getElementById(this.id.replace('radio', 'valor')).value === "") {
+						document.getElementById(this.id.replace('radio', 'valor')).value = 0;
+					} else {
+						InputVal += parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value);
+					}
+					if(InputVal > valor){
+						document.getElementById(this.id.replace('radio', 'valor')).value = 0;
+					}
+					document.getElementById(this.id.replace('radio', 'valorParcela')).innerText = 
+						(parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value /$("#" + this.id.replace('radio', 'nParcelas')).val())).toFixed(2)
+						
+					$("#" + this.id.replace('radio', '')).val(this.id.replace('radio', ''));
+					$("#" + this.id.replace('radio', 'cardValue')).val(parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value));
+					$("#" + this.id.replace('radio', 'cardParcela')).val((parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value /$("#" + this.id.replace('radio', 'nParcelas')).val())).toFixed(2));
+					$("#" + this.id.replace('radio', 'numParcela')).val($("#" + this.id.replace('radio', 'nParcelas')).val());
+				});
 		$("#numCards").val(qtdCards);
 		if (InputVal === Val) {
 			$("#Concluir").prop("disabled", false);
@@ -132,7 +95,10 @@
 
 	}
 	function clicada(idEndereco) {
-		$("#idEnd").val(idEndereco)
+		$("#idEnd").val(idEndereco);
+	}
+	function clicCup(idEndereco) {
+		$("#idCupom").val(idCup);
 	}
 </script>
 </head>
@@ -155,6 +121,17 @@
 							<h2 class="page-header">
 								<i class="fa fa-shopping-cart"></i> Finalize o seu pedido
 							</h2>
+							<h3>
+								&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+								&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+								&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+								&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+								&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+								&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+								&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp<i
+									class="fas fa-hand-holding-usd"></i> Saldo:R$ ${usuario.saldo}
+							</h3>
+
 						</div>
 					</div>
 
@@ -315,10 +292,6 @@
 
 												</tbody>
 											</table>
-											<div>
-												<input type="button" id="operacao" name="operacao"
-													value="ADDcar" class="btn btn-success" />
-											</div>
 
 										</c:if> <c:if test="${usuario.getCartao().size() <= 0}">
 
@@ -344,6 +317,11 @@
 								<table class="table">
 									<tbody>
 										<tr>
+											<th style="width: 50%">Saldo em Conta:</th>
+											<td class="text-right" style="color:blue;"><c:out
+													value=" R$ ${usuario.saldo}" /></td>
+										</tr>
+										<tr>
 											<th style="width: 50%">Itens:</th>
 											<td class="text-right"><c:out
 													value=" R$ ${pedido.precoTotal}" /></td>
@@ -364,7 +342,8 @@
 										<tr>
 											<th>Total:</th>
 											<c:if test="${cupom !=null}">
-												<td class="text-right">R$ ${pedido.precoTotal + pedido.precoFrete - cupom.desconto}</td>
+												<td class="text-right" id="idTotal">R$
+													${pedido.precoTotal + pedido.precoFrete - cupom.desconto}</td>
 											</c:if>
 											<c:if test="${cupom ==null}">
 												<td class="text-right" id="idTotal">R$
@@ -373,7 +352,7 @@
 										</tr>
 									</tbody>
 								</table>
-
+								<h4 style="color: red">${resultadoCompra}</h4>
 							</div>
 						</div>
 						<!-- /.col -->
@@ -394,8 +373,7 @@
 										id="numParcela${cartao.id}" />
 									<input type="hidden" value="${cartao.numero}"
 										name="numero${cartao.id}" id="numero${cartao.id}" />
-									<input type="hidden" value="${cartao.bandeira}"
-										name="bandeira${cartao.id}" id="bandeira${cartao.id}" />
+									<input type="text" value="${cartao.bandeira}" name="bandeira${cartao.id}" id="bandeira${cartao.id}" />
 									<input type="hidden" value="${cartao.validade}"
 										name="validade${cartao.id}" id="validade${cartao.id}" />
 								</c:forEach>
@@ -405,7 +383,6 @@
 									value="FINALIZAR" class="btn btn-success pull-right" disabled>
 									<i class="fa fa-credit-card"></i> Concluir Pedido
 								</button>
-							</form>
 						</div>
 
 

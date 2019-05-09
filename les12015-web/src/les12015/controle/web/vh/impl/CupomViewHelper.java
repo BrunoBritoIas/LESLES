@@ -100,7 +100,8 @@ public class CupomViewHelper implements IViewHelper {
 
 				}
 			}
-			
+			request.getSession().getAttribute("carrinho");
+			request.getSession().getAttribute("itens");
 			d.forward(request, response);
 		}
 

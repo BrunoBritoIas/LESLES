@@ -127,7 +127,7 @@ public class ProdutoViewHelper implements IViewHelper {
 			Integer ProdID = Integer.parseInt( request.getParameter("id"));
 			sup.setId(ProdID);
 		}
-
+		
 		return sup;
 
 	}

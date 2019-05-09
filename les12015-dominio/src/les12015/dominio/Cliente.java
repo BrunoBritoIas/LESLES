@@ -27,6 +27,8 @@ public class Cliente extends EntidadeDominio {
 
 	private String Status;
 	
+	private Double saldo;
+	
 	private List<Pedido> pedido;
 	private List<Endereco> endereco;
 	private List<Cartao> cartao;
@@ -147,4 +149,12 @@ public class Cliente extends EntidadeDominio {
 		this.cartao = cartao;
 	}
 
+	public Double getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(Double saldo) {
+		this.saldo = saldo;
+	}
+	
 }

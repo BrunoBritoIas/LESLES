@@ -84,7 +84,7 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 			connection.setAutoCommit(false);
 			StringBuilder sql = new StringBuilder();
 			sql.append(
-					"UPDATE Suplemento SET nome=?, marca=?, categoria=?, descricao=?, peso=?, preco=?, proteina=?, carboidratos=?, gordura=?, calorias=?, stats=?,validade=?"
+					"UPDATE Suplemento SET nome=?, marca=?, categoria=?, descricao=?, peso=?, preco=?, proteina=?, carboidratos=?, gordura=?, calorias=?, stats=?,validade=?,quantidade=?"
 							+ " WHERE Id_suplemento=?");
 
 			pst = connection.prepareStatement(sql.toString());
@@ -100,7 +100,8 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 			pst.setDouble(10, suplemento.getCalorias());
 			pst.setString(11, suplemento.getStatus());
 			pst.setString(12, suplemento.getValidade());
-			pst.setDouble(13, suplemento.getId());
+			pst.setInt(13, suplemento.getQuantidade());
+			pst.setDouble(14, suplemento.getId());
 			pst.executeUpdate();
 			connection.commit();
 
@@ -121,15 +122,13 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 			sup = (Suplementos) entidade;
 		}
 		String sql = null;
-		
-		if(sup.isSupPedido()) {
-			sql = "SELECT * FROM Suplemento WHERE Id_suplemento="+ sup.getId();
-		}
-		else
-		{
+
+		if (sup.isSupPedido()) {
+			sql = "SELECT * FROM Suplemento WHERE Id_suplemento=" + sup.getId();
+		} else {
 			sql = "SELECT * FROM Suplemento WHERE 1=1";
 		}
-		
+
 		if (sup.getId() != null && sup.getId() > 0) {
 			sql += " and Id_suplemento = " + sup.getId();
 
@@ -156,7 +155,7 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 			sql += " and rating = " + sup.getRating();
 
 		}
-		
+
 		try {
 			openConnection();
 			pst = connection.prepareStatement(sql);
