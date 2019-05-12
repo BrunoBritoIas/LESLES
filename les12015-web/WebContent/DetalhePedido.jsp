@@ -30,13 +30,15 @@
 
 <link rel="stylesheet" href="assets/css/meat.css">
 <script>
-function alerta(){
-	$("input[type='checkbox']:checked").each(
-			function() {
-				
-				
-			});
-}
+	function alerta(id) {
+
+		$("input[type='checkbox']:checked").each(function() {
+			alert(this.id)
+		});
+
+		var qtdCards = $("input[type='checkbox']:checked").size();
+		alert(qtdCards)
+	}
 </script>
 
 </head>
@@ -113,13 +115,15 @@ a {
 						<div class="col-xs-12">
 							<div class="box box-solid">
 								<div class="box-header with-border">
-									<i class="fa fa-home"></i>
+									<form method="get" action="finalizaCompra">
 
-									<h3 class="box-title">
-										<input type="checkbox" style="margin-left: 77%;" id="check${pedido.idSup}" /> <label class="pull-right" for="check${pedido.idSup}" onclick="alerta()"><i class="fa fa-refresh"></i>
-											Solicitar Devolução</label> <input type="number"
-											style="margin-left: 87%; width: 52px;" min="1" max="${pedido.quantidade}">
-									</h3>
+										<h3 class="box-title pull-right">
+
+											<input type="number" class="pull-right" value="1" placeholder="Quantidade "id="qtdProd" name="qtdProd" style="width: 145px;" min="1" max="${pedido.quantidade}" />
+											<input type="hidden" class="pull-right" id="idProd" name="idProd" value="${pedido.idSup}"/> <label
+												class="control control-checkbox"><button type="submit"  value="UNICHANGE" name="operacao">Devolução <i class="fa fa-refresh"></i></button></label>
+										</h3>										
+									</form>
 								</div>
 								<!-- /.box-header -->
 								<div class="box-body">
@@ -257,17 +261,19 @@ a {
 		</div>
 		<%-- </c:forEach> --%>
 		<div class="text-center">
-			<form method="post" action="adicionarCarrinho">
-			
+			<form method="get" action="finalizaCompra">
+				<c:forEach items="${detalhePed.unidade}" var="pedi">
+					<input type="text" id="${pedi.idSup}" name="">
+				</c:forEach>
+
 				<button class="btn btn btn-success" type="submit" id="operacao"
 					value="addCarrinho" name="operacao">Adicionar</button>
 			</form>
 		</div>
-		</section>
+
 		<!-- FIM DO CONTEÚDO -->
 	</div>
 	<!-- /.container -->
-	</div>
 	<!-- /.content-wrapper -->
 	<footer class="main-footer">
 		<div class="container">

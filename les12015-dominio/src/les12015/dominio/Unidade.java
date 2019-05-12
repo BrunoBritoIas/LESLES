@@ -1,6 +1,9 @@
 package les12015.dominio;
 
+import java.util.List;
+
 public class Unidade extends EntidadeDominio {
+	private List<Troca> troca;
 	private Suplementos sup;
 	private int quantidade;
 	private int idSup;
@@ -37,6 +40,15 @@ public class Unidade extends EntidadeDominio {
 	public void setIdSup(int idSup) {
 		this.idSup = idSup;
 	}
+
+	public List<Troca> getTroca() {
+		return troca;
+	}
+
+	public void setTroca(List<Troca> troca) {
+		this.troca = troca;
+	}
+	
 	
 	
 }

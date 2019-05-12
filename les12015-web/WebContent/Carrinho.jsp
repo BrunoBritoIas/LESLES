@@ -46,24 +46,62 @@
 		var Val = parseFloat(valor);
 		var qtdCards = $("input[type='checkbox']:checked").size();
 
-		$("input[type='checkbox']:checked").each(
-				function() {
-					if (parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value) < 0 || document.getElementById(this.id.replace('radio', 'valor')).value === "") {
-						document.getElementById(this.id.replace('radio', 'valor')).value = 0;
-					} else {
-						InputVal += parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value);
-					}
-					if(InputVal > valor){
-						document.getElementById(this.id.replace('radio', 'valor')).value = 0;
-					}
-					document.getElementById(this.id.replace('radio', 'valorParcela')).innerText = 
-						(parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value /$("#" + this.id.replace('radio', 'nParcelas')).val())).toFixed(2)
-						
-					$("#" + this.id.replace('radio', '')).val(this.id.replace('radio', ''));
-					$("#" + this.id.replace('radio', 'cardValue')).val(parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value));
-					$("#" + this.id.replace('radio', 'cardParcela')).val((parseFloat(document.getElementById(this.id.replace('radio', 'valor')).value /$("#" + this.id.replace('radio', 'nParcelas')).val())).toFixed(2));
-					$("#" + this.id.replace('radio', 'numParcela')).val($("#" + this.id.replace('radio', 'nParcelas')).val());
-				});
+		$("input[type='checkbox']:checked")
+				.each(
+						function() {
+							if (parseFloat(document.getElementById(this.id
+									.replace('radio', 'valor')).value) < 0
+									|| document.getElementById(this.id.replace(
+											'radio', 'valor')).value === "") {
+								document.getElementById(this.id.replace(
+										'radio', 'valor')).value = 0;
+							} else {
+								InputVal += parseFloat(document
+										.getElementById(this.id.replace(
+												'radio', 'valor')).value);
+							}
+							if (InputVal > valor) {
+								document.getElementById(this.id.replace(
+										'radio', 'valor')).value = 0;
+							}
+							document.getElementById(this.id.replace('radio',
+									'valorParcela')).innerText = (parseFloat(document
+									.getElementById(this.id.replace('radio',
+											'valor')).value
+									/ $(
+											"#"
+													+ this.id.replace('radio',
+															'nParcelas')).val()))
+									.toFixed(2)
+
+							$("#" + this.id.replace('radio', '')).val(
+									this.id.replace('radio', ''));
+							$("#" + this.id.replace('radio', 'cardValue')).val(
+									parseFloat(document.getElementById(this.id
+											.replace('radio', 'valor')).value));
+							$("#" + this.id.replace('radio', 'cardParcela'))
+									.val(
+											(parseFloat(document
+													.getElementById(this.id
+															.replace('radio',
+																	'valor')).value
+													/ $(
+															"#"
+																	+ this.id
+																			.replace(
+																					'radio',
+																					'nParcelas'))
+															.val())).toFixed(2));
+							$("#" + this.id.replace('radio', 'numParcela'))
+									.val(
+											$(
+													"#"
+															+ this.id
+																	.replace(
+																			'radio',
+																			'nParcelas'))
+													.val());
+						});
 		$("#numCards").val(qtdCards);
 		if (InputVal === Val) {
 			$("#Concluir").prop("disabled", false);
@@ -318,7 +356,7 @@
 									<tbody>
 										<tr>
 											<th style="width: 50%">Saldo em Conta:</th>
-											<td class="text-right" style="color:blue;"><c:out
+											<td class="text-right" style="color: blue;"><c:out
 													value=" R$ ${usuario.saldo}" /></td>
 										</tr>
 										<tr>
@@ -373,7 +411,8 @@
 										id="numParcela${cartao.id}" />
 									<input type="hidden" value="${cartao.numero}"
 										name="numero${cartao.id}" id="numero${cartao.id}" />
-									<input type="text" value="${cartao.bandeira}" name="bandeira${cartao.id}" id="bandeira${cartao.id}" />
+									<input type="text" value="${cartao.bandeira}"
+										name="bandeira${cartao.id}" id="bandeira${cartao.id}" />
 									<input type="hidden" value="${cartao.validade}"
 										name="validade${cartao.id}" id="validade${cartao.id}" />
 								</c:forEach>
@@ -383,6 +422,7 @@
 									value="FINALIZAR" class="btn btn-success pull-right" disabled>
 									<i class="fa fa-credit-card"></i> Concluir Pedido
 								</button>
+							</form>
 						</div>
 
 

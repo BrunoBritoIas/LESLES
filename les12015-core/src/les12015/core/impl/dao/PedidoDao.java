@@ -13,6 +13,7 @@ import les12015.dominio.Endereco;
 import les12015.dominio.EntidadeDominio;
 import les12015.dominio.Pedido;
 import les12015.dominio.Suplementos;
+import les12015.dominio.Troca;
 import les12015.dominio.Unidade;
 
 public class PedidoDao extends AbstractJdbcDAO {
@@ -120,8 +121,9 @@ public class PedidoDao extends AbstractJdbcDAO {
 		try {
 			connection.setAutoCommit(false);
 			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE Pedido SET dt_pedido=?, stats=?, idEndereco=?, precoFinal=?, frete=? , precoTotal=?, ciqtdItens=?, username=?, userCpf=?"
-					+ "WHERE ID_Pedido=?");
+			sql.append(
+					"UPDATE Pedido SET dt_pedido=?, stats=?, idEndereco=?, precoFinal=?, frete=? , precoTotal=?, ciqtdItens=?, username=?, userCpf=?"
+							+ "WHERE ID_Pedido=?");
 			pst = connection.prepareStatement(sql.toString());
 			pst.setString(1, p.getDtPedido());
 			pst.setString(2, ped.getStatus());
@@ -136,6 +138,28 @@ public class PedidoDao extends AbstractJdbcDAO {
 			pst.executeUpdate();
 			connection.commit();
 
+			PreparedStatement pts = null;
+			for (int i = 0; i < ped.getUnidade().size(); i++) {
+				TrocaDAO troquinha = new TrocaDAO();
+				sql = new StringBuilder();
+				sql.append("UPDATE UnidadePedido SET quantidade=?, preço=?, id_pedido=?, id_sup=?"
+						+ " WHERE ID_UnidadePedido=?");
+				pts = connection.prepareStatement(sql.toString());
+				pts.setInt(1, ped.getUnidade().get(i).getQuantidade());
+				pts.setDouble(2, ped.getUnidade().get(i).getPreco());
+				pts.setDouble(3, ped.getUnidade().get(i).getId());
+				pts.setInt(4, ped.getUnidade().get(i).getIdSup());
+				pts.setInt(5, ped.getUnidade().get(i).getId());
+				pts.executeUpdate();
+				connection.commit();
+
+				for (int y = 0; y < ped.getUnidade().get(i).getTroca().size(); y++) {
+					if (ped.getUnidade().get(i).getTroca().get(y) != null) {
+						troquinha.salvar(ped.getUnidade().get(i).getTroca().get(y));
+					}
+				}
+			}
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -149,11 +173,10 @@ public class PedidoDao extends AbstractJdbcDAO {
 		String sql = null;
 		String sq = null;
 		String sequela = null;
-
-		if(ped.isConsultaPedidos()){
+		TrocaDAO troquinha = new TrocaDAO();
+		if (ped.isConsultaPedidos()) {
 			sql = "SELECT * FROM Pedido WHERE  1=1";
-		}
-		else if (ped.isProdDetail()) {
+		} else if (ped.isProdDetail()) {
 			sql = "SELECT * FROM Pedido WHERE ID_Pedido =" + ped.getId();
 		} else {
 			sql = "SELECT * FROM Pedido WHERE idUsuario =" + ped.getId();
@@ -203,16 +226,27 @@ public class PedidoDao extends AbstractJdbcDAO {
 				ResultSet rsss = pst.executeQuery();
 				Suplementos s = new Suplementos();
 				while (rsss.next()) {
+					List<EntidadeDominio> troca = new ArrayList<EntidadeDominio>();
+					List<Troca> tr = new ArrayList<Troca>();
 					SuplementoDAO supimpa = new SuplementoDAO();
 					Unidade uni = new Unidade();
 					s = new Suplementos();
 					uni.setQuantidade(rsss.getInt("quantidade"));
 					uni.setPreco(rsss.getDouble("preço"));
 					uni.setIdSup(rsss.getInt("id_sup"));
+					uni.setId(rsss.getInt("ID_UnidadePedido"));
 					s.setId(rsss.getInt("id_sup"));
 					s.setSupPedido(true);
 					s = (Suplementos) supimpa.consultar(s).get(0);
 					uni.setSup(s);
+					troca = troquinha.consultar(uni);
+
+					for (int i = 0; i < troca.size(); i++) {
+						Troca t = new Troca();
+						t = (Troca) troca.get(i);
+						tr.add(t);
+					}
+					uni.setTroca(tr);
 					unidadePedido.add(uni);
 				}
 				EnderecoDAO end = new EnderecoDAO();

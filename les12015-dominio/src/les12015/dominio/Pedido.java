@@ -10,8 +10,8 @@ public class Pedido extends EntidadeDominio {
 	private String dtPedido;
 	private String status;
 	private Integer IDusuario;
-	private String  nomeUser;
-	private String  cpfUser;
+	private String nomeUser;
+	private String cpfUser;
 	private Integer idEnd;
 	private double precoTotal;
 	private double precoFrete;
@@ -147,6 +147,5 @@ public class Pedido extends EntidadeDominio {
 	public void setConsultaPedidos(boolean consultaPedidos) {
 		this.consultaPedidos = consultaPedidos;
 	}
-	
-	
+
 }

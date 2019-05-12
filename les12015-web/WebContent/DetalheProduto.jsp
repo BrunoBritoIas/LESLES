@@ -144,7 +144,6 @@
 					<button class="btn btn btn-success" type="submit" id="operacao" value="addCarrinho" name="operacao">Adicionar</button>
 				</form>
 			</div>
-			</section>
 			<!-- FIM DO CONTEÚDO -->
 		</div>
 		<!-- /.container -->

@@ -18,6 +18,7 @@ import les12015.dominio.CartaoPedido;
 import les12015.dominio.Cliente;
 import les12015.dominio.EntidadeDominio;
 import les12015.dominio.Pedido;
+import les12015.dominio.Troca;
 
 public class PedidoViewHelper implements IViewHelper {
 
@@ -69,8 +70,11 @@ public class PedidoViewHelper implements IViewHelper {
 				numero = "numero" + y;
 				nvalidade = "validade" + y;
 				nbandeira = "bandeira" + y;
-				while (request.getParameter(numParcela) == null  || request.getParameter(cardValue) == null|| request.getParameter(cardParcela) == null || request.getParameter(numero) == null|| request.getParameter(nvalidade) == null
-						||  request.getParameter(numParcela) == ""  || request.getParameter(cardValue) == ""|| request.getParameter(cardParcela) == "" || request.getParameter(numero) == ""|| request.getParameter(nvalidade) == "") {
+				while (request.getParameter(numParcela) == null || request.getParameter(cardValue) == null
+						|| request.getParameter(cardParcela) == null || request.getParameter(numero) == null
+						|| request.getParameter(nvalidade) == null || request.getParameter(numParcela) == ""
+						|| request.getParameter(cardValue) == "" || request.getParameter(cardParcela) == ""
+						|| request.getParameter(numero) == "" || request.getParameter(nvalidade) == "") {
 					y++;
 					numParcela = "numParcela" + y;
 					cardValue = "cardValue" + y;
@@ -114,14 +118,37 @@ public class PedidoViewHelper implements IViewHelper {
 			pedido.setProdDetail(true);
 			pedido.setId(idPedido);
 		}
-		
-		if(operacao.equals("SPEDIDO")) {
+
+		if (operacao.equals("SPEDIDO")) {
 			String status = request.getParameter("status");
 			Integer idPedido = Integer.parseInt(request.getParameter("idPedido"));
 			pedido.setStatus(status);
 			pedido.setId(idPedido);
 		}
 
+		if (operacao.equals("UNICHANGE")) {
+			ArrayList<Troca> troca = new ArrayList<Troca>();
+			Troca t = new Troca();
+			Pedido pedi = (Pedido) request.getSession().getAttribute("detalhePed");
+			Integer qtdProd = Integer.parseInt(request.getParameter("qtdProd"));
+			Integer idSup = Integer.parseInt(request.getParameter("idProd"));
+			for (int i = 0; i < pedi.getUnidade().size(); i++) {
+				if (idSup == pedi.getUnidade().get(i).getIdSup()) {
+					
+					t.setIdSup(idSup);
+					t.setQtdCredito(qtdProd * pedi.getUnidade().get(i).getSup().getPreco());
+					t.setStatus("Troca Unitaria");
+					t.setIdUnidade(pedi.getUnidade().get(i).getId());
+					t.setQtdItens(qtdProd);
+					troca.add(t);
+					pedi.getUnidade().get(i).setQuantidade(pedi.getUnidade().get(i).getQuantidade() - qtdProd);
+					pedi.getUnidade().get(i).setTroca(troca);
+				}
+			}		
+			pedi.setStatus("Troca ATIVA");
+			pedido = pedi;
+
+		}
 
 		return pedido;
 
@@ -166,14 +193,21 @@ public class PedidoViewHelper implements IViewHelper {
 
 		}
 
+		if (operacao.equals("UNICHANGE")) {
+			sessao.setAttribute("pedDetail", resultado.getEntidades());
+			sessao.setAttribute("detalhePed", resultado.getEntidades().get(0));
+			d = request.getRequestDispatcher("DetalhePedido.jsp");
+
+		}
+
 		if (operacao.equals("PEDIDOADMIN")) {
 
 			sessao.setAttribute("todosPedidos", resultado.getEntidades());
 			d = request.getRequestDispatcher("Admin.jsp");
 
 		}
-		
-		if(operacao.equals("SPEDIDO")) {
+
+		if (operacao.equals("SPEDIDO")) {
 			sessao.setAttribute("todosPedidos", resultado.getEntidades());
 			d = request.getRequestDispatcher("Admin.jsp");
 		}
