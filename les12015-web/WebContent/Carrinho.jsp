@@ -411,7 +411,7 @@
 										id="numParcela${cartao.id}" />
 									<input type="hidden" value="${cartao.numero}"
 										name="numero${cartao.id}" id="numero${cartao.id}" />
-									<input type="text" value="${cartao.bandeira}"
+									<input type="hidden" value="${cartao.bandeira}"
 										name="bandeira${cartao.id}" id="bandeira${cartao.id}" />
 									<input type="hidden" value="${cartao.validade}"
 										name="validade${cartao.id}" id="validade${cartao.id}" />

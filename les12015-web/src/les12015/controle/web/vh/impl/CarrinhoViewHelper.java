@@ -67,23 +67,6 @@ public class CarrinhoViewHelper implements IViewHelper {
 		Double vFinal = 0.0;
 		Double qtdFinal = 0.0;
 		Double pesoFinal = 0.0;
-		/*
-		 * if (operacao.equals("addCarrinho")) { Map<Integer, Pedido> carrinho = new
-		 * HashMap<Integer, Pedido>(); Unidade u = new Unidade(); Suplementos sup =
-		 * (Suplementos) resultado.getEntidades().get(0); Pedido p = new Pedido();
-		 * Cliente cliente = (Cliente) request.getSession().getAttribute("usuario");
-		 * String stringId = Integer.toString(cliente.getIdCliente()); u.setSup(sup);
-		 * u.setQuantidade(1); u.setPreco(sup.getPreco()); p.setUnidade(new
-		 * ArrayList<Unidade>()); p.getUnidade().add(u); int idUsuario =
-		 * Integer.parseInt(stringId); carrinho.put(idUsuario, p);
-		 * 
-		 * String nome = carrinho.get(1).getUnidade().get(0).getSup().getNome();
-		 * 
-		 * request.getSession().setAttribute("carrinho", carrinho);
-		 * request.getSession().setAttribute("itenscarrinho", p.getUnidade()); d =
-		 * request.getRequestDispatcher("Carrinho.jsp"); }
-		 */
-
 		if (operacao.equals("addCarrinho")) {
 
 			Cliente cliente = (Cliente) request.getSession().getAttribute("usuario");
@@ -97,8 +80,6 @@ public class CarrinhoViewHelper implements IViewHelper {
 				carrinho = new HashMap<Integer, Pedido>();
 			}
 
-			String msg1 = "Nao ha mais suplementos restantes no estoque";
-			msg1.trim();
 
 			if (carrinho.containsKey(id)) {
 				List<EntidadeDominio> e = resultado.getEntidades();

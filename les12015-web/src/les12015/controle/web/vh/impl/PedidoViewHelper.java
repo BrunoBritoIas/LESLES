@@ -119,6 +119,15 @@ public class PedidoViewHelper implements IViewHelper {
 			pedido.setId(idPedido);
 		}
 
+		if (operacao.equals("PEDIDOCANCEL")) {
+			Pedido pedi = (Pedido) request.getSession().getAttribute("detalhePed");
+			Integer idPedido = Integer.parseInt(request.getParameter("PedidoID"));
+			pedido = pedi;
+			pedido.setStatus("CANCELADO");
+			pedido.setProdDetail(true);
+			pedido.setId(idPedido);
+		}
+
 		if (operacao.equals("SPEDIDO")) {
 			String status = request.getParameter("status");
 			Integer idPedido = Integer.parseInt(request.getParameter("idPedido"));
@@ -134,17 +143,42 @@ public class PedidoViewHelper implements IViewHelper {
 			Integer idSup = Integer.parseInt(request.getParameter("idProd"));
 			for (int i = 0; i < pedi.getUnidade().size(); i++) {
 				if (idSup == pedi.getUnidade().get(i).getIdSup()) {
-					
+
 					t.setIdSup(idSup);
 					t.setQtdCredito(qtdProd * pedi.getUnidade().get(i).getSup().getPreco());
-					t.setStatus("Troca Unitaria");
-					t.setIdUnidade(pedi.getUnidade().get(i).getId());
+					t.setStatus("Troca Ativa");
+					t.setIdUnidade(pedi.getUnidade().get(i).getSup().getId());
 					t.setQtdItens(qtdProd);
+					t.setIdUser(pedi.getIDusuario());
 					troca.add(t);
 					pedi.getUnidade().get(i).setQuantidade(pedi.getUnidade().get(i).getQuantidade() - qtdProd);
 					pedi.getUnidade().get(i).setTroca(troca);
 				}
-			}		
+			}
+			pedi.setStatus("Troca ATIVA");
+			pedido = pedi;
+
+		}
+
+		if (operacao.equals("FULLTROCA")) {
+			ArrayList<Troca> troca = new ArrayList<Troca>();
+			Troca t = new Troca();
+			Pedido pedi = (Pedido) request.getSession().getAttribute("detalhePed");
+			for (int i = 0; i < pedi.getUnidade().size(); i++) {
+				troca = new ArrayList<Troca>();
+				t = new Troca();
+				Integer qtdProd = pedi.getUnidade().get(i).getQuantidade();
+				Integer idSup = pedi.getUnidade().get(i).getSup().getId();
+				t.setIdSup(idSup);
+				t.setQtdCredito(qtdProd * pedi.getUnidade().get(i).getSup().getPreco());
+				t.setStatus("Troca Ativa");
+				t.setIdUnidade(pedi.getUnidade().get(i).getSup().getId());
+				t.setQtdItens(qtdProd);
+				t.setIdUser(pedi.getIDusuario());
+				troca.add(t);
+				pedi.getUnidade().get(i).setQuantidade(pedi.getUnidade().get(i).getQuantidade() - qtdProd);
+				pedi.getUnidade().get(i).setTroca(troca);
+			}
 			pedi.setStatus("Troca ATIVA");
 			pedido = pedi;
 
@@ -193,7 +227,23 @@ public class PedidoViewHelper implements IViewHelper {
 
 		}
 
+		if (operacao.equals("PEDIDOCANCEL")) {
+			Pedido p = (Pedido) resultado.getEntidades().get(0);
+			if (p.getStatus().equals("ADMCANCELADO")) {
+				d = request.getRequestDispatcher("CliAdmin.jsp");
+			} else if (p.getStatus().equals("CANCELADO")) {
+				sessao.setAttribute("detalhePed", resultado.getEntidades().get(0));
+				d = request.getRequestDispatcher("DetalhePedido.jsp");
+			}
+		}
+
 		if (operacao.equals("UNICHANGE")) {
+			sessao.setAttribute("pedDetail", resultado.getEntidades());
+			sessao.setAttribute("detalhePed", resultado.getEntidades().get(0));
+			d = request.getRequestDispatcher("DetalhePedido.jsp");
+
+		}
+		if (operacao.equals("FULLTROCA")) {
 			sessao.setAttribute("pedDetail", resultado.getEntidades());
 			sessao.setAttribute("detalhePed", resultado.getEntidades().get(0));
 			d = request.getRequestDispatcher("DetalhePedido.jsp");

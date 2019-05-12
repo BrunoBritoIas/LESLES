@@ -4,6 +4,7 @@ public class Troca extends EntidadeDominio {
 	private Integer idUnidade;
 	private Double  qtdCredito;
 	private Integer  qtdItens;
+	private Integer  idUser;
 	private Integer  idSup;
 	private String status;
 	
@@ -36,6 +37,12 @@ public class Troca extends EntidadeDominio {
 	}
 	public void setQtdItens(Integer qtdItens) {
 		this.qtdItens = qtdItens;
+	}
+	public Integer getIdUser() {
+		return idUser;
+	}
+	public void setIdUser(Integer idUser) {
+		this.idUser = idUser;
 	}
 	
 	

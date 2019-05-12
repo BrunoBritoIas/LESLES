@@ -79,6 +79,8 @@ public class Servlet extends HttpServlet {
 		commands.put("VERPEDIDO", new ConsultarCommand());
 		commands.put("SPEDIDO", new AlterarCommand());
 		commands.put("UNICHANGE", new AlterarCommand());
+		commands.put("PEDIDOCANCEL", new AlterarCommand());
+		commands.put("FULLTROCA", new AlterarCommand());
 		/*
 		 * Utilizando o ViewHelper para tratar especificações de qualquer tela e
 		 * indexando cada viewhelper pela url em que esta servlet é chamada no form

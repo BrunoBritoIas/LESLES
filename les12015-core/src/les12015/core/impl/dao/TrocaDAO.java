@@ -25,14 +25,15 @@ public class TrocaDAO extends AbstractJdbcDAO {
 		openConnection();
 		Troca troca = (Troca) entidade;
 		StringBuilder sql = new StringBuilder();
-		sql.append("INSERT INTO Troca (stats, ciqtdItens, credito, idUnidade)" + "    VALUES (?, ?, ?, ?)");
+		sql.append("INSERT INTO Troca (stats, ciqtdItens, credito, idUnidade, idUsuario )" + "    VALUES (?, ?, ?, ?, ?)");
 		try {
 			pst = connection.prepareStatement(sql.toString());
 			connection.setAutoCommit(false);			
-			pst.setString(1, troca.getStatus());
+			pst.setString(1, "Troca Unitaria");
 			pst.setInt(2, troca.getQtdItens());
 			pst.setDouble(3, troca.getQtdCredito());
 			pst.setInt(4, troca.getIdUnidade());
+			pst.setInt(5, troca.getIdUser());
 			pst.executeUpdate();
 			connection.commit();
 		} catch (SQLException ex) {
@@ -71,6 +72,7 @@ public class TrocaDAO extends AbstractJdbcDAO {
 				t.setQtdCredito(rs.getDouble("credito"));
 				t.setQtdItens(rs.getInt("ciqtdItens"));
 				t.setId(rs.getInt("ID_Troca"));
+				t.setId(rs.getInt("idUsuario"));
 				trocas.add(t);
 			}
 			return trocas;

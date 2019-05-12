@@ -104,25 +104,29 @@ a {
 
 
 			<!-- INÍCIO DO CONTEÚDO -->
-			<section class="content-header">
-				<h1></h1>
-			</section>
 
-			<%-- <c:forEach items="${detalhePed}" var="pedido"> --%>
 			<section class="content">
 				<c:forEach items="${detalhePed.unidade}" var="pedido">
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="box box-solid">
 								<div class="box-header with-border">
-									<form method="get" action="finalizaCompra">
+									<form method="post" action="finalizaCompra">
+										<c:if test="${(detalhePed.status ne 'CANCELADO')&&(detalhePed.status ne 'Aguardando Aprovação')}">
+											<h3 class="box-title pull-right">
 
-										<h3 class="box-title pull-right">
-
-											<input type="number" class="pull-right" value="1" placeholder="Quantidade "id="qtdProd" name="qtdProd" style="width: 145px;" min="1" max="${pedido.quantidade}" />
-											<input type="hidden" class="pull-right" id="idProd" name="idProd" value="${pedido.idSup}"/> <label
-												class="control control-checkbox"><button type="submit"  value="UNICHANGE" name="operacao">Devolução <i class="fa fa-refresh"></i></button></label>
-										</h3>										
+												<input type="number" class="pull-right" value="1"
+													placeholder="Quantidade " id="qtdProd" name="qtdProd"
+													style="width: 145px;" min="1" max="${pedido.quantidade}"
+													oninvalid="setCustomValidity('Valor deve ser maior ou igual a quantidade disponivel ')" />
+												<input type="hidden" class="pull-right" id="idProd"
+													name="idProd" value="${pedido.idSup}" /> <label
+													class="control control-checkbox"><button
+														type="submit" value="UNICHANGE" name="operacao">
+														Devolução <i class="fa fa-refresh"></i>
+													</button></label>
+											</h3>
+										</c:if>								
 									</form>
 								</div>
 								<!-- /.box-header -->
@@ -262,12 +266,15 @@ a {
 		<%-- </c:forEach> --%>
 		<div class="text-center">
 			<form method="get" action="finalizaCompra">
-				<c:forEach items="${detalhePed.unidade}" var="pedi">
-					<input type="text" id="${pedi.idSup}" name="">
-				</c:forEach>
-
-				<button class="btn btn btn-success" type="submit" id="operacao"
-					value="addCarrinho" name="operacao">Adicionar</button>
+			<input type="hidden" name="PedidoID" value="${detalhePed.id}">
+				<c:if test="${detalhePed.getStatus().equals('Aguardando Aprovação')}">
+					<button class="btn btn btn-danger" type="submit" id="operacao"
+				 name="operacao" value="PEDIDOCANCEL">Cancelar Pedido</button>
+				</c:if>
+				<c:if test="${detalhePed.getStatus().equals('APROVADO')}">
+					<button class="btn btn btn-success" type="submit" id="operacao" value="FULLTROCA"
+				 name="operacao">Troca Completa  <i class="fa fa-refresh"></i></button>
+				</c:if>
 			</form>
 		</div>
 

@@ -147,14 +147,14 @@ public class PedidoDao extends AbstractJdbcDAO {
 				pts = connection.prepareStatement(sql.toString());
 				pts.setInt(1, ped.getUnidade().get(i).getQuantidade());
 				pts.setDouble(2, ped.getUnidade().get(i).getPreco());
-				pts.setDouble(3, ped.getUnidade().get(i).getId());
+				pts.setDouble(3, ped.getId());
 				pts.setInt(4, ped.getUnidade().get(i).getIdSup());
 				pts.setInt(5, ped.getUnidade().get(i).getId());
 				pts.executeUpdate();
 				connection.commit();
 
 				for (int y = 0; y < ped.getUnidade().get(i).getTroca().size(); y++) {
-					if (ped.getUnidade().get(i).getTroca().get(y) != null) {
+					if (ped.getUnidade().get(i).getTroca().get(y) != null && ped.getUnidade().get(i).getTroca().get(y).getStatus().equals("Troca Ativa")) {
 						troquinha.salvar(ped.getUnidade().get(i).getTroca().get(y));
 					}
 				}
@@ -204,6 +204,7 @@ public class PedidoDao extends AbstractJdbcDAO {
 				pi.setIdEnd(rs.getInt("idEndereco"));
 				pi.setNomeUser(rs.getString("username"));
 				pi.setCpfUser(rs.getString("usercpf"));
+				pi.setIDusuario(rs.getInt("idUsuario"));
 				sq = "SELECT * FROM CartaoPedido WHERE id_pedido =" + pi.getId();
 				pst = null;
 				pst = connection.prepareStatement(sq);
