@@ -21,6 +21,7 @@ import les12015.controle.web.vh.impl.CupomViewHelper;
 import les12015.controle.web.vh.impl.EnderecoViewHelper;
 import les12015.controle.web.vh.impl.PedidoViewHelper;
 import les12015.controle.web.vh.impl.ProdutoViewHelper;
+import les12015.controle.web.vh.impl.TrocaViewHelper;
 import les12015.core.aplicacao.Resultado;
 import les12015.dominio.EntidadeDominio;
 
@@ -61,26 +62,30 @@ public class Servlet extends HttpServlet {
 		commands.put("CONSULTARHOME", new ConsultarCommand());
 		commands.put("VERPRODUTO", new ConsultarCommand());
 		commands.put("ALTERARSUP", new AlterarCommand());
-		//CARRINHO
+		// CARRINHO
 		commands.put("addCarrinho", new ConsultarCommand());
 		commands.put("REMOVER", new ConsultarCommand());
 		commands.put("QUANTIDADE", new ConsultarCommand());
 		commands.put("ENDHOME", new ConsultarCommand());
 		commands.put("CARDHOME", new ConsultarCommand());
-		
-		//CUPOM
+
+		// CUPOM
 		commands.put("SAVECUPOM", new SalvarCommand());
 		commands.put("CUPOM", new ConsultarCommand());
-		
-		//PEDIDO
+
+		// PEDIDO
 		commands.put("FINALIZAR", new SalvarCommand());
 		commands.put("CONSULTAPEDIDO", new ConsultarCommand());
 		commands.put("PEDIDOADMIN", new ConsultarCommand());
 		commands.put("VERPEDIDO", new ConsultarCommand());
 		commands.put("SPEDIDO", new AlterarCommand());
+		
+		//TROCA
 		commands.put("UNICHANGE", new AlterarCommand());
 		commands.put("PEDIDOCANCEL", new AlterarCommand());
 		commands.put("FULLTROCA", new AlterarCommand());
+		commands.put("TROCADMIN", new ConsultarCommand());
+		commands.put("APROVATROCA", new AlterarCommand());
 		/*
 		 * Utilizando o ViewHelper para tratar especificações de qualquer tela e
 		 * indexando cada viewhelper pela url em que esta servlet é chamada no form
@@ -104,6 +109,7 @@ public class Servlet extends HttpServlet {
 		vhs.put("/les12015-web/adicionarCarrinho", new CarrinhoViewHelper());
 		vhs.put("/les12015-web/SalvarCupom", new CupomViewHelper());
 		vhs.put("/les12015-web/finalizaCompra", new PedidoViewHelper());
+		vhs.put("/les12015-web/efetuaTroca", new TrocaViewHelper());
 
 	}
 
@@ -157,7 +163,7 @@ public class Servlet extends HttpServlet {
 		 * Executa o command que chamará a fachada para executar a operação requisitada
 		 * o retorno é uma instância da classe resultado que pode conter mensagens derro
 		 * ou entidades de retorno
-		 */ 
+		 */
 		Resultado resultado = command.execute(entidade);
 
 		/*

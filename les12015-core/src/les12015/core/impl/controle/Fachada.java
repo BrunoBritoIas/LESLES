@@ -16,12 +16,15 @@ import les12015.core.impl.dao.CupomDAO;
 import les12015.core.impl.dao.EnderecoDAO;
 import les12015.core.impl.dao.PedidoDao;
 import les12015.core.impl.dao.SuplementoDAO;
+import les12015.core.impl.dao.TrocaDAO;
 import les12015.core.impl.negocio.CancelaPedido;
 import les12015.core.impl.negocio.NumCaracterCampos;
 import les12015.core.impl.negocio.ValidaDadosCliente;
 import les12015.core.impl.negocio.ValidaDadosEndereco;
 import les12015.core.impl.negocio.ValidaDadosProduto;
 import les12015.core.impl.negocio.ValidaPedido;
+import les12015.core.impl.negocio.ValidaTroca;
+import les12015.core.impl.negocio.ValidaTroca;
 import les12015.core.impl.negocio.ValidaValidade;
 import les12015.core.impl.negocio.ValidadorCpf;
 import les12015.dominio.Cartao;
@@ -31,6 +34,7 @@ import les12015.dominio.Endereco;
 import les12015.dominio.EntidadeDominio;
 import les12015.dominio.Pedido;
 import les12015.dominio.Suplementos;
+import les12015.dominio.Troca;
 import les12015.dominio.Unidade;
 
 public class Fachada implements IFachada {
@@ -62,7 +66,7 @@ public class Fachada implements IFachada {
 		CartaoDao carDao = new CartaoDao();
 		CupomDAO cupDao = new CupomDAO();
 		PedidoDao pedDao = new PedidoDao(); 
-		//TrocaDAO trcDAO = new TrocaDAO(); 
+		TrocaDAO trcDAO = new TrocaDAO(); 
 
 		/* Adicionando cada dao no MAP indexando pelo nome da classe */
 		daos.put(Cliente.class.getName(), cliDAO);
@@ -72,7 +76,7 @@ public class Fachada implements IFachada {
 		daos.put(Unidade.class.getName(), supDao);
 		daos.put(Cupom.class.getName(), cupDao);
 		daos.put(Pedido.class.getName(), pedDao);
-		//daos.put(Troca.class.getName(), trcDAO);
+		daos.put(Troca.class.getName(), trcDAO);
 		/* Criando instâncias de regras de negócio a serem utilizados */
 
 		ValidadorCpf vCpf = new ValidadorCpf();
@@ -83,6 +87,7 @@ public class Fachada implements IFachada {
 		ValidaDadosEndereco vEnd = new ValidaDadosEndereco();
 		ValidaPedido vPed = new ValidaPedido();
 		CancelaPedido cPed = new CancelaPedido();
+		ValidaTroca vTroca = new  ValidaTroca();
 		/*
 		 * Criando uma lista para conter as regras de negócio de cliente quando a
 		 * operação for salvar
@@ -93,7 +98,7 @@ public class Fachada implements IFachada {
 		List<IStrategy> rnsSalvarEnderecos = new ArrayList<IStrategy>();
 		List<IStrategy> rnsSalvarPedidos = new ArrayList<IStrategy>();
 		List<IStrategy> rnsCancelarPedidos = new ArrayList<IStrategy>();
-		//List<IStrategy> rnsSalvarTrocas = new ArrayList<IStrategy>();
+		List<IStrategy> rnsAprovarTrocas = new ArrayList<IStrategy>();
 		/* Adicionando as regras a serem utilizadas na operação salvar do cliente */
 		rnsSalvarCliente.add(vCpf);
 		rnsSalvarCliente.add(cliVal);
@@ -103,7 +108,8 @@ public class Fachada implements IFachada {
 		rnsSalvarEnderecos.add(vEnd);
 		rnsSalvarPedidos.add(vPed);
 		rnsCancelarPedidos.add(cPed);
-		//rnsSalvarTrocas.add(vPed);
+		rnsAprovarTrocas.add(vTroca);
+		
 		/*
 		 * Cria o mapa que poderá conter todas as listas de regras de negócio específica
 		 * por operação do cliente
@@ -112,7 +118,7 @@ public class Fachada implements IFachada {
 		Map<String, List<IStrategy>> rnsProduto = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsEndereco = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsPedido = new HashMap<String, List<IStrategy>>();
-		//Map<String, List<IStrategy>> rnsTroca = new HashMap<String, List<IStrategy>>();
+		Map<String, List<IStrategy>> rnsTroca = new HashMap<String, List<IStrategy>>();
 		/*
 		 * Adiciona a listra de regras na operação salvar no mapa do cliente (lista
 		 * criada na linha 93)
@@ -123,7 +129,7 @@ public class Fachada implements IFachada {
 		rnsEndereco.put("SALVAR", rnsSalvarEnderecos);
 		rnsPedido.put("SALVAR", rnsSalvarPedidos);
 		rnsPedido.put("ALTERAR", rnsCancelarPedidos);
-		//rnsTroca.put("ALTERAR", rnsSalvarTrocas);
+		rnsTroca.put("ALTERAR", rnsAprovarTrocas);
 		/*
 		 * Adiciona o mapa(criado na linha 101) com as regras indexadas pelas operações
 		 * no mapa geral indexado pelo nome da entidade. Observe que este mapa (rns) é o
@@ -133,7 +139,7 @@ public class Fachada implements IFachada {
 		rns.put(Suplementos.class.getName(), rnsProduto);
 		rns.put(Endereco.class.getName(), rnsEndereco);
 		rns.put(Pedido.class.getName(), rnsPedido);
-		//rns.put(Pedido.class.getName(), rnsTroca);
+		rns.put(Troca.class.getName(), rnsTroca);
 	}
 
 	@Override

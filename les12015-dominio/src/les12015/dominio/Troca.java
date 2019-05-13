@@ -1,6 +1,8 @@
 package les12015.dominio;
 
 public class Troca extends EntidadeDominio {
+	private Cliente user;
+	private Suplementos produto;
 	private Integer idUnidade;
 	private Double  qtdCredito;
 	private Integer  qtdItens;
@@ -43,6 +45,18 @@ public class Troca extends EntidadeDominio {
 	}
 	public void setIdUser(Integer idUser) {
 		this.idUser = idUser;
+	}
+	public Cliente getUser() {
+		return user;
+	}
+	public void setUser(Cliente user) {
+		this.user = user;
+	}
+	public Suplementos getProduto() {
+		return produto;
+	}
+	public void setProduto(Suplementos produto) {
+		this.produto = produto;
 	}
 	
 	

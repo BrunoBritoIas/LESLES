@@ -95,9 +95,9 @@ function mandaId(num, numm){
 							<li><a href="http://www.jquery2dotnet.com"
 								data-target-id="table"><i class="fa fa-table fa-fw"></i>Pedidos</a></li>
 							<li><a href="http://www.jquery2dotnet.com"
-								data-target-id="forms"><i class="fa fa-tasks fa-fw"></i>Pedidos</a></li>
+								data-target-id="forms"><i class="fa fa-table fa-fw"></i>Trocas</a></li>
 							<li><a href="http://www.jquery2dotnet.com"
-								data-target-id="calender"><i class="fa fa-calendar fa-fw"></i>Calenderario</a></li>
+								data-target-id="calender"><i class="fa fa-charts fa-fw"></i>Estatisticas</a></li>
 						</ul>
 					</div>
 					<!-- HOME -->
@@ -317,7 +317,9 @@ function mandaId(num, numm){
 					<div class="col-md-9 well admin-content" id="table">
 							<%@include file="PedidosAdmin.jsp"%>
 					</div>
-					<div class="col-md-9 well admin-content" id="forms">Forms</div>
+					<div class="col-md-9 well admin-content" id="forms">
+						<%@include file="ListaTrocas.jsp"%>
+					</div>
 					<div class="col-md-9 well admin-content" id="calender">
 						Calender</div>
 				</div>

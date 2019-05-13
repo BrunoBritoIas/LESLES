@@ -8,31 +8,34 @@
 	cellspacing="0" width="100%">
 	<thead>
 		<tr>
-			<th>Nome</th>
-			<th>CPF</th>
-			<th>Frete</th>
+			<th>N.</th>
+			<th>Produto</th>
 			<th>Quantidade</th>
-			<th>Data</th>
+			<th>Credito</th>
+			<th>Usuario</th>
+			<th>CPF</th>
 			<th>Status</th>
 			<th>Aprovar</th>
 			<th>Reprovar</th>
 
 
+
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach items="${todosPedidos}" var="pedido">
+		<c:forEach items="${todasTrocas}" var="troca">
 			<tr>
-				<td>${pedido.nomeUser}</td>
-				<td>${pedido.cpfUser}</td>
-				<td>${pedido.precoFrete}</td>
-				<td>${pedido.precoFinal}</td>
-				<td>${pedido.dtPedido}</td>
-				<td>${pedido.status}</td>
-				<c:if test="${pedido.status eq 'Aguardando Aprovação'}">
+				<td>${troca.id}</td>
+				<td>${troca.produto.nome}</td>
+				<td>${troca.qtdItens}</td>
+				<td>${troca.qtdCredito}</td>
+				<td>${troca.user.nome}</td>
+				<td>${troca.user.cpf}</td>
+				<td>${troca.status}</td>
+				<c:if test="${troca.status eq 'Troca Unitaria'}">
 					<td><p data-placement="top" data-toggle="tooltip" title="Edit">
 							<a
-								href="finalizaCompra?operacao=SPEDIDO&status=APROVADO&idPedido=${pedido.id}"><button
+								href="efetuaTroca?operacao=APROVATROCA&status=APROVADO&idUser=${troca.idUser}&idSup=${troca.produto.id}&idTroca=${troca.id}&credito=${troca.qtdCredito}"><button
 									type="button" class="btn btn-success btn-xs">
 									<span class="glyphicon glyphicon-ok-sign"></span>
 								</button></a>
@@ -40,7 +43,7 @@
 
 					<td><p data-placement="top" data-toggle="tooltip" title="Edit">
 							<a
-								href="finalizaCompra?operacao=SPEDIDO&status=REPROVADO&idPedido=${pedido.id}"><button
+								href="efetuaTroca?operacao=APROVATROCA&status=APROVADO&idUser=${troca.idUser}&idUser=${troca.idSup}"><button
 									type="button" class="btn btn-danger btn-xs">
 									<span class="glyphicon glyphicon-ok-sign"></span>
 								</button></a>
@@ -53,7 +56,7 @@
 </table>
 <form action="finalizaCompra" method="post">
 	<button type="submit" class="btn btn-primary btn-lg" name="operacao"
-		value=PEDIDOADMIN id="operacao" style="width: 95%;">
+		value=TROCADMIN id="operacao" style="width: 95%;">
 		<span class="glyphicon glyphicon-ok-sign"></span> consultar
 	</button>
 </form>

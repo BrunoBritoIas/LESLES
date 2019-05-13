@@ -35,6 +35,7 @@
 		<url-pattern>/adicionarCarrinho</url-pattern>
 		<url-pattern>/SalvarCupom</url-pattern>
 		<url-pattern>/finalizaCompra</url-pattern>
+		<url-pattern>/efetuaTroca</url-pattern>
 	</servlet-mapping>
 
 </web-app>
