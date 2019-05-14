@@ -115,7 +115,16 @@ public class PedidoViewHelper implements IViewHelper {
 			return t;
 
 		}
-		
+
+		if (operacao.equals("TROCACLI")) {
+			Troca t = new Troca();
+			t.setIdUser(cliente.getId());
+			t.setIdUser(cliente.getIdCliente());
+			t.setStatus("TROCACLI");
+			return t;
+
+		}
+
 		if (operacao.equals("PEDIDOADMIN")) {
 			pedido.setConsultaPedidos(true);
 
@@ -263,10 +272,16 @@ public class PedidoViewHelper implements IViewHelper {
 			d = request.getRequestDispatcher("Admin.jsp");
 
 		}
-		
+
 		if (operacao.equals("TROCADMIN")) {
 			sessao.setAttribute("todasTrocas", resultado.getEntidades());
 			d = request.getRequestDispatcher("Admin.jsp");
+
+		}
+
+		if (operacao.equals("TROCACLI")) {
+			sessao.setAttribute("clienteTroca", resultado.getEntidades());
+			d = request.getRequestDispatcher("CliAdmin.jsp");
 
 		}
 

@@ -356,8 +356,7 @@
 									<tbody>
 										<tr>
 											<th style="width: 50%">Saldo em Conta:</th>
-											<td class="text-right" style="color: blue;"><c:out
-													value=" R$ ${usuario.saldo}" /></td>
+											<td class="text-right" style="color: blue;"><input type="radio" value=true id="saldoRadio"><c:out value=" R$ ${usuario.saldo}" /></td>
 										</tr>
 										<tr>
 											<th style="width: 50%">Itens:</th>
@@ -417,7 +416,7 @@
 										name="validade${cartao.id}" id="validade${cartao.id}" />
 								</c:forEach>
 								<input type="hidden" name="numCards" id="numCards" /> <input
-									type="text" name="idEnd" id="idEnd" />
+									type="hidden" name="idEnd" id="idEnd" />
 								<button type="submit" name="operacao" id="Concluir"
 									value="FINALIZAR" class="btn btn-success pull-right" disabled>
 									<i class="fa fa-credit-card"></i> Concluir Pedido

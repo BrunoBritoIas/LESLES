@@ -46,6 +46,21 @@
 								</button></a>
 						</p></td>
 				</c:if>
+
+				<c:if test="${pedido.status ne 'Aguardando Aprovação'}">
+					<td><p data-placement="top" data-toggle="tooltip" title="Edit">
+
+							<button disabled type="button" class="btn btn-success btn-xs">
+								<span class="glyphicon glyphicon-ok-sign"></span>
+							</button>
+						</p></td>
+
+					<td><p data-placement="top" data-toggle="tooltip" title="Edit">
+							<button disabled type="button" class="btn btn-danger btn-xs">
+								<span class="glyphicon glyphicon-ok-sign"></span>
+							</button>
+						</p></td>
+				</c:if>
 			</tr>
 		</c:forEach>
 

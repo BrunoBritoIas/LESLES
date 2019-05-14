@@ -85,6 +85,7 @@ public class Servlet extends HttpServlet {
 		commands.put("PEDIDOCANCEL", new AlterarCommand());
 		commands.put("FULLTROCA", new AlterarCommand());
 		commands.put("TROCADMIN", new ConsultarCommand());
+		commands.put("TROCACLI", new ConsultarCommand());
 		commands.put("APROVATROCA", new AlterarCommand());
 		/*
 		 * Utilizando o ViewHelper para tratar especificações de qualquer tela e

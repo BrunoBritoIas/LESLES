@@ -108,6 +108,13 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		} finally {
+			try {
+				pst.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -209,6 +216,16 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 			return suplementos;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				pst.close();
+				connection.close();
+
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+
 		}
 		return null;
 	}

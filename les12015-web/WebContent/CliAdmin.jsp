@@ -107,8 +107,11 @@ textarea {
 								data-target-id="conCards"><i class="fa fa-bar-chart-o fa-fw"></i>Consulta
 									Cartões </a></li>
 							<li><a href="http://www.jquery2dotnet.com"
-								data-target-id="conPedidos"><i class="fa fa-bar-chart-o fa-fw"></i>Consulta
-									Pedidos </a></li>
+								data-target-id="conPedidos"><i
+									class="fa fa-bar-chart-o fa-fw"></i>Consulta Pedidos </a></li>
+									<li><a href="http://www.jquery2dotnet.com"
+								data-target-id="conTrocas"><i
+									class="fa fa-bar-chart-o fa-fw"></i>Trocas </a></li>
 						</ul>
 					</div>
 					<!-- HOME -->
@@ -125,7 +128,7 @@ textarea {
 										<th>E-mail</th>
 										<th>Nascimento</th>
 										<th>Telefone</th>
-										<th>Editar</th>
+										<th>Saldo</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -137,14 +140,7 @@ textarea {
 											<td>${usuario.email}</td>
 											<td>${usuario.dtNasc}</td>
 											<td>${usuario.telefone}</td>
-
-											<td><p data-placement="top" data-toggle="tooltip"
-													title="Edit">
-													<button type="button" class="btn btn-primary btn-xs"
-														data-title="Edit" data-toggle="modal" data-target="#edit">
-														<span class="glyphicon glyphicon-pencil"></span>
-													</button>
-												</p></td>
+											<td>$ ${usuario.saldo}</td>
 										</tr>
 									</c:if>
 								</tbody>
@@ -326,7 +322,9 @@ textarea {
 					<div class="col-md-9 content admin-content" id="conPedidos">
 						<%@include file="CliPedido.jsp"%>
 					</div>
-
+					<div class="col-md-9 content admin-content" id="conTrocas">
+						<%@include file="ClienteTrocas.jsp"%>
+					</div>
 				</div>
 
 				<!-- /.content -->

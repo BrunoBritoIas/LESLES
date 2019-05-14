@@ -19,6 +19,7 @@ public class Pedido extends EntidadeDominio {
 	private Double qtdItens;
 	private boolean prodDetail;
 	private boolean consultaPedidos;
+	private boolean usaCredito;
 
 	public Cupom getCupomPromocional() {
 		return cupomPromocional;
@@ -148,4 +149,12 @@ public class Pedido extends EntidadeDominio {
 		this.consultaPedidos = consultaPedidos;
 	}
 
+	public boolean isUsaCredito() {
+		return usaCredito;
+	}
+
+	public void setUsaCredito(boolean usaCredito) {
+		this.usaCredito = usaCredito;
+	}
+	
 }

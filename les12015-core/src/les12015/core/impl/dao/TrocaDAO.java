@@ -42,6 +42,7 @@ public class TrocaDAO extends AbstractJdbcDAO {
 			connection.rollback();
 			ex.printStackTrace();
 		} finally {
+			pst.close();
 			connection.close();
 		}
 
@@ -65,6 +66,7 @@ public class TrocaDAO extends AbstractJdbcDAO {
 			connection.rollback();
 			ex.printStackTrace();
 		} finally {
+			pst.close();
 			connection.close();
 		}
 
@@ -77,8 +79,12 @@ public class TrocaDAO extends AbstractJdbcDAO {
 		if (entidade instanceof Troca) {
 
 			String sql = null;
-
-			sql = "SELECT * FROM Troca";
+			Troca tu = (Troca) entidade;
+			if (tu.getStatus().equals("TROCACLI")) {
+				sql = "SELECT * FROM Troca WHERE idUsuario =" + tu.getIdUser();
+			} else {
+				sql = "SELECT * FROM Troca";
+			}
 			try {
 				openConnection();
 				pst = connection.prepareStatement(sql.toString());
@@ -108,6 +114,9 @@ public class TrocaDAO extends AbstractJdbcDAO {
 				return trocas;
 			} catch (SQLException e) {
 				e.printStackTrace();
+			} finally {
+				pst.close();
+				connection.close();
 			}
 
 		} else {
@@ -134,6 +143,9 @@ public class TrocaDAO extends AbstractJdbcDAO {
 				return trocas;
 			} catch (SQLException e) {
 				e.printStackTrace();
+			} finally {
+				pst.close();
+				connection.close();
 			}
 		}
 		return null;

@@ -15,7 +15,6 @@ public class ValidaTroca implements IStrategy {
 	public String processar(EntidadeDominio entidade) {
 		if (entidade instanceof Troca) {
 			Cliente c = new Cliente();
-			SuplementoDAO pDAO = new SuplementoDAO();
 			ClienteDAO cDAO = new ClienteDAO();
 			Troca t = new Troca();
 			Troca troca = (Troca) entidade;

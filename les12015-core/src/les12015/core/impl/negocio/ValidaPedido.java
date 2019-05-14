@@ -36,7 +36,7 @@ public class ValidaPedido implements IStrategy {
 				quantidade = ped.getUnidade().get(i).getQuantidade();
 
 				if (quantidade > s.getQuantidade()) {
-					return "Tem muito Suprimento ai Parça";
+					return "Quantidade de Suplementos maior que o estoque";
 				}
 
 			}
