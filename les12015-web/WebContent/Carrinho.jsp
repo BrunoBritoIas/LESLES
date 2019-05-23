@@ -105,6 +105,7 @@
 		$("#numCards").val(qtdCards);
 		if (InputVal === Val) {
 			$("#Concluir").prop("disabled", false);
+			$("#usaSaldo").val(document.getElementById("saldoRadio").checked);
 		} else {
 			$("#Concluir").prop("disabled", true);
 		}
@@ -119,7 +120,7 @@
 	}
 
 	function clicLoco(checkId) {
-
+		$("#usaSaldo").val(document.getElementById("saldoRadio").checked);
 		var idCheck = checkId;
 		var idChange = idCheck.replace('radio', 'valor');
 		var idChange2 = idCheck.replace('radio', 'nParcelas');
@@ -134,6 +135,9 @@
 	}
 	function clicada(idEndereco) {
 		$("#idEnd").val(idEndereco);
+	}
+	function radioLoco(usaSaldo) {
+		$("#usaSaldo").val(document.getElementById("saldoRadio").checked);
 	}
 	function clicCup(idEndereco) {
 		$("#idCupom").val(idCup);
@@ -356,7 +360,7 @@
 									<tbody>
 										<tr>
 											<th style="width: 50%">Saldo em Conta:</th>
-											<td class="text-right" style="color: blue;"><input type="radio" value=true id="saldoRadio"><c:out value=" R$ ${usuario.saldo}" /></td>
+											<td class="text-right" style="color: blue;" id="SaldoCliente"><input type="radio" id="saldoRadio" onclick="radioLoco()"><c:out value=" R$ ${usuario.saldo}" /></td>
 										</tr>
 										<tr>
 											<th style="width: 50%">Itens:</th>
@@ -417,6 +421,7 @@
 								</c:forEach>
 								<input type="hidden" name="numCards" id="numCards" /> <input
 									type="hidden" name="idEnd" id="idEnd" />
+									<input type="text" name="usaSaldo" id="usaSaldo" />
 								<button type="submit" name="operacao" id="Concluir"
 									value="FINALIZAR" class="btn btn-success pull-right" disabled>
 									<i class="fa fa-credit-card"></i> Concluir Pedido

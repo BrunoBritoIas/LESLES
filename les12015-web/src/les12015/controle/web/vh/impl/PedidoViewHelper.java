@@ -41,6 +41,7 @@ public class PedidoViewHelper implements IViewHelper {
 			Integer idEndereco = request.getParameter("idEnd").equals("") ? 0
 					: Integer.parseInt(request.getParameter("idEnd"));
 			Integer numCards = Integer.parseInt(request.getParameter("numCards"));
+			Boolean usaCredito = Boolean.parseBoolean(request.getParameter("usaSaldo"));
 			pedido.setDtPedido(data);
 			pedido.setEndereco(cliente.getEndereco().get(0));
 			pedido.setNomeUser(cliente.getNome());
@@ -52,8 +53,11 @@ public class PedidoViewHelper implements IViewHelper {
 			pedido.setPrecoFrete(ped.getPrecoFrete());
 			pedido.setPrecoTotal(ped.getPrecoTotal());
 			pedido.setQtdItens(ped.getQtdItens());
-			pedido.setIdEnd(idEndereco);
+			pedido.setIdEnd(idEndereco);			
 			pedido.setId(1);
+			pedido.setUsaCredito(usaCredito);
+			pedido.setSaldoCliente(cliente.getSaldo());
+			pedido.setSaldoUsado(0);
 			int y = 1;
 			String numParcela = "numParcela" + y;
 			String cardValue = "cardValue" + y;
@@ -100,6 +104,18 @@ public class PedidoViewHelper implements IViewHelper {
 				p.add(cardPed);
 				pedido.setCardPed(p);
 				y++;
+			}
+			if (pedido.isUsaCredito()) {
+				pedido.setSaldoUsado(cliente.getSaldo());
+				if(pedido.getPrecoFinal() <= cliente.getSaldo())		{
+					pedido.setPrecoFinal(pedido.getPrecoFrete());
+					pedido.setSaldoCliente(cliente.getSaldo() - pedido.getPrecoFinal() );
+				}
+				else {
+					pedido.setPrecoFinal(pedido.getPrecoFinal() - cliente.getSaldo());
+					pedido.setSaldoCliente(0);
+				}
+				
 			}
 
 		}
@@ -217,6 +233,10 @@ public class PedidoViewHelper implements IViewHelper {
 			sessao.setAttribute("resultadoCompra", resultado.getMsg());
 			ArrayList<Pedido> pedido = (ArrayList<Pedido>) sessao.getAttribute("listaPedidos");
 			cli.setPedido(pedido);
+			Pedido p = (Pedido) resultado.getEntidades().get(0);
+			if (p.isUsaCredito()) {
+				cli.setSaldo(p.getSaldoCliente());		
+			}
 			request.getSession().setAttribute("usuario", cli);
 			if (resultado.getMsg() == null) {
 				sessao.setAttribute("pedido", null);

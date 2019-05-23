@@ -3,10 +3,13 @@ package les12015.core.impl.negocio;
 import java.sql.SQLException;
 
 import les12015.core.IStrategy;
+import les12015.core.impl.dao.ClienteDAO;
 import les12015.core.impl.dao.SuplementoDAO;
+import les12015.dominio.Cliente;
 import les12015.dominio.EntidadeDominio;
 import les12015.dominio.Pedido;
 import les12015.dominio.Suplementos;
+import les12015.dominio.Troca;
 
 public class ValidaPedido implements IStrategy {
 
@@ -56,7 +59,7 @@ public class ValidaPedido implements IStrategy {
 
 			}
 
-			for (int i = 0; i < ped.getUnidade().size(); i++) {	
+			for (int i = 0; i < ped.getUnidade().size(); i++) {
 				s = new Suplementos();
 				supimpa = new SuplementoDAO();
 				s.setId(ped.getUnidade().get(i).getSup().getId());
@@ -69,6 +72,23 @@ public class ValidaPedido implements IStrategy {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
+			}
+
+			if (ped.isUsaCredito()) {
+				Cliente c = new Cliente();
+				ClienteDAO cDAO = new ClienteDAO();
+				c.setId(ped.getIDusuario());
+				c = (Cliente) cDAO.consultar(c).get(0);
+				c.setSaldo(ped.getSaldoCliente());
+				EntidadeDominio e = new EntidadeDominio();
+				e = c;
+				try {
+					cDAO.alterar(e);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
 			}
 
 		}

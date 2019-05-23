@@ -4,7 +4,6 @@ import java.sql.SQLException;
 
 import les12015.core.IStrategy;
 import les12015.core.impl.dao.ClienteDAO;
-import les12015.core.impl.dao.SuplementoDAO;
 import les12015.dominio.Cliente;
 import les12015.dominio.EntidadeDominio;
 import les12015.dominio.Troca;

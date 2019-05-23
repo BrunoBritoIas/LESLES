@@ -33,8 +33,8 @@ public class PedidoDao extends AbstractJdbcDAO {
 
 			StringBuilder sql = new StringBuilder();
 			sql.append(
-					"INSERT INTO Pedido(dt_pedido, stats, idEndereco, idUsuario, precoFinal, frete , precoTotal, ciqtdItens, username, userCpf) ");
-			sql.append("VALUES (?,?,?,?,?,?,?,?,?,?)");
+					"INSERT INTO Pedido(dt_pedido, stats, idEndereco, idUsuario, precoFinal, frete , precoTotal, ciqtdItens, username, userCpf, credito) ");
+			sql.append("VALUES (?,?,?,?,?,?,?,?,?,?,?)");
 
 			pst = connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 			pst.setString(1, ped.getDtPedido());
@@ -47,6 +47,7 @@ public class PedidoDao extends AbstractJdbcDAO {
 			pst.setDouble(8, ped.getQtdItens());
 			pst.setString(9, ped.getNomeUser());
 			pst.setString(10, ped.getCpfUser());
+			pst.setDouble(11, ped.getSaldoUsado());
 			pst.executeUpdate();
 			ResultSet rs = pst.getGeneratedKeys();
 			int id = 0;
@@ -205,6 +206,7 @@ public class PedidoDao extends AbstractJdbcDAO {
 				pi.setNomeUser(rs.getString("username"));
 				pi.setCpfUser(rs.getString("usercpf"));
 				pi.setIDusuario(rs.getInt("idUsuario"));
+				pi.setSaldoUsado(rs.getDouble("credito"));
 				sq = "SELECT * FROM CartaoPedido WHERE id_pedido =" + pi.getId();
 				pst = null;
 				pst = connection.prepareStatement(sq);

@@ -11,11 +11,9 @@ import javax.servlet.http.HttpSession;
 
 import les12015.controle.web.vh.IViewHelper;
 import les12015.core.aplicacao.Resultado;
-import les12015.dominio.Cartao;
 import les12015.dominio.Cliente;
 import les12015.dominio.Endereco;
 import les12015.dominio.EntidadeDominio;
-import les12015.dominio.Suplementos;
 
 public class EnderecoViewHelper implements IViewHelper {
 

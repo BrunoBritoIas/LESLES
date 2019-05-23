@@ -10,13 +10,17 @@ a {
 	color: #014BB0;
 	text-decoration: none;
 }
+
+.branco {
+	color: white
+}
 </style>
 
 <div class="wrapper">
 	<nav class="navbar navbar-static-top">
 		<div class="container">
 			<div class="navbar-header">
-				<a href="Home.jsp" class="navbar-brand"><b>SupliMais</b></a>
+				<a href="Home.jsp" class="navbar-brand branco"><b>SupliMais</b></a>
 				<button type="button" class="navbar-toggle collapsed"
 					data-toggle="collapse" data-target="#navbar-collapse">
 					<i class="fa fa-bars"></i>
@@ -32,8 +36,8 @@ a {
 							<li><a href="#">Logout</a></li>
 						</c:when>
 						<c:when test="${usuario ==null}">
-					    <li><a href="Login.jsp">Login</a></li>
-					  </c:when>
+							<li><a href="Login.jsp">Login</a></li>
+						</c:when>
 
 					</c:choose>
 					<li>

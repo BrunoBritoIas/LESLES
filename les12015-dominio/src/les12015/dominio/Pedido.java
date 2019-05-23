@@ -13,10 +13,12 @@ public class Pedido extends EntidadeDominio {
 	private String nomeUser;
 	private String cpfUser;
 	private Integer idEnd;
+	private Double qtdItens;
 	private double precoTotal;
 	private double precoFrete;
 	private double precoFinal;
-	private Double qtdItens;
+	private double saldoCliente;
+	private double saldoUsado;
 	private boolean prodDetail;
 	private boolean consultaPedidos;
 	private boolean usaCredito;
@@ -156,5 +158,22 @@ public class Pedido extends EntidadeDominio {
 	public void setUsaCredito(boolean usaCredito) {
 		this.usaCredito = usaCredito;
 	}
+
+	public double getSaldoCliente() {
+		return saldoCliente;
+	}
+
+	public void setSaldoCliente(double saldoCliente) {
+		this.saldoCliente = saldoCliente;
+	}
+
+	public double getSaldoUsado() {
+		return saldoUsado;
+	}
+
+	public void setSaldoUsado(double saldoUsado) {
+		this.saldoUsado = saldoUsado;
+	}
 	
+
 }

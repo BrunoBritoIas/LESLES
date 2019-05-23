@@ -112,7 +112,8 @@ a {
 							<div class="box box-solid">
 								<div class="box-header with-border">
 									<form method="post" action="finalizaCompra">
-										<c:if test="${(detalhePed.status ne 'CANCELADO')&&(detalhePed.status ne 'Aguardando Aprovação')}">
+										<c:if
+											test="${(detalhePed.status ne 'CANCELADO')&&(detalhePed.status ne 'Aguardando Aprovação')}">
 											<h3 class="box-title pull-right">
 
 												<input type="number" class="pull-right" value="1"
@@ -126,7 +127,7 @@ a {
 														Devolução <i class="fa fa-refresh"></i>
 													</button></label>
 											</h3>
-										</c:if>								
+										</c:if>
 									</form>
 								</div>
 								<!-- /.box-header -->
@@ -208,6 +209,7 @@ a {
 										<th>Preço Produtos</th>
 										<th>Preço Frete</th>
 										<th>Preço Final</th>
+										<th>Credito Usado</th>
 										<th>Quantidade Total</th>
 										<th>Status</th>
 									</tr>
@@ -215,6 +217,7 @@ a {
 										<td>${detalhePed.precoFinal}</td>
 										<td>${detalhePed.precoFrete}</td>
 										<td>${detalhePed.precoFinal + detalhePed.precoFrete}</td>
+										<td>${detalhePed.saldoUsado}</td>
 										<td>${detalhePed.qtdItens}</td>
 										<td>${detalhePed.status}</td>
 								</table>
@@ -266,14 +269,17 @@ a {
 		<%-- </c:forEach> --%>
 		<div class="text-center">
 			<form method="get" action="finalizaCompra">
-			<input type="hidden" name="PedidoID" value="${detalhePed.id}">
-				<c:if test="${detalhePed.getStatus().equals('Aguardando Aprovação')}">
+				<input type="hidden" name="PedidoID" value="${detalhePed.id}">
+				<c:if
+					test="${detalhePed.getStatus().equals('Aguardando Aprovação')}">
 					<button class="btn btn btn-danger" type="submit" id="operacao"
-				 name="operacao" value="PEDIDOCANCEL">Cancelar Pedido</button>
+						name="operacao" value="PEDIDOCANCEL">Cancelar Pedido</button>
 				</c:if>
 				<c:if test="${detalhePed.getStatus().equals('APROVADO')}">
-					<button class="btn btn btn-success" type="submit" id="operacao" value="FULLTROCA"
-				 name="operacao">Troca Completa  <i class="fa fa-refresh"></i></button>
+					<button class="btn btn btn-success" type="submit" id="operacao"
+						value="FULLTROCA" name="operacao">
+						Troca Completa <i class="fa fa-refresh"></i>
+					</button>
 				</c:if>
 			</form>
 		</div>
