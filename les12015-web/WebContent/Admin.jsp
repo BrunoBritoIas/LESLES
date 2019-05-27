@@ -97,7 +97,7 @@ function mandaId(num, numm){
 							<li><a href="http://www.jquery2dotnet.com"
 								data-target-id="forms"><i class="fa fa-table fa-fw"></i>Trocas</a></li>
 							<li><a href="http://www.jquery2dotnet.com"
-								data-target-id="calender"><i class="fa fa-charts fa-fw"></i>Estatisticas</a></li>
+								data-target-id="calender"><i class="fa fa-line-chart fa-fw"></i>Estatisticas</a></li>
 						</ul>
 					</div>
 					<!-- HOME -->
@@ -228,10 +228,11 @@ function mandaId(num, numm){
 												<label>Marca</label> <input type="text" id="txtMarca"
 													name="txtMarca" class="form-control">
 											</div>
-											
+
 											<div class="col-sm-2 form-group">
-												<label>Quantidade</label> <input type="number" id="txtQuantidade"
-													name="txtQuantidade" class="form-control">
+												<label>Quantidade</label> <input type="number"
+													id="txtQuantidade" name="txtQuantidade"
+													class="form-control">
 											</div>
 										</div>
 										<div class="form-group">
@@ -315,13 +316,13 @@ function mandaId(num, numm){
 						<%@include file="Cupom.jsp"%>
 					</div>
 					<div class="col-md-9 well admin-content" id="table">
-							<%@include file="PedidosAdmin.jsp"%>
+						<%@include file="PedidosAdmin.jsp"%>
 					</div>
 					<div class="col-md-9 well admin-content" id="forms">
 						<%@include file="ListaTrocas.jsp"%>
 					</div>
 					<div class="col-md-9 well admin-content" id="calender">
-						Calender</div>
+						<%@include file="Charts.jsp"%></div>
 				</div>
 			</div>
 

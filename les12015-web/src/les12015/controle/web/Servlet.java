@@ -19,6 +19,7 @@ import les12015.controle.web.vh.impl.CartaoViewHelper;
 import les12015.controle.web.vh.impl.ClienteViewHelper;
 import les12015.controle.web.vh.impl.CupomViewHelper;
 import les12015.controle.web.vh.impl.EnderecoViewHelper;
+import les12015.controle.web.vh.impl.GraficoViewHelper;
 import les12015.controle.web.vh.impl.PedidoViewHelper;
 import les12015.controle.web.vh.impl.ProdutoViewHelper;
 import les12015.controle.web.vh.impl.TrocaViewHelper;
@@ -79,14 +80,17 @@ public class Servlet extends HttpServlet {
 		commands.put("PEDIDOADMIN", new ConsultarCommand());
 		commands.put("VERPEDIDO", new ConsultarCommand());
 		commands.put("SPEDIDO", new AlterarCommand());
-		
-		//TROCA
+
+		// TROCA
 		commands.put("UNICHANGE", new AlterarCommand());
 		commands.put("PEDIDOCANCEL", new AlterarCommand());
 		commands.put("FULLTROCA", new AlterarCommand());
 		commands.put("TROCADMIN", new ConsultarCommand());
 		commands.put("TROCACLI", new ConsultarCommand());
 		commands.put("APROVATROCA", new AlterarCommand());
+
+		// GRAFICOS
+		commands.put("GRAFICOS", new ConsultarCommand());
 		/*
 		 * Utilizando o ViewHelper para tratar especificações de qualquer tela e
 		 * indexando cada viewhelper pela url em que esta servlet é chamada no form
@@ -111,6 +115,7 @@ public class Servlet extends HttpServlet {
 		vhs.put("/les12015-web/SalvarCupom", new CupomViewHelper());
 		vhs.put("/les12015-web/finalizaCompra", new PedidoViewHelper());
 		vhs.put("/les12015-web/efetuaTroca", new TrocaViewHelper());
+		vhs.put("/les12015-web/pesquisaGraficos", new GraficoViewHelper());
 
 	}
 
