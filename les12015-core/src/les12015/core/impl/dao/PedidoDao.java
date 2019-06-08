@@ -79,14 +79,16 @@ public class PedidoDao extends AbstractJdbcDAO {
 
 			sql = new StringBuilder();
 
-			sql.append("INSERT INTO UnidadePedido(quantidade ,preço, id_pedido, id_sup) ");
-			sql.append("VALUES (?,?,?,?)");
+			sql.append("INSERT INTO UnidadePedido(quantidade ,preço, id_pedido, id_sup, dt_pedido, categoria ) ");
+			sql.append("VALUES (?,?,?,?,?,?)");
 			for (int i = 0; i < ped.getUnidade().size(); i++) {
 				pst = connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 				pst.setInt(1, ped.getUnidade().get(i).getQuantidade());
 				pst.setDouble(2, ped.getUnidade().get(i).getPreco());
 				pst.setInt(3, ped.getId());
 				pst.setInt(4, ped.getUnidade().get(i).getSup().getId());
+				pst.setString(5, ped.getDtPedido());
+				pst.setString(6, ped.getUnidade().get(i).getSup().getCategoria());
 				pst.executeUpdate();
 				rs = pst.getGeneratedKeys();
 				connection.commit();
@@ -238,6 +240,7 @@ public class PedidoDao extends AbstractJdbcDAO {
 					uni.setPreco(rsss.getDouble("preço"));
 					uni.setIdSup(rsss.getInt("id_sup"));
 					uni.setId(rsss.getInt("ID_UnidadePedido"));
+					uni.setDtPedido(rsss.getString("dt_pedido"));
 					s.setId(rsss.getInt("id_sup"));
 					s.setSupPedido(true);
 					s = (Suplementos) supimpa.consultar(s).get(0);

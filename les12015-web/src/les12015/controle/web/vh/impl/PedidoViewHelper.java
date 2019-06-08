@@ -34,7 +34,7 @@ public class PedidoViewHelper implements IViewHelper {
 		Pedido ped = (Pedido) request.getSession().getAttribute("pedido");
 		Pedido pedido = new Pedido();
 		LocalDateTime ldt = LocalDateTime.now().plusDays(1);
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY", Locale.ENGLISH);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-dd-MM", Locale.ENGLISH);
 		String data = formatter.format(ldt);
 		ArrayList<CartaoPedido> p = new ArrayList<CartaoPedido>();
 		if (operacao.equals("FINALIZAR")) {
@@ -106,7 +106,7 @@ public class PedidoViewHelper implements IViewHelper {
 				y++;
 			}
 			if (pedido.isUsaCredito()) {
-				pedido.setSaldoUsado(cliente.getSaldo());
+				pedido.setSaldoUsado(pedido.getPrecoFinal());
 				if(pedido.getPrecoFinal() <= cliente.getSaldo())		{
 					pedido.setPrecoFinal(pedido.getPrecoFrete());
 					pedido.setSaldoCliente(cliente.getSaldo() - pedido.getPrecoFinal() );
@@ -115,7 +115,10 @@ public class PedidoViewHelper implements IViewHelper {
 					pedido.setPrecoFinal(pedido.getPrecoFinal() - cliente.getSaldo());
 					pedido.setSaldoCliente(0);
 				}
-				
+				Cliente cu = (Cliente) request.getSession().getAttribute("usuario");
+				Cliente cli = cu;
+				cli.setSaldo(pedido.getSaldoCliente());
+				request.getSession().setAttribute("usuario", cli);
 			}
 
 		}
@@ -233,10 +236,6 @@ public class PedidoViewHelper implements IViewHelper {
 			sessao.setAttribute("resultadoCompra", resultado.getMsg());
 			ArrayList<Pedido> pedido = (ArrayList<Pedido>) sessao.getAttribute("listaPedidos");
 			cli.setPedido(pedido);
-			Pedido p = (Pedido) resultado.getEntidades().get(0);
-			if (p.isUsaCredito()) {
-				cli.setSaldo(p.getSaldoCliente());		
-			}
 			request.getSession().setAttribute("usuario", cli);
 			if (resultado.getMsg() == null) {
 				sessao.setAttribute("pedido", null);

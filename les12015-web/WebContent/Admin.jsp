@@ -166,6 +166,12 @@ function mandaId(num, numm){
 									id="txtCategoria" name="txtCategoria" value="Emagrecimento">Emagrecimento</label>
 								<label class="checkbox-inline"><input type="radio"
 									id="txtCategoria" name="txtCategoria" value="Vegano">Vegano</label>
+									<label class="checkbox-inline"><input type="radio"
+									id="txtCategoria" name="txtCategoria" value="Força">Força</label>
+									<label class="checkbox-inline"><input type="radio"
+									id="txtCategoria" name="txtCategoria" value="Libido">Libido</label>
+									<label class="checkbox-inline"><input type="radio"
+									id="txtCategoria" name="txtCategoria" value="Resistencia">Resistencia</label>
 							</div>
 							<input type="submit" name="operacao" value="CONSULTARSUP"
 								id="operacao"> <br> <br> <br>

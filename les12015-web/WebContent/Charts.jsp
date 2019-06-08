@@ -28,10 +28,12 @@
 			data : {
 				labels : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
 				datasets : [ 
-					<c:forEach items="${categorias}" var="suplemento">
+					<c:forEach items="${dados}" var="data">
 				{
-					label : '${suplemento.categoria}',
-					data : [ '${suplemento.quantidade}', 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3 ],
+					label : '${data.categoria}',
+					data : [ '${data.qtdMes.get(0)}', '${data.qtdMes.get(1)}', '${data.qtdMes.get(2)}', '${data.qtdMes.get(3)}',
+							 '${data.qtdMes.get(4)}', '${data.qtdMes.get(5)}','${data.qtdMes.get(6)}', '${data.qtdMes.get(7)}', 
+							'${data.qtdMes.get(8)}', '${data.qtdMes.get(9)}', '${data.qtdMes.get(10)}', '${data.qtdMes.get(11)}' ],
 					backgroundColor : [ 'Transparent' ],
 					borderColor : [ getRandomColor() ],
 					borderWidth : 5

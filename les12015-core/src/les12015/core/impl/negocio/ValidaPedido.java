@@ -79,7 +79,7 @@ public class ValidaPedido implements IStrategy {
 				ClienteDAO cDAO = new ClienteDAO();
 				c.setId(ped.getIDusuario());
 				c = (Cliente) cDAO.consultar(c).get(0);
-				c.setSaldo(ped.getSaldoCliente());
+				c.setSaldo(ped.getSaldoCliente() - ped.getSaldoUsado());
 				EntidadeDominio e = new EntidadeDominio();
 				e = c;
 				try {

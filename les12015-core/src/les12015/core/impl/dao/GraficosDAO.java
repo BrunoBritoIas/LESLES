@@ -38,6 +38,8 @@ public class GraficosDAO extends AbstractJdbcDAO {
 		List<EntidadeDominio> l = new ArrayList<EntidadeDominio>();
 		Pedido p = new Pedido();
 		List<Pedido> pedido = new ArrayList<Pedido>();
+		List<Unidade> unis = new ArrayList<Unidade>();
+		List<EntidadeDominio> unidade = new ArrayList<EntidadeDominio>();
 		List<Pedido> pa = new ArrayList<Pedido>();
 		PedidoDao pDAO = new PedidoDao();
 		p.setConsultaPedidos(true);
@@ -63,28 +65,40 @@ public class GraficosDAO extends AbstractJdbcDAO {
 			}
 
 			for (int c = 0; c < categorias.size(); c++) {
+				categorias.get(c).toString();
 				graficos = new GraficosVendasCategoria();
-
-				for (int i = 0; i < pedido.size(); i++) {
-
-					for (int n = 1; n <= 12; n++) {
-
-						if (pedido.get(i).getDtPedido().substring(3, 5).equals(String.valueOf(n))) {
-							int qtdCategoria = 0;
-							for (int y = 0; y < pedido.get(i).getUnidade().size(); i++) {
-
-								if (pedido.get(i).getUnidade().get(y).getSup().getCategoria().equals(categorias.get(c).toString())) {
-									qtdCategoria = qtdCategoria + 1;
-								}
-								graficos.getQtdMes().add(n - 1, qtdCategoria);
-							}
-
-						}
-
+				for (int i = 1; i <= 12; i++) {
+					Unidade uni = new Unidade();
+					UnidadePedidoDao uniDao = new UnidadePedidoDao();
+					unis = new ArrayList<Unidade>();
+					unidade = new ArrayList<EntidadeDominio>();
+					uni.setCategoria(categorias.get(c).toString());
+					uni.setStat("graficos");
+					uni.setDtPedido(String.valueOf(i));
+					unidade = uniDao.consultar(uni);
+					if(unidade.size() == 0 || unidade == null){
+						graficos.getQtdMes().add(i-1, 0);
 					}
-
+					for (int j = 0; j < unidade.size(); j++) {
+						unis.add((Unidade) unidade.get(j));					
+					}
+					int qtd = 0;
+					for (int k = 0; k < unis.size(); k++) {
+						if(unis.size() > 1) {
+							qtd = qtd + unis.get(k).getQuantidade();					
+						}
+						else {
+							graficos.getQtdMes().add(i-1, unis.get(k).getQuantidade());
+						}
+					}
+					if(unis.size() > 1) {
+						graficos.getQtdMes().add(i-1, qtd);
+					}
+					
+					
 				}
 				graficos.setCategoria(categorias.get(c).toString());
+				grafico.add(graficos);
 			}
 
 		} catch (SQLException e) {
