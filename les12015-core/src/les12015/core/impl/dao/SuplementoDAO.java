@@ -82,7 +82,7 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 			connection.setAutoCommit(false);
 			StringBuilder sql = new StringBuilder();
 			sql.append(
-					"UPDATE Suplemento SET nome=?, marca=?, categoria=?, descricao=?, peso=?, preco=?, proteina=?, carboidratos=?, gordura=?, calorias=?, stats=?,validade=?,quantidade=?"
+					"UPDATE Suplemento SET nome=?, marca=?, categoria=?, descricao=?, peso=?, preco=?, proteina=?, carboidratos=?, gordura=?, calorias=?, stats=?,validade=?,quantidade=?,rating=?"
 							+ " WHERE Id_suplemento=?");
 
 			pst = connection.prepareStatement(sql.toString());
@@ -99,7 +99,8 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 			pst.setString(11, suplemento.getStatus());
 			pst.setString(12, suplemento.getValidade());
 			pst.setInt(13, suplemento.getQuantidade());
-			pst.setDouble(14, suplemento.getId());
+			pst.setDouble(14, suplemento.getRating());
+			pst.setDouble(15, suplemento.getId());
 			pst.executeUpdate();
 			connection.commit();
 
@@ -157,8 +158,7 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 		}
 
 		if (sup.getRating() != null && sup.getRating() > 0) {
-			sql += " and rating = " + sup.getRating();
-
+			sql += " order by rating = 5 desc";
 		}
 
 		try {

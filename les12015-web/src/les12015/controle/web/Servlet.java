@@ -89,6 +89,8 @@ public class Servlet extends HttpServlet {
 		commands.put("TROCADMIN", new ConsultarCommand());
 		commands.put("TROCACLI", new ConsultarCommand());
 		commands.put("APROVATROCA", new AlterarCommand());
+		commands.put("AVALIAÇÃO", new AlterarCommand());
+
 
 		// GRAFICOS
 		commands.put("GRAFICOS", new ConsultarCommand());

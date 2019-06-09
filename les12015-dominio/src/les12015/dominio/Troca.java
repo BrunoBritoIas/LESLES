@@ -5,6 +5,7 @@ public class Troca extends EntidadeDominio {
 	private Suplementos produto;
 	private Integer idUnidade;
 	private Double  qtdCredito;
+	private Integer  nota;
 	private Integer  qtdItens;
 	private Integer  idUser;
 	private Integer  idSup;
@@ -58,6 +59,13 @@ public class Troca extends EntidadeDominio {
 	public void setProduto(Suplementos produto) {
 		this.produto = produto;
 	}
+	public Integer getNota() {
+		return nota;
+	}
+	public void setNota(Integer nota) {
+		this.nota = nota;
+	}
+	
 	
 	
 	

@@ -24,7 +24,32 @@ public class UnidadePedidoDao extends AbstractJdbcDAO {
 
 	@Override
 	public void alterar(EntidadeDominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
+		openConnection();
+		PreparedStatement pst = null;
+		Unidade unidade = (Unidade) entidade;
+
+		try {
+			connection.setAutoCommit(false);
+			StringBuilder sql = new StringBuilder();
+			sql.append( "UPDATE UnidadePedido SET avaliado=? WHERE ID_UnidadePedido=?");
+
+			pst = connection.prepareStatement(sql.toString());
+			pst.setString(1, unidade.getStat());
+			pst.setInt(2, unidade.getId());
+			pst.executeUpdate();
+			connection.commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				pst.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
 
 	}
 

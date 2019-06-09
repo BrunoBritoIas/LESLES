@@ -130,19 +130,30 @@ a {
 													</button></label>
 											</h3>
 										</c:if>
-											<c:if
-											test="${detalhePed.status eq 'FINALIZADO'}">
-											<h3 class="box-title pull-right">
 
-												<input type="number" class="pull-right" value="1"
-													placeholder="Quantidade " id="nota" name="nota"
-													style="width: 145px;" min="1" max="5"
-													oninvalid="setCustomValidity('Valor deve ser de 1 a 5 ')" />
-												<input type="hidden" class="pull-right" id="idProd" name="idProd" value="${pedido.idSup}" /> <label
-													class="control control-checkbox"><button
-														type="submit" value="AVALIAR" name="operacao">
-														Avaliar <i class="fa fa-angellist"></i>
-													</button></label>
+									</form>
+									<form method="get" action="efetuaTroca">
+										<c:if test="${detalhePed.status eq 'FINALIZADO'}">
+											<h3 class="box-title pull-right">
+												<c:if test="${pedido.stat ne 'AVALIADO'}">
+													<input type="number" class="pull-right" value="1"
+														placeholder="Quantidade " id="nota" name="nota"
+														style="width: 145px;" min="1" max="5"
+														oninvalid="setCustomValidity('Valor deve ser de 1 a 5 ')" />
+													<input type="hidden" class="pull-right" id="idSup"
+														name="idSup" value="${pedido.idSup}" />
+													<input type="hidden" class="pull-right" id="idUnidade"
+														name="idUnidade" value="${pedido.id}" />										
+													<label class="control control-checkbox"><button
+															type="submit" value="AVALIAÇÃO" name="operacao">
+															Avaliar <i class="fa fa-angellist"></i>
+														</button></label>
+												</c:if>
+												
+												<c:if test="${pedido.stat eq 'AVALIADO'}">																														
+													<label class="control control-checkbox"><button disabled> AVALIADO <i class="fa fa-angellist"></i>
+														</button></label>
+												</c:if>
 											</h3>
 										</c:if>
 									</form>

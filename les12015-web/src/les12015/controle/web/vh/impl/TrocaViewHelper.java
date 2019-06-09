@@ -31,7 +31,17 @@ public class TrocaViewHelper implements IViewHelper {
 			troca.setId(idTroca);
 			troca.setQtdCredito(credito);
 
-		}		
+		}
+		
+		if (operacao.equals("AVALIAÇÃO"))  {
+			Integer idSup = Integer.parseInt(request.getParameter("idSup"));
+			Integer idUnidade = Integer.parseInt(request.getParameter("idUnidade"));
+			Integer nota = Integer.parseInt(request.getParameter("nota"));
+			troca.setStat("AVALIAÇÃO");
+			troca.setIdUnidade(idUnidade);
+			troca.setIdSup(idSup);
+			troca.setNota(nota);
+		}
 		return troca;
 	}
 
@@ -46,6 +56,10 @@ public class TrocaViewHelper implements IViewHelper {
 			cliente.setSaldo(t.getQtdCredito() + cliente.getSaldo());
 			request.getSession().setAttribute("usuario", cliente);
 			d = request.getRequestDispatcher("Admin.jsp");
+		}
+		
+		if (operacao.equals("AVALIAÇÃO")) {
+			d = request.getRequestDispatcher("CliAdmin.jsp");
 		}
 		d.forward(request, response);
 	}

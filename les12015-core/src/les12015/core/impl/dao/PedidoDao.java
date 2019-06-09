@@ -243,6 +243,7 @@ public class PedidoDao extends AbstractJdbcDAO {
 					uni.setIdSup(rsss.getInt("id_sup"));
 					uni.setId(rsss.getInt("ID_UnidadePedido"));
 					uni.setDtPedido(rsss.getString("dt_pedido"));
+					uni.setStat(rsss.getString("avaliado"));
 					s.setId(rsss.getInt("id_sup"));
 					s.setSupPedido(true);
 					s = (Suplementos) supimpa.consultar(s).get(0);
