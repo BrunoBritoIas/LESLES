@@ -8,7 +8,6 @@ import java.util.List;
 
 import les12015.dominio.EntidadeDominio;
 import les12015.dominio.Suplementos;
-import les12015.dominio.Troca;
 import les12015.dominio.Unidade;
 
 public class UnidadePedidoDao extends AbstractJdbcDAO {

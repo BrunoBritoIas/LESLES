@@ -31,8 +31,7 @@ public class TrocaViewHelper implements IViewHelper {
 			troca.setId(idTroca);
 			troca.setQtdCredito(credito);
 
-		}
-
+		}		
 		return troca;
 	}
 

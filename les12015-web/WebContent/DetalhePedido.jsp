@@ -113,18 +113,35 @@ a {
 								<div class="box-header with-border">
 									<form method="post" action="finalizaCompra">
 										<c:if
-											test="${(detalhePed.status ne 'CANCELADO')&&(detalhePed.status ne 'Aguardando Aprovação')}">
+											test="${(detalhePed.status ne 'REPROVADO')&&(detalhePed.status ne 'CANCELADO')&&
+											(detalhePed.status ne 'Aguardando Aprovação') && (detalhePed.status ne 'APROVADO')
+											 && (detalhePed.status ne 'FINALIZADO')}">
 											<h3 class="box-title pull-right">
 
 												<input type="number" class="pull-right" value="1"
 													placeholder="Quantidade " id="qtdProd" name="qtdProd"
 													style="width: 145px;" min="1" max="${pedido.quantidade}"
-													oninvalid="setCustomValidity('Valor deve ser maior ou igual a quantidade disponivel ')" />
+													oninvalid="setCustomValidity('Valor deve ser de 1 a ${pedido.quantidade} ')" />
 												<input type="hidden" class="pull-right" id="idProd"
 													name="idProd" value="${pedido.idSup}" /> <label
 													class="control control-checkbox"><button
 														type="submit" value="UNICHANGE" name="operacao">
 														Devolução <i class="fa fa-refresh"></i>
+													</button></label>
+											</h3>
+										</c:if>
+											<c:if
+											test="${detalhePed.status eq 'FINALIZADO'}">
+											<h3 class="box-title pull-right">
+
+												<input type="number" class="pull-right" value="1"
+													placeholder="Quantidade " id="nota" name="nota"
+													style="width: 145px;" min="1" max="5"
+													oninvalid="setCustomValidity('Valor deve ser de 1 a 5 ')" />
+												<input type="hidden" class="pull-right" id="idProd" name="idProd" value="${pedido.idSup}" /> <label
+													class="control control-checkbox"><button
+														type="submit" value="AVALIAR" name="operacao">
+														Avaliar <i class="fa fa-angellist"></i>
 													</button></label>
 											</h3>
 										</c:if>
@@ -266,24 +283,39 @@ a {
 					<!-- FIM DO MENU -->
 				</div>
 		</div>
-		<%-- </c:forEach> --%>
-		<div class="text-center">
-			<form method="get" action="finalizaCompra">
-				<input type="hidden" name="PedidoID" value="${detalhePed.id}">
-				<c:if
-					test="${detalhePed.getStatus().equals('Aguardando Aprovação')}">
-					<button class="btn btn btn-danger" type="submit" id="operacao"
-						name="operacao" value="PEDIDOCANCEL">Cancelar Pedido</button>
-				</c:if>
-				<c:if test="${detalhePed.getStatus().equals('APROVADO')}">
-					<button class="btn btn btn-success" type="submit" id="operacao"
-						value="FULLTROCA" name="operacao">
-						Troca Completa <i class="fa fa-refresh"></i>
-					</button>
-				</c:if>
-			</form>
-		</div>
+		<c:if test="${detalhePed.status ne 'REPROVADO'}">
+			<div class="text-center">
+				<form method="get" action="finalizaCompra">
+					<input type="hidden" name="PedidoID" value="${detalhePed.id}">
+					<c:if test="${detalhePed.getStatus().equals('APROVADO')}">
+						<button class="btn btn btn-danger" type="submit" id="operacao"
+							name="operacao" value="PEDIDOCANCEL">Cancelar Pedido</button>
+					</c:if>
+					<c:if test="${detalhePed.getStatus().equals('ENTREGUE')}">
 
+						<button class="btn btn btn-warning" style="margin-right: 25px"
+							type="submit" id="operacao" value="FULLTROCA" name="operacao">
+							Troca Completa <i class="fa fa-refresh"></i>
+						</button>
+						<button class="btn btn btn-success" type="submit" id="operacao"
+							value="FINALIZADO" name="operacao">
+							Está tudo OK <i class="fa fa-thumbs-up"></i>
+						</button>
+
+					</c:if>
+				</form>
+			</div>
+		</c:if>
+		<c:if test="${detalhePed.getStatus().equals('REPROVADO')}">
+			<h4 style="text-align: center;">REPROVADO POR:</h4>
+			<div class="row">
+				<!--INÍCIO DO MENU -->
+				<div class="col-xs-12">
+
+					<div class="menu-item-info-box"
+						style="font-size: 20px; color: red; text-align: center;">${detalhePed.stat}</div>
+				</div>
+		</c:if>
 		<!-- FIM DO CONTEÚDO -->
 	</div>
 	<!-- /.container -->

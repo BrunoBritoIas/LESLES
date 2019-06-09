@@ -18,6 +18,7 @@ import les12015.core.impl.dao.GraficosDAO;
 import les12015.core.impl.dao.PedidoDao;
 import les12015.core.impl.dao.SuplementoDAO;
 import les12015.core.impl.dao.TrocaDAO;
+import les12015.core.impl.dao.UnidadePedidoDao;
 import les12015.core.impl.negocio.CancelaPedido;
 import les12015.core.impl.negocio.NumCaracterCampos;
 import les12015.core.impl.negocio.ValidaDadosCliente;
@@ -69,6 +70,7 @@ public class Fachada implements IFachada {
 		PedidoDao pedDao = new PedidoDao(); 
 		TrocaDAO trcDAO = new TrocaDAO(); 
 		GraficosDAO grfDAO = new GraficosDAO();
+		//UnidadePedidoDao uniDAO = new UnidadePedidoDao();
 
 		/* Adicionando cada dao no MAP indexando pelo nome da classe */
 		daos.put(Cliente.class.getName(), cliDAO);
@@ -80,6 +82,7 @@ public class Fachada implements IFachada {
 		daos.put(Pedido.class.getName(), pedDao);
 		daos.put(Troca.class.getName(), trcDAO);
 		daos.put(GraficosVendasCategoria.class.getName(), grfDAO);
+		//daos.put(Unidade.class.getName(), uniDAO);
 		/* Criando instâncias de regras de negócio a serem utilizados */
 
 		ValidadorCpf vCpf = new ValidadorCpf();

@@ -105,6 +105,8 @@ function Redirecionar(id) {
 						id="txtCategoria" name="txtCategoria" value="Emagrecimento">Emagrecimento</label>
 					<label class="checkbox-inline"><input type="radio"
 						id="txtCategoria" name="txtCategoria" value="Vegano">Vegano</label>
+						<label class="checkbox-inline"><input type="radio"
+						id="txtCategoria" name="txtCategoria" value="Força">Força</label>
 				</div>
 				<input type="submit" name="operacao" value="CONSULTARHOME"
 					id="operacao"> <br> <br> <br>
@@ -120,7 +122,7 @@ function Redirecionar(id) {
 									<div class="place-info-box-content">
 										<span class="place-info-box-text">${suplemento.nome}</span> <span
 											class="place-info-box-star"><i class="fa fa-star"></i>
-											4.8</span> <span class="place-info-box-detail">${suplemento.marca}</span>
+											${suplemento.rating}</span> <span class="place-info-box-detail">${suplemento.marca}</span>
 										<span class="place-info-box-detail">${suplemento.peso}gr</span>
 										<span class="menu-item-info-box-price">R$
 											${suplemento.preco}</span>

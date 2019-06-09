@@ -125,7 +125,7 @@ public class PedidoDao extends AbstractJdbcDAO {
 			connection.setAutoCommit(false);
 			StringBuilder sql = new StringBuilder();
 			sql.append(
-					"UPDATE Pedido SET dt_pedido=?, stats=?, idEndereco=?, precoFinal=?, frete=? , precoTotal=?, ciqtdItens=?, username=?, userCpf=?"
+					"UPDATE Pedido SET dt_pedido=?, stats=?, idEndereco=?, precoFinal=?, frete=? , precoTotal=?, ciqtdItens=?, username=?, userCpf=?, sts=? "
 							+ "WHERE ID_Pedido=?");
 			pst = connection.prepareStatement(sql.toString());
 			pst.setString(1, p.getDtPedido());
@@ -137,7 +137,8 @@ public class PedidoDao extends AbstractJdbcDAO {
 			pst.setDouble(7, p.getQtdItens());
 			pst.setString(8, p.getNomeUser());
 			pst.setString(9, p.getCpfUser());
-			pst.setInt(10, ped.getId());
+			pst.setString(10, ped.getStat());
+			pst.setInt(11, ped.getId());
 			pst.executeUpdate();
 			connection.commit();
 
@@ -209,6 +210,7 @@ public class PedidoDao extends AbstractJdbcDAO {
 				pi.setCpfUser(rs.getString("usercpf"));
 				pi.setIDusuario(rs.getInt("idUsuario"));
 				pi.setSaldoUsado(rs.getDouble("credito"));
+				pi.setStat(rs.getString("sts"));
 				sq = "SELECT * FROM CartaoPedido WHERE id_pedido =" + pi.getId();
 				pst = null;
 				pst = connection.prepareStatement(sq);

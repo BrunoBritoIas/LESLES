@@ -80,6 +80,7 @@ public class Servlet extends HttpServlet {
 		commands.put("PEDIDOADMIN", new ConsultarCommand());
 		commands.put("VERPEDIDO", new ConsultarCommand());
 		commands.put("SPEDIDO", new AlterarCommand());
+		commands.put("FINALIZADO", new AlterarCommand());
 
 		// TROCA
 		commands.put("UNICHANGE", new AlterarCommand());

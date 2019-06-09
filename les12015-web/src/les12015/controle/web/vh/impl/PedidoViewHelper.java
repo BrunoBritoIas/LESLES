@@ -134,6 +134,14 @@ public class PedidoViewHelper implements IViewHelper {
 			return t;
 
 		}
+		
+		if (operacao.equals("AVALIAR")) {
+			Integer idProduto = Integer.parseInt(request.getParameter("idProd"));
+			Integer nota = Integer.parseInt(request.getParameter("nota"));
+			pedido.setProdDetail(true);
+			pedido.setId(idProduto);
+
+		}
 
 		if (operacao.equals("TROCACLI")) {
 			Troca t = new Troca();
@@ -165,8 +173,12 @@ public class PedidoViewHelper implements IViewHelper {
 
 		if (operacao.equals("SPEDIDO")) {
 			String status = request.getParameter("status");
+			String motivo = request.getParameter("txtMotivo");
 			Integer idPedido = Integer.parseInt(request.getParameter("idPedido"));
 			pedido.setStatus(status);
+			if (motivo != null || motivo !="") {
+				pedido.setStat(motivo);
+			}
 			pedido.setId(idPedido);
 		}
 
@@ -215,6 +227,13 @@ public class PedidoViewHelper implements IViewHelper {
 				pedi.getUnidade().get(i).setTroca(troca);
 			}
 			pedi.setStatus("Troca ATIVA");
+			pedido = pedi;
+
+		}
+		
+		if (operacao.equals("FINALIZADO")) {
+			Pedido pedi = (Pedido) request.getSession().getAttribute("detalhePed");
+			pedi.setStatus("FINALIZADO");
 			pedido = pedi;
 
 		}
@@ -279,6 +298,12 @@ public class PedidoViewHelper implements IViewHelper {
 
 		}
 		if (operacao.equals("FULLTROCA")) {
+			sessao.setAttribute("pedDetail", resultado.getEntidades());
+			sessao.setAttribute("detalhePed", resultado.getEntidades().get(0));
+			d = request.getRequestDispatcher("DetalhePedido.jsp");
+
+		}
+		if (operacao.equals("FINALIZADO")) {
 			sessao.setAttribute("pedDetail", resultado.getEntidades());
 			sessao.setAttribute("detalhePed", resultado.getEntidades().get(0));
 			d = request.getRequestDispatcher("DetalhePedido.jsp");
