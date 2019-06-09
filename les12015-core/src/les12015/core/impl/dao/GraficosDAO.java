@@ -33,6 +33,9 @@ public class GraficosDAO extends AbstractJdbcDAO {
 
 	@Override
 	public List<EntidadeDominio> consultar(EntidadeDominio entidade) throws SQLException {
+		
+		GraficosVendasCategoria graf = (GraficosVendasCategoria) entidade;
+		
 		GraficosVendasCategoria graficos = new GraficosVendasCategoria();
 		List<EntidadeDominio> grafico = new ArrayList<EntidadeDominio>();
 		List<EntidadeDominio> l = new ArrayList<EntidadeDominio>();
@@ -75,6 +78,7 @@ public class GraficosDAO extends AbstractJdbcDAO {
 					uni.setCategoria(categorias.get(c).toString());
 					uni.setStat("graficos");
 					uni.setDtPedido(String.valueOf(i));
+					uni.setAno(graf.getAno());
 					unidade = uniDao.consultar(uni);
 					if(unidade.size() == 0 || unidade == null){
 						graficos.getQtdMes().add(i-1, 0);

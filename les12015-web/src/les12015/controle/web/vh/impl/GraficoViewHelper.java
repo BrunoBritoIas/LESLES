@@ -16,8 +16,9 @@ import les12015.dominio.GraficosVendasCategoria;
 public class GraficoViewHelper implements IViewHelper {
 
 	public EntidadeDominio getEntidade(HttpServletRequest request) {
-		GraficosVendasCategoria grafico = new  GraficosVendasCategoria();
-	
+		GraficosVendasCategoria grafico = new GraficosVendasCategoria();
+		Integer ano = Integer.parseInt(request.getParameter("ano"));
+		grafico.setAno(ano);
 		return grafico;
 	}
 

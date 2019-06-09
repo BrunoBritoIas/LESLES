@@ -290,9 +290,9 @@ function mandaId(num, numm){
 											</div>
 										</div>
 										<%
-											Resultado result = (Resultado) session.getAttribute("resultado");
+											Resultado result = (Resultado) session.getAttribute("resultadoSup");
 											if (result != null) {
-												if ("Produto cadastrado com sucesso!".equals(result.getMsg())) {
+												if (result.getMsg() == null) {
 													StringBuilder st = new StringBuilder();
 													st.append("<div class='alert alert-success' role='alert'>");
 													st.append("<strong>Parabéns</strong> Produto cadastrado com sucesso!.");

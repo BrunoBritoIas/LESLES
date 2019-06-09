@@ -26,7 +26,7 @@ public class ClienteDAO extends AbstractJdbcDAO {
 
 			StringBuilder sql = new StringBuilder();
 			sql.append("INSERT INTO Cliente(nome, genero, senha, cpf, email, ");
-			sql.append("dt_cadastro, dt_Nasc,telefone,tipo_User,cli_status) VALUES (?,?,?,?,?,sysdate(),?,?,?,?,?)");
+			sql.append("dt_cadastro, dt_Nasc,telefone,tipo_User,cli_status,saldo) VALUES (?,?,?,?,?,sysdate(),?,?,?,?,?)");
 
 			pst = connection.prepareStatement(sql.toString());
 			pst.setString(1, cliente.getNome());

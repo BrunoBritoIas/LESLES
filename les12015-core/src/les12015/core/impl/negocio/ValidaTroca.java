@@ -21,7 +21,7 @@ public class ValidaTroca implements IStrategy {
 			Suplementos s = new Suplementos();
 			SuplementoDAO supimpa = new SuplementoDAO();
 			Troca troca = (Troca) entidade;
-			if (troca.getStat().equals("AVALIAÇÃO")) {
+			if (troca.getStat() != null) {
 
 				s = new Suplementos();
 				supimpa = new SuplementoDAO();

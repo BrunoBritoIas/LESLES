@@ -142,12 +142,12 @@ public class ProdutoViewHelper implements IViewHelper {
 			if (operacao.equals("SALVARSUP")) {
 				resultado.setMsg("Produto cadastrado com sucesso!");
 			}
-			sessao.setAttribute("resultado", resultado);
+			sessao.setAttribute("resultadoSup", resultado);
 			d = request.getRequestDispatcher("Admin.jsp");
 
 		}
 		else {
-			sessao.setAttribute("resultado", resultado);
+			sessao.setAttribute("resultadoSup", resultado);
 			d = request.getRequestDispatcher("Admin.jsp");
 		}
 		

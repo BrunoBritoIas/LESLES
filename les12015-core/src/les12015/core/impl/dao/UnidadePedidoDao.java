@@ -63,6 +63,7 @@ public class UnidadePedidoDao extends AbstractJdbcDAO {
 		if (unidade.getStat().equals("graficos")) {
 			sql = "SELECT * FROM UnidadePedido WHERE categoria = '" + unidade.getCategoria() + "'";
 			sql += " and DAY(dt_pedido) = " + unidade.getDtPedido();
+			sql += " and YEAR(dt_pedido) = " + unidade.getAno();
 		}
 		else {
 		sql = "SELECT * FROM UnidadePedido WHERE categoria = '" + unidade.getCategoria() + "'";

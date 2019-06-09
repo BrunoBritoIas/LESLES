@@ -41,10 +41,7 @@ public class ValidaDadosProduto implements IStrategy {
 				return "Este valor tem que ser maior que zero";
 			}
 
-		} else {
-			return "Registro de Suplementos";
-		}
-
+		} 
 		return null;
 	}
 }

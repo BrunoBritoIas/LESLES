@@ -52,11 +52,12 @@
 			}
 		});
 	</script>
-<form action="pesquisaGraficos" method="post">
+<form action="pesquisaGraficos" method="get">
 	<button type="submit" class="btn btn-primary btn-lg" name="operacao"
 		value=GRAFICOS id="operacao" style="width: 95%;">
 		<span class="glyphicon glyphicon-ok-sign"></span> consultar
 	</button>
+	<input type="number" min="2015" max="2019" step="1" value="2019" name="ano" style="margin-left: 322px;width: 163px;text-align: center;font-size: 35px;">
 </form>
 </body>
 </html>

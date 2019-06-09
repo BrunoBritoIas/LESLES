@@ -302,7 +302,7 @@ a {
 						<button class="btn btn btn-danger" type="submit" id="operacao"
 							name="operacao" value="PEDIDOCANCEL">Cancelar Pedido</button>
 					</c:if>
-					<c:if test="${detalhePed.getStatus().equals('ENTREGUE')}">
+					<c:if test="${detalhePed.getStatus().equals('ENTREGUE') || detalhePed.getStatus().equals('Troca ATIVA')}">
 
 						<button class="btn btn btn-warning" style="margin-right: 25px"
 							type="submit" id="operacao" value="FULLTROCA" name="operacao">

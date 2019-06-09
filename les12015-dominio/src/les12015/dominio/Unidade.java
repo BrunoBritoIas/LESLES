@@ -9,6 +9,7 @@ public class Unidade extends EntidadeDominio {
 	private String categoria;
 	private int quantidade;
 	private int idSup;
+	private int ano;
 	private double preco;
 	
 	public int getQuantidade() {
@@ -66,7 +67,13 @@ public class Unidade extends EntidadeDominio {
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
-	
-	
+
+	public int getAno() {
+		return ano;
+	}
+
+	public void setAno(int ano) {
+		this.ano = ano;
+	}
 	
 }

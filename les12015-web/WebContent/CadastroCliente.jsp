@@ -178,7 +178,7 @@
 							<div></div>
 						</c:when>
 						<c:when
-							test="${ resultadoSalvar != null && resultado.msg == null}">
+							test="${ resultadoSalvar != null && resultadoSalvar.msg == null}">
 							<div class="alert alert-success"
 								style="margin-left: 294px; class: center; text-align: center; width: 74%;"
 								role='alert'>
