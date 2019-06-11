@@ -21,7 +21,7 @@
 			return color;
 		}
 		</script>
-		<script>
+	<script>
 		var ctx = document.getElementById('myChart');
 		var myChart = new Chart(ctx, {
 			type : 'line',
@@ -52,12 +52,40 @@
 			}
 		});
 	</script>
-<form action="pesquisaGraficos" method="get">
-	<button type="submit" class="btn btn-primary btn-lg" name="operacao"
-		value=GRAFICOS id="operacao" style="width: 95%;">
-		<span class="glyphicon glyphicon-ok-sign"></span> consultar
-	</button>
-	<input type="number" min="2015" max="2019" step="1" value="2019" name="ano" style="margin-left: 322px;width: 163px;text-align: center;font-size: 35px;">
-</form>
+	<form action="pesquisaGraficos" method="get">
+		<button type="submit" class="btn btn-primary btn-lg" name="operacao"
+			value=GRAFICOS id="operacao" style="width: 95%;">
+			<span class="glyphicon glyphicon-ok-sign"></span> consultar
+		</button>
+		<select name="carlist" form="carform">
+			<option value="1">Janeiro</option>
+			<option value="2">Fevereiro</option>
+			<option value="3">Março</option>
+			<option value="4">Abril</option>
+			<option value="5">Maio</option>
+			<option value="6">Junho</option>
+			<option value="7">Julho</option>
+			<option value="8">Agosto</option>
+			<option value="9">Setembro</option>
+			<option value="10">Outubro</option>
+			<option value="11">Novembro</option>
+			<option value="12">Dezembro</option>
+		</select> ATÉ <select name="carlist" form="carform">
+		<option value="1">Janeiro</option>
+			<option value="2">Fevereiro</option>
+			<option value="3">Março</option>
+			<option value="4">Abril</option>
+			<option value="5">Maio</option>
+			<option value="6">Junho</option>
+			<option value="7">Julho</option>
+			<option value="8">Agosto</option>
+			<option value="9">Setembro</option>
+			<option value="10">Outubro</option>
+			<option value="11">Novembro</option>
+			<option value="12">Dezembro</option>
+		</select> <input type="number" min="2015" max="2019" step="1" value="2019"
+			name="ano"
+			style="margin-left: 111px; width: 163px; text-align: center; font-size: 35px;">
+	</form>
 </body>
 </html>

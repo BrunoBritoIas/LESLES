@@ -58,7 +58,7 @@
 									<i class="fa fa-home"></i>
 
 									<h3 class="box-title">${suplemento.nome}</h3>
-									<span class="pull-right"><i class="fa fa-star"></i> 4.5</span>
+									<span class="pull-right"><i class="fa fa-star"></i> ${suplemento.rating}</span>
 								</div>
 								<!-- /.box-header -->
 								<div class="box-body">

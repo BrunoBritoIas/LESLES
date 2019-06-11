@@ -35,7 +35,7 @@
 				<c:if test="${troca.status eq 'Troca Unitaria'}">
 					<td><p data-placement="top" data-toggle="tooltip" title="Edit">
 							<a
-								href="efetuaTroca?operacao=APROVATROCA&status=APROVADO&idUser=${troca.idUser}&idSup=${troca.produto.id}&idTroca=${troca.id}&credito=${troca.qtdCredito}"><button
+								href="efetuaTroca?operacao=APROVATROCA&status=APROVADO&idUser=${troca.idUser}&idSup=${troca.produto.id}&idTroca=${troca.id}&credito=${troca.qtdCredito}&qtdProduto=${troca.qtdItens}"><button
 									type="button" class="btn btn-success btn-xs">
 									<span class="glyphicon glyphicon-ok-sign"></span>
 								</button></a>

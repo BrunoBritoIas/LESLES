@@ -63,6 +63,18 @@ public class ValidaTroca implements IStrategy {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+					
+					s = new Suplementos();
+					supimpa = new SuplementoDAO();
+					s.setId(troca.getIdSup());
+					s.setSupPedido(true);
+					s = (Suplementos) supimpa.consultar(s).get(0);
+					s.setQuantidade(s.getQuantidade() + troca.getQtdItens());
+					try {
+						supimpa.alterar(s);
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
 
 				}
 			}

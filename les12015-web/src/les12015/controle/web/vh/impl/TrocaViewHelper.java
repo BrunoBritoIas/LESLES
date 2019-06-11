@@ -24,12 +24,14 @@ public class TrocaViewHelper implements IViewHelper {
 			Integer idSup = Integer.parseInt(request.getParameter("idSup"));
 			Integer idUser = Integer.parseInt(request.getParameter("idUser"));
 			Integer idTroca = Integer.parseInt(request.getParameter("idTroca"));
+			Integer qtdProduto = Integer.parseInt(request.getParameter("qtdProduto"));
 			Double credito = Double.parseDouble(request.getParameter("credito"));
 			troca.setStatus("APROVADO");
 			troca.setIdSup(idSup);
 			troca.setIdUser(idUser);
 			troca.setId(idTroca);
 			troca.setQtdCredito(credito);
+			troca.setQtdItens(qtdProduto);
 
 		}
 		
