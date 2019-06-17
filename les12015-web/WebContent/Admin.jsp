@@ -105,7 +105,7 @@ function mandaId(num, numm){
 						<form method="post" action="SalvarCliente">
 							Nome<input type="text" id="txtNome" name="txtNome" /> CPF<input
 								type="text" id="txtCpf" name="txtCpf" /> <input type="submit"
-								name="operacao" value="CONSULTAR" id="operacao"> <br>
+								name="operacao" value="ADMINCONSULTAR" id="operacao"> <br>
 							<br> <br>
 							<table id="datatable" class="table table-striped table-bordered"
 								cellspacing="0" width="100%">
@@ -121,7 +121,7 @@ function mandaId(num, numm){
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${listaCliente}" var="cliente">
+									<c:forEach items="${listaClientes}" var="cliente">
 										<tr>
 											<td>${cliente.nome}</td>
 											<td>${cliente.cpf}</td>

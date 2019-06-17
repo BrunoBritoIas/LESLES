@@ -132,7 +132,7 @@ public class CarrinhoViewHelper implements IViewHelper {
 			}
 			request.getSession().setAttribute("carrinho", carrinho);
 			request.getSession().setAttribute("itens", p.getUnidade());
-			request.getSession().setAttribute("resultadoSuplementos", resultado);
+			request.getSession().setAttribute("resultadoCompra", resultado.getMsg());
 			request.getSession().setAttribute("pedido", p);
 			d = request.getRequestDispatcher("Carrinho.jsp");
 		}

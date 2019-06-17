@@ -104,9 +104,6 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 			pst.executeUpdate();
 			connection.commit();
 
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
 		} finally {
 			try {
 				pst.close();
@@ -120,6 +117,7 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 
 	@Override
 	public List<EntidadeDominio> consultar(EntidadeDominio entidade) {
+		openConnection();
 		PreparedStatement pst = null;
 		Suplementos sup;
 		if (Unidade.class.getName().equals(entidade.getClass().getName())) {
@@ -211,20 +209,20 @@ public class SuplementoDAO extends AbstractJdbcDAO {
 					suplementos.add(s);
 				}
 			}
+
 			return suplementos;
-		} catch (SQLException e) {
+		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		} finally {
 			try {
 				pst.close();
 				connection.close();
-
 			} catch (SQLException e) {
-
 				e.printStackTrace();
 			}
-
 		}
+
 		return null;
 	}
 }

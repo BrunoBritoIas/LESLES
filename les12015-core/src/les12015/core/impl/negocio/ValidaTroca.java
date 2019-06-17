@@ -64,7 +64,7 @@ public class ValidaTroca implements IStrategy {
 						e1.printStackTrace();
 					}
 					
-					s = new Suplementos();
+					/*s = new Suplementos();
 					supimpa = new SuplementoDAO();
 					s.setId(troca.getIdSup());
 					s.setSupPedido(true);
@@ -75,7 +75,7 @@ public class ValidaTroca implements IStrategy {
 					} catch (SQLException ex) {
 						ex.printStackTrace();
 					}
-
+*/
 				}
 			}
 		}

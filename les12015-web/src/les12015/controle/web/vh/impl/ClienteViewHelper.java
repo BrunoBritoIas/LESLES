@@ -156,6 +156,11 @@ public class ClienteViewHelper implements IViewHelper {
 			sessao.setAttribute("listaCliente", resultado.getEntidades());
 			d = request.getRequestDispatcher("CliAdmin.jsp");
 		}
+		
+		if (operacao.equals("ADMINCONSULTAR")) {
+			sessao.setAttribute("listaClientes", resultado.getEntidades());
+			d = request.getRequestDispatcher("Admin.jsp");
+		}
 
 		if (resultado.getMsg() == null && operacao.equals("ALTERAR")) {
 			resultado.setMsg("Produto Alterado com sucesso!");

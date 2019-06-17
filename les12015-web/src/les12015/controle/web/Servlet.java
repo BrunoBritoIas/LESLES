@@ -49,6 +49,7 @@ public class Servlet extends HttpServlet {
 		// CLIENTE
 		commands.put("SALVAR", new SalvarCommand());
 		commands.put("CONSULTAR", new ConsultarCommand());
+		commands.put("ADMINCONSULTAR", new ConsultarCommand());
 		commands.put("LOGAR", new ConsultarCommand());
 		commands.put("ALTERAR", new AlterarCommand());
 		commands.put("SALVAREND", new SalvarCommand());

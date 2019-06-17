@@ -26,7 +26,8 @@ public class ClienteDAO extends AbstractJdbcDAO {
 
 			StringBuilder sql = new StringBuilder();
 			sql.append("INSERT INTO Cliente(nome, genero, senha, cpf, email, ");
-			sql.append("dt_cadastro, dt_Nasc,telefone,tipo_User,cli_status,saldo) VALUES (?,?,?,?,?,sysdate(),?,?,?,?,?)");
+			sql.append(
+					"dt_cadastro, dt_Nasc,telefone,tipo_User,cli_status,saldo) VALUES (?,?,?,?,?,sysdate(),?,?,?,?,?)");
 
 			pst = connection.prepareStatement(sql.toString());
 			pst.setString(1, cliente.getNome());
@@ -96,6 +97,13 @@ public class ClienteDAO extends AbstractJdbcDAO {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		} finally {
+			try {
+				pst.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -163,8 +171,16 @@ public class ClienteDAO extends AbstractJdbcDAO {
 				clientes.add(c);
 			}
 			return clientes;
-		} catch (SQLException e) {
+		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
+		} finally {
+			try {
+				pst.close();
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}

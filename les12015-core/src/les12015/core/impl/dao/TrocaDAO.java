@@ -50,7 +50,6 @@ public class TrocaDAO extends AbstractJdbcDAO {
 
 	@Override
 	public void alterar(EntidadeDominio entidade) throws SQLException {
-
 		PreparedStatement pst = null;
 		openConnection();
 		Troca troca = (Troca) entidade;
@@ -74,7 +73,7 @@ public class TrocaDAO extends AbstractJdbcDAO {
 
 	@Override
 	public List<EntidadeDominio> consultar(EntidadeDominio entidade) throws SQLException {
-
+		openConnection();
 		PreparedStatement pst = null;
 		if (entidade instanceof Troca) {
 
@@ -86,7 +85,6 @@ public class TrocaDAO extends AbstractJdbcDAO {
 				sql = "SELECT * FROM Troca";
 			}
 			try {
-				openConnection();
 				pst = connection.prepareStatement(sql.toString());
 				ResultSet rs = pst.executeQuery();
 				List<EntidadeDominio> trocas = new ArrayList<EntidadeDominio>();

@@ -421,7 +421,7 @@
 								</c:forEach>
 								<input type="hidden" name="numCards" id="numCards" /> <input
 									type="hidden" name="idEnd" id="idEnd" />
-									<input type="text" name="usaSaldo" id="usaSaldo" />
+									<input type="hidden" name="usaSaldo" id="usaSaldo" />
 								<button type="submit" name="operacao" id="Concluir"
 									value="FINALIZAR" class="btn btn-success pull-right" disabled>
 									<i class="fa fa-credit-card"></i> Concluir Pedido

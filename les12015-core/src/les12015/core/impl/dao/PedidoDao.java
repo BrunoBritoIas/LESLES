@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.mysql.jdbc.Statement;
 
+import les12015.core.util.Conexao;
 import les12015.dominio.CartaoPedido;
 import les12015.dominio.Endereco;
 import les12015.dominio.EntidadeDominio;
@@ -122,6 +123,8 @@ public class PedidoDao extends AbstractJdbcDAO {
 		p.setId(ped.getId());
 		p = (Pedido) consultar(p).get(0);
 		try {
+			if(connection == null || connection.isClosed())
+				openConnection();
 			connection.setAutoCommit(false);
 			StringBuilder sql = new StringBuilder();
 			sql.append(
@@ -167,6 +170,9 @@ public class PedidoDao extends AbstractJdbcDAO {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}finally {
+			pst.close();
+			connection.close();
 		}
 	}
 
@@ -193,8 +199,10 @@ public class PedidoDao extends AbstractJdbcDAO {
 			pst = connection.prepareStatement(sql);
 
 			ResultSet rs = pst.executeQuery();
-
 			while (rs.next()) {
+				if(connection == null || connection.isClosed())
+					openConnection();
+				
 				Pedido pi = new Pedido();
 				cartaoPedido = new ArrayList<CartaoPedido>();
 				unidadePedido = new ArrayList<Unidade>();
@@ -211,6 +219,8 @@ public class PedidoDao extends AbstractJdbcDAO {
 				pi.setIDusuario(rs.getInt("idUsuario"));
 				pi.setSaldoUsado(rs.getDouble("credito"));
 				pi.setStat(rs.getString("sts"));
+				
+				
 				sq = "SELECT * FROM CartaoPedido WHERE id_pedido =" + pi.getId();
 				pst = null;
 				pst = connection.prepareStatement(sq);
@@ -226,7 +236,11 @@ public class PedidoDao extends AbstractJdbcDAO {
 					cartaoPedido.add(pe);
 				}
 				pi.setCardPed(cartaoPedido);
-
+				
+				/*pst.close();
+				connection.close();
+				openConnection();*/
+				
 				sequela = "SELECT * FROM UnidadePedido WHERE id_pedido =" + pi.getId();
 				pst = null;
 				pst = connection.prepareStatement(sequela);
@@ -272,7 +286,11 @@ public class PedidoDao extends AbstractJdbcDAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			pst.close();
+			connection.close();
 		}
+		
 		return null;
 
 	}
