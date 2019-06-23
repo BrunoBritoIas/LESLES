@@ -9,7 +9,6 @@ import java.util.List;
 import les12015.dominio.EntidadeDominio;
 import les12015.dominio.GraficosVendasCategoria;
 import les12015.dominio.Pedido;
-import les12015.dominio.Suplementos;
 import les12015.dominio.Unidade;
 
 public class GraficosDAO extends AbstractJdbcDAO {
@@ -70,7 +69,19 @@ public class GraficosDAO extends AbstractJdbcDAO {
 			for (int c = 0; c < categorias.size(); c++) {
 				categorias.get(c).toString();
 				graficos = new GraficosVendasCategoria();
-				for (int i = 1; i <= 12; i++) {
+				
+				if (graf.getMes1() > graf.getMes2()) {
+					int aux =  graf.getMes1();
+					graf.setMes1(graf.getMes2());
+					graf.setMes2(aux);	
+				}
+				if(graf.getMes1() > 1) {
+					for (int i = 0; i < graf.getMes1(); i++) {
+						graficos.getQtdMes().add(i, 0);
+					}
+					
+				}
+				for (int i = graf.getMes1(); i <= graf.getMes2(); i++) {
 					Unidade uni = new Unidade();
 					UnidadePedidoDao uniDao = new UnidadePedidoDao();
 					unis = new ArrayList<Unidade>();
@@ -100,6 +111,11 @@ public class GraficosDAO extends AbstractJdbcDAO {
 					}
 					
 					
+				}
+				if(graf.getMes2() < 12) {
+					for (int i = graficos.getQtdMes().size(); i <= 12; i++) {
+						graficos.getQtdMes().add(i, 0);
+					}
 				}
 				graficos.setCategoria(categorias.get(c).toString());
 				grafico.add(graficos);

@@ -6,6 +6,8 @@ public class GraficosVendasCategoria extends EntidadeDominio {
 	private String categoria;
 	private ArrayList<Integer> qtdMes = new ArrayList<Integer>();
 	private Integer ano;
+	private Integer mes1;
+	private Integer mes2;
 	
 	public String getCategoria() {
 		return categoria;
@@ -29,6 +31,22 @@ public class GraficosVendasCategoria extends EntidadeDominio {
 
 	public void setAno(Integer ano) {
 		this.ano = ano;
+	}
+
+	public Integer getMes1() {
+		return mes1;
+	}
+
+	public void setMes1(Integer mes1) {
+		this.mes1 = mes1;
+	}
+
+	public Integer getMes2() {
+		return mes2;
+	}
+
+	public void setMes2(Integer mes2) {
+		this.mes2 = mes2;
 	}
 	
 	

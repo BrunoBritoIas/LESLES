@@ -20,14 +20,81 @@
 			}
 			return color;
 		}
+		
+		function filtro(){ 
+			 var val = 0;
+			 for(var i = 11 ; i >= 0; i--){
+				 for(var y = 0 ; y < 5; y++){	
+					val = val + myChart.data.datasets[y].data[i];
+					 }
+				if(val==0){
+					delete myChart.data.datasets[0].data[i]
+					delete myChart.data.datasets[1].data[i]
+					delete myChart.data.datasets[2].data[i]
+					delete myChart.data.datasets[3].data[i]
+					delete myChart.data.datasets[4].data[i]
+					delete myChart.data.datasets[5].data[i]
+				}
+				else{
+					myChart.update();
+					return;
+				}
+			 
+			   
+			 }	 			
+		}
+		function filtro2(){ 
+			 var val = 0;
+			 for(var i = 0 ; i <= 11; i++){
+				 for(var y = 0 ; y < 5; y++){	
+					val = val + myChart.data.datasets[y].data[i];
+					 }
+				if(val==0){
+					delete myChart.data.datasets[0].data[i]
+					delete myChart.data.datasets[1].data[i]
+					delete myChart.data.datasets[2].data[i]
+					delete myChart.data.datasets[3].data[i]
+					delete myChart.data.datasets[4].data[i]
+					delete myChart.data.datasets[5].data[i]
+				}
+				else{
+					myChart.update();
+					return;
+				}
+			 
+			   
+			 }	 			
+		}
+		 
+			function setaMes() {
+ 
+				myChart.data.labels[0] = "Jan";
+				myChart.data.labels[1] = "Fev";
+				myChart.data.labels[2] = "Mar";
+				myChart.data.labels[3] = "Abril";
+				myChart.data.labels[4] = "Maio";
+				myChart.data.labels[5] = "Jun";
+				myChart.data.labels[6] = "Jul";
+				myChart.data.labels[7] = "Ago";
+				myChart.data.labels[8] = "Set";
+				myChart.data.labels[9] = "Out";
+				myChart.data.labels[10] = "Nov";
+				myChart.data.labels[11] = "Dez";
+				myChart.update();
+	
+		}
 		</script>
 	<script>
 		var ctx = document.getElementById('myChart');
 		var myChart = new Chart(ctx, {
 			type : 'line',
 			data : {
-				labels : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
-				datasets : [ 
+				labels :
+					
+					[],
+				
+					
+					datasets : [ 
 					<c:forEach items="${dados}" var="data">
 				{
 					label : '${data.categoria}',
@@ -51,13 +118,15 @@
 				}
 			}
 		});
+		<c:forEach items="${dados}" var="data" varStatus="loop">
+				setaMes('${loop.index}')
+		</c:forEach>
+				filtro()
+				//filtro2()
 	</script>
 	<form action="pesquisaGraficos" method="get">
-		<button type="submit" class="btn btn-primary btn-lg" name="operacao"
-			value=GRAFICOS id="operacao" style="width: 95%;">
-			<span class="glyphicon glyphicon-ok-sign"></span> consultar
-		</button>
-		<select name="carlist" form="carform">
+		
+		<select name="mes1" id="mes1">
 			<option value="1">Janeiro</option>
 			<option value="2">Fevereiro</option>
 			<option value="3">Março</option>
@@ -70,22 +139,28 @@
 			<option value="10">Outubro</option>
 			<option value="11">Novembro</option>
 			<option value="12">Dezembro</option>
-		</select> ATÉ <select name="carlist" form="carform">
-		<option value="1">Janeiro</option>
-			<option value="2">Fevereiro</option>
-			<option value="3">Março</option>
-			<option value="4">Abril</option>
-			<option value="5">Maio</option>
-			<option value="6">Junho</option>
-			<option value="7">Julho</option>
-			<option value="8">Agosto</option>
-			<option value="9">Setembro</option>
-			<option value="10">Outubro</option>
-			<option value="11">Novembro</option>
+		</select> ATÉ 
+		<select name="mes2" id="mes2">
 			<option value="12">Dezembro</option>
-		</select> <input type="number" min="2015" max="2019" step="1" value="2019"
-			name="ano"
+			<option value="11">Novembro</option>
+			<option value="10">Outubro</option>
+			<option value="9">Setembro</option>
+			<option value="8">Agosto</option>
+			<option value="7">Julho</option>
+			<option value="6">Junho</option>
+			<option value="5">Maio</option>
+			<option value="4">Abril</option>
+			<option value="3">Março</option>
+			<option value="2">Fevereiro</option>
+			<option value="1">Janeiro</option>
+		</select>
+		 
+		 <input type="number" min="2015" max="2019" step="1" value="2019" name="ano"
 			style="margin-left: 111px; width: 163px; text-align: center; font-size: 35px;">
+			<button type="submit" class="btn btn-primary btn-lg" name="operacao"
+			value=GRAFICOS id="operacao" style="width: 95%;">
+			<span class="glyphicon glyphicon-ok-sign"></span> consultar
+		</button>
 	</form>
 </body>
 </html>

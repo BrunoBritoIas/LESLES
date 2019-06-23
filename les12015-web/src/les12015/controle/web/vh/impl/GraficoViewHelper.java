@@ -18,7 +18,11 @@ public class GraficoViewHelper implements IViewHelper {
 	public EntidadeDominio getEntidade(HttpServletRequest request) {
 		GraficosVendasCategoria grafico = new GraficosVendasCategoria();
 		Integer ano = Integer.parseInt(request.getParameter("ano"));
+		Integer mes1 = Integer.parseInt(request.getParameter("mes1"));
+		Integer mes2 = Integer.parseInt(request.getParameter("mes2"));
 		grafico.setAno(ano);
+		grafico.setMes1(mes1);
+		grafico.setMes2(mes2);
 		return grafico;
 	}
 
